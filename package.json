@@ -65,6 +65,7 @@
       "electron/**/*",
       "src/lib/**/*",
       "src/locales/**/*",
+      "server-pack.json",
       "package.json"
     ],
     "extraMetadata": {

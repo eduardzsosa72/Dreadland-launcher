@@ -15,6 +15,15 @@ contextBridge.exposeInMainWorld('launcher', {
   minecraftOpenRootDirectory() {
     return ipcRenderer.invoke('minecraft:open-root-directory');
   },
+  syncServerPack() {
+    return ipcRenderer.invoke('serverPack:sync');
+  },
+  minecraftPickRootDirectory() {
+    return ipcRenderer.invoke('minecraft:pick-root-directory');
+  },
+  minecraftResetRootDirectory() {
+    return ipcRenderer.invoke('minecraft:reset-root-directory');
+  },
   minecraftGetInstalledVersions() {
     return ipcRenderer.invoke('minecraft:get-installed-versions');
   },

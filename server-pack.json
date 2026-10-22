@@ -1,0 +1,402 @@
+{
+  "id": "dreadland",
+  "name": "DREADLAND",
+  "packVersion": "1.0.0",
+  "minecraftVersion": "1.20.1",
+  "loader": {
+    "type": "fabric",
+    "version": "0.19.5"
+  },
+  "ram": 4,
+  "server": {
+    "address": "altaria.proxy.rlwy.net:28649",
+    "autoConnect": true
+  },
+  "mods": [
+    {
+      "name": "Accessories",
+      "fileName": "accessories-fabric-1.0.0-beta.48_1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/accessories-fabric-1.0.0-beta.48_1.20.1.jar",
+      "size": 769376,
+      "md5": "221b4a22e0d96453c949bcd7d913ad62"
+    },
+    {
+      "name": "The Aether",
+      "fileName": "aether-1.20.1-1.5.2-beta.9-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/aether-1.20.1-1.5.2-beta.9-fabric.jar",
+      "size": 51365899,
+      "md5": "afaa78c58efc52f3a44d48ba208d721d"
+    },
+    {
+      "name": "AppleSkin",
+      "fileName": "appleskin-fabric-mc1.20.1-2.5.2.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/appleskin-fabric-mc1.20.1-2.5.2.jar",
+      "size": 1097240,
+      "md5": "0f5aeb43d6949ddad88449ad29884b2b"
+    },
+    {
+      "name": "Architectury",
+      "fileName": "architectury-9.2.14-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/architectury-9.2.14-fabric.jar",
+      "size": 585207,
+      "md5": "2ae04e0dad60a390031ee341e0b2ab45"
+    },
+    {
+      "name": "Automobility",
+      "fileName": "automobility-0.4.2_1.20.1-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/automobility-0.4.2_1.20.1-fabric.jar",
+      "size": 1108056,
+      "md5": "ae13f136fc6081cc9242fe330b9f2252"
+    },
+    {
+      "name": "BitsAndChisels",
+      "fileName": "bitsandchisels-2.7.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/bitsandchisels-2.7.3.jar",
+      "size": 303304,
+      "md5": "8aa26b5527db8b732912d427adcb9dd8"
+    },
+    {
+      "name": "Botania",
+      "fileName": "Botania-1.20.1-456-FABRIC.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Botania-1.20.1-456-FABRIC.jar",
+      "size": 12671936,
+      "md5": "ed80c68561f579d588dbe3d2c7ac7cbf"
+    },
+    {
+      "name": "Cardinal Components API",
+      "fileName": "cardinal-components-api-5.2.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cardinal-components-api-5.2.3.jar",
+      "size": 228709,
+      "md5": "b902397d35fbbf6df232f46fb483024a"
+    },
+    {
+      "name": "Carry On",
+      "fileName": "carryon-fabric-1.20.1-2.1.2.7.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/carryon-fabric-1.20.1-2.1.2.7.jar",
+      "size": 443033,
+      "md5": "c050f3d0934bbd8893fe2353eab906bb"
+    },
+    {
+      "name": "Cloth Config v11",
+      "fileName": "cloth-config-11.1.136-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cloth-config-11.1.136-fabric.jar",
+      "size": 1172214,
+      "md5": "45d8bada7797af61d1f5543313b1f9f0"
+    },
+    {
+      "name": "Comforts",
+      "fileName": "comforts-fabric-6.4.0_1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/comforts-fabric-6.4.0_1.20.1.jar",
+      "size": 693624,
+      "md5": "681a5788b12195e5b2243947203c701e"
+    },
+    {
+      "name": "CorgiLib",
+      "fileName": "Corgilib-Fabric-1.20.1-4.0.3.6.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Corgilib-Fabric-1.20.1-4.0.3.6.jar",
+      "size": 700309,
+      "md5": "9892e1cc4dbc78c59a6684d5664f0f75"
+    },
+    {
+      "name": "CoroUtil",
+      "fileName": "coroutil-fabric-1.20.1-1.3.7.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/coroutil-fabric-1.20.1-1.3.7.jar",
+      "size": 2392617,
+      "md5": "44365b7447c9b4c3aeadcadf454494aa"
+    },
+    {
+      "name": "Cosmetic Lib",
+      "fileName": "cosmetic-lib-1.0.4.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cosmetic-lib-1.0.4.jar",
+      "size": 149425,
+      "md5": "8ecd07a99a5f7b78214a5bd0ae5b7145"
+    },
+    {
+      "name": "CosmeticAnew",
+      "fileName": "cosmeticanew-1.1.0.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cosmeticanew-1.1.0.jar",
+      "size": 190757,
+      "md5": "cdedfb42dee29f5adc21b8fe0f339b53"
+    },
+    {
+      "name": "CreativeCore",
+      "fileName": "CreativeCore_FABRIC_v2.12.41_mc1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/CreativeCore_FABRIC_v2.12.41_mc1.20.1.jar",
+      "size": 1207852,
+      "md5": "54c1a949f488c1bbbe79ddf057a1accf"
+    },
+    {
+      "name": "Customizable Player Models",
+      "fileName": "CustomPlayerModels-Fabric-1.20-0.6.27a.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/CustomPlayerModels-Fabric-1.20-0.6.27a.jar",
+      "size": 2847779,
+      "md5": "b8c69a754194e684c4a22143b903ba79"
+    },
+    {
+      "name": "Data Anchor",
+      "fileName": "Data_Anchor-fabric-1.20.1-1.0.0.23.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Data_Anchor-fabric-1.20.1-1.0.0.23.jar",
+      "size": 122341,
+      "md5": "4b907156fab27b307859eb63303c6390"
+    },
+    {
+      "name": "Decocraft",
+      "fileName": "decocraft-3.0.7-1.20.1-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/decocraft-3.0.7-1.20.1-fabric.jar",
+      "size": 93791809,
+      "md5": "733d163340ee5f8b07a5a018a53af1ac"
+    },
+    {
+      "name": "Emotecraft: Borrow Their Emote (EBTE)",
+      "fileName": "emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
+      "size": 304863,
+      "md5": "5d07a7eb5dc712ac92c07c23e802e1fc"
+    },
+    {
+      "name": "Emotecraft",
+      "fileName": "emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
+      "size": 873611,
+      "md5": "3a7abdac2462955c5a51af3cd14712ff"
+    },
+    {
+      "name": "Enhanced Celestials",
+      "fileName": "Enhanced-Celestials-fabric-1.20.1-5.0.3.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Enhanced-Celestials-fabric-1.20.1-5.0.3.3.jar",
+      "size": 1632623,
+      "md5": "0a9c5cd6e7396a88646acaafcb349552"
+    },
+    {
+      "name": "Fabric API",
+      "fileName": "fabric-api-0.92.12_1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fabric-api-0.92.12_1.20.1.jar",
+      "size": 2137232,
+      "md5": "0e405ca544d986fb65f3f524e393c11a"
+    },
+    {
+      "name": "Fabric Language Kotlin",
+      "fileName": "fabric-language-kotlin-1.13.14_kotlin.2.4.20.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fabric-language-kotlin-1.13.14_kotlin.2.4.20.jar",
+      "size": 8143094,
+      "md5": "88658e66def762d6e80ed38e3ab8c7a3"
+    },
+    {
+      "name": "Faewulf's Lib",
+      "fileName": "faewulf_lib-fabric-1.20.1-1.4.0.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/faewulf_lib-fabric-1.20.1-1.4.0.jar",
+      "size": 540280,
+      "md5": "b04e43ae8ee77b8cfe8b3fbb0965fff6"
+    },
+    {
+      "name": "Farmer's Delight",
+      "fileName": "FarmersDelight-1.20.1-2.4.1_refabricated.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/FarmersDelight-1.20.1-2.4.1_refabricated.jar",
+      "size": 8056758,
+      "md5": "f4f3c88e3a2c463d125c45c44980b1ca"
+    },
+    {
+      "name": "Fusion",
+      "fileName": "fusion-1.3.16-fabric-mc1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fusion-1.3.16-fabric-mc1.20.1.jar",
+      "size": 931032,
+      "md5": "7b4faa20f61e51985e0f8152426f1ac5"
+    },
+    {
+      "name": "Fzzy Config",
+      "fileName": "fzzy_config-0.7.7_1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fzzy_config-0.7.7_1.20.1.jar",
+      "size": 2395040,
+      "md5": "576803e6acda4d82c55b7571dab54a54"
+    },
+    {
+      "name": "GeckoLib 4",
+      "fileName": "geckolib-fabric-1.20.1-4.8.4.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/geckolib-fabric-1.20.1-4.8.4.jar",
+      "size": 969016,
+      "md5": "8632c2274d4c37f2122b202c02050370"
+    },
+    {
+      "name": "GokiSkills",
+      "fileName": "GokiSkills-fabric-1.1.3-1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/GokiSkills-fabric-1.1.3-1.20.1.jar",
+      "size": 154673,
+      "md5": "f5c789286903be8929473362c6be388a"
+    },
+    {
+      "name": "Immersive Aircraft",
+      "fileName": "immersive_aircraft-1.5.0_1.20.1-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/immersive_aircraft-1.5.0_1.20.1-fabric.jar",
+      "size": 2430374,
+      "md5": "75e8dcc9948acc754566db7587a268fa"
+    },
+    {
+      "name": "Jade",
+      "fileName": "Jade-1.20-Fabric-11.13.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Jade-1.20-Fabric-11.13.3.jar",
+      "size": 553868,
+      "md5": "de1a0808a3c61c44b57d2adcdaf52632"
+    },
+    {
+      "name": "Just Enough Items",
+      "fileName": "jei-1.20.1-fabric-15.49.0.194.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/jei-1.20.1-fabric-15.49.0.194.jar",
+      "size": 1696701,
+      "md5": "5c0710dc03094f50a320f2b15a4e3b3c"
+    },
+    {
+      "name": "Journeymap",
+      "fileName": "journeymap-fabric-1.20.1-6.0.7.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/journeymap-fabric-1.20.1-6.0.7.jar",
+      "size": 4360409,
+      "md5": "d35b817693c0cbd700a7ff5187c3b084"
+    },
+    {
+      "name": "Litematica",
+      "fileName": "litematica-fabric-1.20.1-0.15.4.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/litematica-fabric-1.20.1-0.15.4.jar",
+      "size": 923876,
+      "md5": "4f716692227e2e5290aa862984104316"
+    },
+    {
+      "name": "Lootr",
+      "fileName": "lootr-fabric-1.20-0.7.35.86.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/lootr-fabric-1.20-0.7.35.86.jar",
+      "size": 575601,
+      "md5": "b8e9383e03928d6a3619d3dd6dd5f45d"
+    },
+    {
+      "name": "MaLiLib",
+      "fileName": "malilib-fabric-1.20.1-0.16.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/malilib-fabric-1.20.1-0.16.3.jar",
+      "size": 545403,
+      "md5": "007a02b4cbca762018d2a56237d36631"
+    },
+    {
+      "name": "Macaw's Bridges",
+      "fileName": "mcw-bridges-3.1.2-mc1.20.1fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/mcw-bridges-3.1.2-mc1.20.1fabric.jar",
+      "size": 672903,
+      "md5": "5465a911363fc466da49489457e2c4b1"
+    },
+    {
+      "name": "Macaw's Furniture",
+      "fileName": "mcw-furniture-3.4.1-mc1.20.1fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/mcw-furniture-3.4.1-mc1.20.1fabric.jar",
+      "size": 2102784,
+      "md5": "dde7f5854b1a6d814ee6ba76023dc264"
+    },
+    {
+      "name": "MossyLib",
+      "fileName": "MossyLib-1.6.0_1.20.1_fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/MossyLib-1.6.0_1.20.1_fabric.jar",
+      "size": 189952,
+      "md5": "b1f6e8f297dbd67f2d3e95af1cbb0130"
+    },
+    {
+      "name": "Naturalist",
+      "fileName": "naturalist-fabric-4.0.3-1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/naturalist-fabric-4.0.3-1.20.1.jar",
+      "size": 4310075,
+      "md5": "5313f863f10d2fd2abaa30c18d3c7b02"
+    },
+    {
+      "name": "Patchouli",
+      "fileName": "Patchouli-1.20.1-85-FABRIC.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Patchouli-1.20.1-85-FABRIC.jar",
+      "size": 857123,
+      "md5": "de8c80f59fb6b70381c82649c950e3df"
+    },
+    {
+      "name": "Piggyback",
+      "fileName": "piggyback-fabric-1.20.1-1.1.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/piggyback-fabric-1.20.1-1.1.1.jar",
+      "size": 342696,
+      "md5": "3f700033550bce65d01374faf22c86cd"
+    },
+    {
+      "name": "Polymorph",
+      "fileName": "polymorph-fabric-0.49.11_1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/polymorph-fabric-0.49.11_1.20.1.jar",
+      "size": 683213,
+      "md5": "94326a451c3ef94ed3f44a119d5b866d"
+    },
+    {
+      "name": "Rechiseled",
+      "fileName": "rechiseled-1.1.6-fabric-mc1.20.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/rechiseled-1.1.6-fabric-mc1.20.jar",
+      "size": 3577691,
+      "md5": "90af959efd53e54bb9ec7c1794860361"
+    },
+    {
+      "name": "Simple armor hud",
+      "fileName": "simple-armor-hud-1.20.2-1.3.2.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/simple-armor-hud-1.20.2-1.3.2.jar",
+      "size": 18923,
+      "md5": "9f58bc3de0c64d374edf870eeda320e0"
+    },
+    {
+      "name": "Simply Swords",
+      "fileName": "simplyswords-fabric-1.70.2-1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/simplyswords-fabric-1.70.2-1.20.1.jar",
+      "size": 15700827,
+      "md5": "99b8c86380a7431c91b2fd466515fc50"
+    },
+    {
+      "name": "Simply Tooltips",
+      "fileName": "SimplyTooltips-fabric-0.1.5-1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/SimplyTooltips-fabric-0.1.5-1.20.1.jar",
+      "size": 5518319,
+      "md5": "10686d1b21e699266d4455ca75582135"
+    },
+    {
+      "name": "Status Effect Bars",
+      "fileName": "status-effect-bars-1.0.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/status-effect-bars-1.0.3.jar",
+      "size": 44632,
+      "md5": "fc1642fa6d4a6a3cf8e3c392d367124a"
+    },
+    {
+      "name": "SuperMartijn642's Config Lib",
+      "fileName": "supermartijn642configlib-1.1.8a-fabric-mc1.20.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/supermartijn642configlib-1.1.8a-fabric-mc1.20.jar",
+      "size": 207990,
+      "md5": "b8e27e4c98a70e3034774f5b31a3044e"
+    },
+    {
+      "name": "SuperMartijn642's Core Lib",
+      "fileName": "supermartijn642corelib-1.1.25-fabric-mc1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/supermartijn642corelib-1.1.25-fabric-mc1.20.1.jar",
+      "size": 608479,
+      "md5": "9ee6b3408916d4cb6370439719887f08"
+    },
+    {
+      "name": "The Graveyard",
+      "fileName": "The_Graveyard_3.1__FABRIC__for_1.20.1.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/The_Graveyard_3.1__FABRIC__for_1.20.1.jar",
+      "size": 10272185,
+      "md5": "9263a6e1ca3b9c955b14278e3a11e4bd"
+    },
+    {
+      "name": "Traveler's Backpack",
+      "fileName": "travelersbackpack-fabric-1.20.1-9.1.55.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/travelersbackpack-fabric-1.20.1-9.1.55.jar",
+      "size": 1512753,
+      "md5": "1d07ba0acaf5a8f4916de2121d2fc922"
+    }
+  ],
+  "files": [
+    {
+      "path": "options.txt",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/files/dreadland/options.txt",
+      "size": 40,
+      "overwrite": false
+    },
+    {
+      "path": "servers.dat",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/files/dreadland/servers.dat",
+      "size": 101,
+      "overwrite": false
+    }
+  ]
+}

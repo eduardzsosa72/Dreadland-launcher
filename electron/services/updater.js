@@ -9,7 +9,7 @@ import { loadLauncherState } from '../../src/lib/launcherState.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const UPDATE_REPOSITORY = 'CesarGarza55/OpenLauncher';
+const UPDATE_REPOSITORY = 'eduardzsosa72/Dreadland-launcher';
 const UPDATE_RELEASES_API = `https://api.github.com/repos/${UPDATE_REPOSITORY}/releases/latest`;
 const UPDATE_RELEASES_PAGE = `https://github.com/${UPDATE_REPOSITORY}/releases/latest`;
 

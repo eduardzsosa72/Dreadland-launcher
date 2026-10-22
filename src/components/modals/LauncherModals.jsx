@@ -387,6 +387,8 @@ export function SettingsModal({
   onCheckUpdates,
   onOpenAbout,
   onOpenMinecraftDirectory,
+  onChangeMinecraftDirectory,
+  onResetMinecraftDirectory,
   language,
   onLanguageChange,
 }) {
@@ -475,6 +477,24 @@ export function SettingsModal({
                 <Icon d={ICONS.folder} size={13} />
                 <span>{t('settings.openMinecraftDirectory')}</span>
               </button>
+              <button
+                className="btn-secondary"
+                type="button"
+                onClick={onChangeMinecraftDirectory}
+                title={t('settings.changeMinecraftDirectoryDesc')}
+              >
+                <span>{t('settings.changeMinecraftDirectory')}</span>
+              </button>
+              {settings.minecraftRootIsCustom && (
+                <button
+                  className="btn-ghost"
+                  type="button"
+                  onClick={onResetMinecraftDirectory}
+                  title={t('settings.resetMinecraftDirectory')}
+                >
+                  <span>{t('settings.resetMinecraftDirectory')}</span>
+                </button>
+              )}
             </div>
           </div>
 

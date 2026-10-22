@@ -2,7 +2,7 @@ import { app, dialog, ipcMain, shell } from 'electron';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { getMinecraftRoot } from '../services/paths.js';
+import { getMinecraftRoot, getDefaultMinecraftRoot, isCustomMinecraftRoot, setCustomMinecraftRoot } from '../services/paths.js';
 import { getMainWindow } from '../services/windowManager.js';
 import { checkForLauncherUpdate, downloadAndApplyUpdate } from '../services/updater.js';
 import {
@@ -27,11 +27,14 @@ import {
   readInstalledVersions,
   installMinecraft,
   cancelInstall,
+  activeInstalls,
 } from '../services/minecraftInstaller.js';
 import {
   launchMinecraft,
   stopMinecraft,
+  runningChildren,
 } from '../services/minecraftRunner.js';
+import { syncServerPack, readServerPackInstanceConfig } from '../services/serverPack.js';
 import { loadLauncherCatalog } from '../../src/lib/minecraftLauncher.js';
 import { loadMinecraftNews, loadMinecraftArticle } from '../../src/lib/minecraftNews.js';
 import { loadLauncherState, saveLauncherState } from '../../src/lib/launcherState.js';
@@ -92,7 +95,35 @@ export function registerAllIpc() {
     }
   });
 
-  ipcMain.handle('minecraft:get-root', async () => ({ root: getMinecraftRoot() }));
+  ipcMain.handle('minecraft:get-root', async () => ({
+    root: getMinecraftRoot(),
+    defaultRoot: getDefaultMinecraftRoot(),
+    isCustom: isCustomMinecraftRoot(),
+  }));
+
+  const changeMinecraftRoot = async (dir) => {
+    if (runningChildren.size > 0 || activeInstalls.size > 0) {
+      return { error: 'Busy', message: 'Close the game and wait for installs to finish before changing the Minecraft directory.' };
+    }
+    try {
+      const root = await setCustomMinecraftRoot(dir);
+      return { ok: true, root, defaultRoot: getDefaultMinecraftRoot(), isCustom: isCustomMinecraftRoot() };
+    } catch (error) {
+      return { error: 'InvalidDirectory', message: error?.message || String(error) };
+    }
+  };
+
+  ipcMain.handle('minecraft:pick-root-directory', async () => {
+    const result = await dialog.showOpenDialog(getMainWindow() || undefined, {
+      title: 'Select Minecraft directory',
+      defaultPath: getMinecraftRoot(),
+      properties: ['openDirectory', 'createDirectory'],
+    });
+    if (result.canceled || !result.filePaths?.[0]) return { canceled: true };
+    return changeMinecraftRoot(result.filePaths[0]);
+  });
+
+  ipcMain.handle('minecraft:reset-root-directory', async () => changeMinecraftRoot(null));
   ipcMain.handle('app:get-version', () => app.getVersion());
   ipcMain.handle('system:get-info', async () => {
     const totalBytes = os.totalmem();
@@ -317,7 +348,25 @@ export function registerAllIpc() {
     return result;
   });
 
+  const packSyncCallbacks = {
+    onLog: sendLog,
+    onProgress: (p) => sendToRenderer('minecraft:install-file-progress', p),
+  };
+
+  ipcMain.handle('serverPack:sync', async () => syncServerPack(packSyncCallbacks));
+
   ipcMain.handle('minecraft:run', async (_, opts) => {
+    if (await readServerPackInstanceConfig(opts?.instanceId)) {
+      // Sync right before playing so a pack pushed while the launcher was open is still applied
+      const sync = await syncServerPack(packSyncCallbacks);
+      if (!sync.ok && sync.error !== 'NoServerPack') {
+        sendLog('warn', `Server pack sync failed: ${sync.message}. Launching with the files already installed.`);
+      }
+      if (sync.versionId) {
+        const installed = await readInstalledVersions();
+        opts = { ...opts, version: installed.find(v => v.id === sync.versionId) || sync.versionId };
+      }
+    }
     return launchMinecraft(opts, {
       onLog: sendLog,
       onAssetProgress: (p) => sendToRenderer('minecraft:asset-progress', p),

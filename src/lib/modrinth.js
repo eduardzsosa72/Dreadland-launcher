@@ -1,5 +1,5 @@
 const MODRINTH_API_BASE = 'https://api.modrinth.com/v2';
-const USER_AGENT = 'CesarGarza55/OpenLauncher/1.0.2 (support@codevbox.com)';
+const USER_AGENT = 'eduardzsosa72/Dreadland-launcher (github.com/eduardzsosa72/Dreadland-launcher)';
 
 async function fetchModrinth(endpoint, options = {}) {
   const url = endpoint.startsWith('http') ? endpoint : `${MODRINTH_API_BASE}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;

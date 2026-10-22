@@ -66,8 +66,8 @@ import {
   cleanMinecraftText,
 } from './utils/formatters';
 
-const APP_SOURCE_URL = 'https://github.com/CesarGarza55/OpenLauncher';
-const APP_RELEASES_URL = 'https://github.com/CesarGarza55/OpenLauncher/releases/latest';
+const APP_SOURCE_URL = 'https://github.com/eduardzsosa72/Dreadland-launcher';
+const APP_RELEASES_URL = 'https://github.com/eduardzsosa72/Dreadland-launcher/releases/latest';
 
 const minecraftLoginWithAbort = async (profileKey, abortSignal) => {
   if (typeof window !== 'undefined' && window.launcher?.minecraftLogin) {
@@ -476,7 +476,7 @@ export default function App() {
 
         const rootRes = await launcher.minecraftGetRoot?.();
         if (rootRes?.root) {
-          setSettings(prev => ({ ...prev, minecraftRoot: rootRes.root }));
+          setSettings(prev => ({ ...prev, minecraftRoot: rootRes.root, minecraftRootIsCustom: Boolean(rootRes.isCustom) }));
         }
 
         const [instVers, instMods, instShaders, instPacks, instDatapacks, loadedInstances] = await Promise.all([
@@ -532,6 +532,26 @@ export default function App() {
         if (snapshot?.installTargets) {
           setInstallTargets(snapshot.installTargets);
         }
+
+        // Background sync of the server's pinned version and mods; the server instance becomes the default selection
+        launcher.syncServerPack?.()
+          .then(async (res) => {
+            if (!res?.instanceId) {
+              if (res?.error && res.error !== 'NoServerPack') addLog('warn', `Server pack: ${res.message || res.error}`);
+              return;
+            }
+            const [freshInstances, freshVersions] = await Promise.all([
+              launcher.getInstances?.().catch(() => null),
+              launcher.minecraftGetInstalledVersions?.().catch(() => null),
+            ]);
+            if (Array.isArray(freshInstances)) setInstances(freshInstances);
+            if (Array.isArray(freshVersions)) setInstalledVersions(freshVersions);
+            if (res.created || !resolvedActiveInstanceId) {
+              setActiveInstanceId(res.instanceId);
+              persistState({ activeInstanceId: res.instanceId });
+            }
+          })
+          .catch(() => { });
 
         if (state?.settings?.autoUpdate !== false) {
           launcher.minecraftCheckUpdate?.()
@@ -1963,6 +1983,24 @@ export default function App() {
     }
   };
 
+  const handleChangeMinecraftDirectory = async (reset = false) => {
+    try {
+      const res = reset
+        ? await launcher.minecraftResetRootDirectory?.()
+        : await launcher.minecraftPickRootDirectory?.();
+      if (!res || res.canceled) return;
+      if (res.error) {
+        pushToast({ tone: 'error', title: t('settings.minecraftDirectory'), message: t('settings.changeMinecraftDirectoryFailed', { error: res.message || res.error }) });
+        return;
+      }
+      addLog('info', `Minecraft directory set to ${res.root}`);
+      // Versions, instances and content all live under the root, so reload to re-read everything from the new location
+      window.location.reload();
+    } catch (e) {
+      addLog('error', `Failed to change Minecraft directory: ${e?.message || e}`);
+    }
+  };
+
   const handleCopyConsole = () => {
     const text = logs.map(l => `[${l.time}] [${l.level.toUpperCase()}] ${l.msg}`).join('\n');
     navigator.clipboard?.writeText(text);
@@ -2820,6 +2858,8 @@ export default function App() {
           onCheckUpdates={handleCheckForUpdates}
           onOpenAbout={() => setModal('about')}
           onOpenMinecraftDirectory={handleOpenMinecraftDirectory}
+          onChangeMinecraftDirectory={() => handleChangeMinecraftDirectory(false)}
+          onResetMinecraftDirectory={() => handleChangeMinecraftDirectory(true)}
           onOpenSourceCode={handleOpenSourceCode}
           onOpenReleases={handleOpenReleases}
           language={language}

@@ -5,7 +5,7 @@ import { spawn } from 'child_process';
 import { Readable } from 'stream';
 import { createRequire } from 'module';
 import { getMinecraftRoot, getMinecraftRoots } from './paths.js';
-import { findJavaCommand, resolveJavaCommand } from './javaDetector.js';
+import { resolveJavaForInstaller } from './javaRuntime.js';
 import { getMainWindow } from './windowManager.js';
 
 const require = createRequire(import.meta.url);
@@ -651,8 +651,7 @@ export async function installMinecraft(opts, { onLog = null, onProgress = null, 
     const installerUrl = `https://maven.fabricmc.net/net/fabricmc/fabric-installer/${installerVersion}/fabric-installer-${installerVersion}.jar`;
     const installerDownload = await downloadToFile(installerUrl, installerPath, installId, `fabric-installer-${installerVersion}.jar`, { onLog, onProgress });
     if (!installerDownload.ok) return { error: 'DownloadFailed', message: 'Fabric installer download failed.' };
-    const javaChoice = findJavaCommand(8, opts?.javaPath || '');
-    const javaCmd = javaChoice?.javaCmd || resolveJavaCommand(opts?.javaPath || '');
+    const javaCmd = await resolveJavaForInstaller(8, opts?.javaPath || '', { onLog });
     const installerResult = await runCommand(javaCmd, ['-jar', installerPath, 'client', '-dir', minecraftRoot, '-mcversion', resolvedGameVersion, '-loader', resolvedLoaderVersion, '-noprofile', '-snapshot'], {
       cwd: tempDir,
       onStdout: (text) => {
@@ -722,8 +721,7 @@ export async function installMinecraft(opts, { onLog = null, onProgress = null, 
     const installerDownload = await downloadToFile(installerUrl, installerPath, installId, `quilt-installer-${installerVersion}.jar`, { onLog, onProgress });
     if (!installerDownload.ok) return { error: 'DownloadFailed', message: 'Quilt installer download failed.' };
 
-    const javaChoice = findJavaCommand(8, opts?.javaPath || '');
-    const javaCmd = javaChoice?.javaCmd || resolveJavaCommand(opts?.javaPath || '');
+    const javaCmd = await resolveJavaForInstaller(8, opts?.javaPath || '', { onLog });
 
     const quiltArgs = [
       '-jar', installerPath,
@@ -839,8 +837,7 @@ export async function installMinecraft(opts, { onLog = null, onProgress = null, 
       }
     }
 
-    const javaChoice = findJavaCommand(8, opts?.javaPath || '');
-    const javaCmd = javaChoice?.javaCmd || resolveJavaCommand(opts?.javaPath || '');
+    const javaCmd = await resolveJavaForInstaller(8, opts?.javaPath || '', { onLog });
 
     let patchResult = await runCommand(javaCmd, ['-jar', installerPath, '--installClient', minecraftRoot], {
       cwd: tempDir,
@@ -951,8 +948,7 @@ export async function installMinecraft(opts, { onLog = null, onProgress = null, 
     const isJava21Required = neoMajor >= 21 || neoVersion.startsWith('20.5') || neoVersion.startsWith('20.6') || resolvedMinecraftVersion.startsWith('1.20.5') || resolvedMinecraftVersion.startsWith('1.20.6') || resolvedMinecraftVersion.startsWith('1.21') || resolvedMinecraftVersion.startsWith('26.');
     const reqJava = isJava21Required ? 21 : 17;
 
-    const javaChoice = findJavaCommand(reqJava, opts?.javaPath || '') || findJavaCommand(8, opts?.javaPath || '');
-    const javaCmd = javaChoice?.javaCmd || resolveJavaCommand(opts?.javaPath || '');
+    const javaCmd = await resolveJavaForInstaller(reqJava, opts?.javaPath || '', { onLog });
 
     onLog?.('info', `Running NeoForge installer using ${javaCmd}...`);
 

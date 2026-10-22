@@ -42,7 +42,7 @@ export async function saveModMetadataStore(newMeta) {
 export async function fetchAndCacheIconAsBase64(iconUrl) {
   if (!iconUrl || typeof iconUrl !== 'string' || !iconUrl.startsWith('http')) return iconUrl || null;
   try {
-    const res = await fetch(iconUrl, { headers: { 'User-Agent': 'CesarGarza55/OpenLauncher/1.0.2 (support@codevbox.com)' } });
+    const res = await fetch(iconUrl, { headers: { 'User-Agent': 'eduardzsosa72/Dreadland-launcher (github.com/eduardzsosa72/Dreadland-launcher)' } });
     if (!res.ok) return iconUrl;
     const arrayBuffer = await res.arrayBuffer();
     const contentType = res.headers.get('content-type') || 'image/png';

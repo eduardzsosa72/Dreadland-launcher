@@ -22,6 +22,8 @@ import {
   resolveLibraryArtifactCandidates,
 } from './minecraftInstaller.js';
 import { loadLauncherState } from '../../src/lib/launcherState.js';
+import { readServerPackInstanceConfig } from './serverPack.js';
+import { ensureJavaRuntime } from './javaRuntime.js';
 import { getMainWindow } from './windowManager.js';
 
 export const runningChildren = new Map();
@@ -620,6 +622,17 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
   if (!gameArgs.includes('--userType')) gameArgs.push('--userType', normalizedSession.userType);
   if (!gameArgs.includes('--versionType')) gameArgs.push('--versionType', versionJson?.type || 'release');
 
+  const packServer = (await readServerPackInstanceConfig(instanceId))?.serverPack?.server;
+  if (packServer?.address && packServer.autoConnect) {
+    // Quick Play replaced --server/--port in 1.20; older versions still need the legacy flags
+    if (compareVersionTuples(versionToTuple(mcVer), versionToTuple('1.20')) >= 0) {
+      gameArgs.push('--quickPlayMultiplayer', packServer.address);
+    } else {
+      const [host, port] = packServer.address.split(':');
+      gameArgs.push('--server', host, '--port', port || '25565');
+    }
+  }
+
   if (String(mainClass).includes('net.fabricmc.loader.impl.launch.knot.KnotClient') || String(mainClass).includes('org.quiltmc.loader.impl.launch.knot.KnotClient')) {
     const fabricLoaderRoot = path.join(baseDir, 'libraries', 'net', 'fabricmc', 'fabric-loader');
     const quiltLoaderRoot = path.join(baseDir, 'libraries', 'org', 'quiltmc', 'quilt-loader');
@@ -729,13 +742,22 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
   const requiredJavaMajor = Number(versionJson?.javaVersion?.majorVersion || 0) || null;
 
   async function findCompatibleJava() {
+    const allCandidates = collectCommonJavaCandidates();
     if (requiredJavaMajor) {
+      // Prefer the exact major Mojang specifies: much newer Java often breaks older mods
+      const exact = allCandidates.find(candidate => detectJavaMajor(candidate) === requiredJavaMajor);
+      if (exact) return { javaCmd: exact, javaMajor: requiredJavaMajor, source: 'auto-detected' };
+      try {
+        const downloaded = await ensureJavaRuntime(requiredJavaMajor, { onLog });
+        return { javaCmd: downloaded, javaMajor: requiredJavaMajor, source: 'launcher-managed' };
+      } catch (error) {
+        onLog?.('warn', `⚠️ Could not download Java ${requiredJavaMajor}: ${error?.message || error}. Trying other installed Java versions...`);
+      }
       const compatibleJava = findJavaCommand(requiredJavaMajor, '');
       if (compatibleJava?.javaCmd && compatibleJava.javaMajor >= requiredJavaMajor) {
         return { javaCmd: compatibleJava.javaCmd, javaMajor: compatibleJava.javaMajor, source: 'auto-detected (compatible)' };
       }
     }
-    const allCandidates = collectCommonJavaCandidates();
     let bestCandidate = null;
     let bestMajor = 0;
     for (const candidate of allCandidates) {
@@ -747,6 +769,12 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
     }
     if (bestCandidate) {
       return { javaCmd: bestCandidate, javaMajor: bestMajor, source: 'auto-detected (best available)' };
+    }
+    if (!requiredJavaMajor) {
+      try {
+        const downloaded = await ensureJavaRuntime(17, { onLog });
+        return { javaCmd: downloaded, javaMajor: 17, source: 'launcher-managed' };
+      } catch { }
     }
     return { javaCmd: resolveJavaCommand(''), javaMajor: detectJavaMajor(resolveJavaCommand('')), source: 'system default' };
   }

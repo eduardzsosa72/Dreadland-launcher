@@ -10,8 +10,8 @@ Name "DREADLAND LAUNCHER"
 !define FILE_DIR "..\release\win-unpacked"
 !define OUT_FILE "..\release\DREADLAND LAUNCHER.exe"
 !define DEVELOPER "CesarGarza55"
-!define HELPURL "https://github.com/CesarGarza55/OpenLauncher"
-!define ABOUTURL "https://github.com/CesarGarza55/OpenLauncher"
+!define HELPURL "https://github.com/eduardzsosa72/Dreadland-launcher"
+!define ABOUTURL "https://github.com/eduardzsosa72/Dreadland-launcher"
 
 ; Use custom resources
 !define ICON_FILE "icon.ico"

@@ -67,6 +67,17 @@ export function collectCommonJavaCandidates() {
     const normalized = String(value).trim();
     if (normalized) candidates.push(normalized);
   };
+  // Runtimes the launcher downloaded itself (see javaRuntime.js), listed first so they win ties
+  try {
+    const runtimesDir = path.join(app.getPath('userData'), 'runtime');
+    const exe = process.platform === 'win32' ? 'java.exe' : 'java';
+    for (const entry of fs.readdirSync(runtimesDir, { withFileTypes: true })) {
+      if (!entry.isDirectory() || !/^java-\d+$/.test(entry.name)) continue;
+      for (const candidate of [path.join(runtimesDir, entry.name, 'bin', exe), path.join(runtimesDir, entry.name, 'Contents', 'Home', 'bin', exe)]) {
+        if (fs.existsSync(candidate)) add(candidate);
+      }
+    }
+  } catch { }
   const pathCandidates = process.platform === 'win32' ? ['java.exe', 'java'] : ['java'];
   for (const executable of pathCandidates) {
     const lookup = spawnSync(process.platform === 'win32' ? 'where' : 'which', [executable], { encoding: 'utf8' });
