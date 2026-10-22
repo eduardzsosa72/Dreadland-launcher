@@ -1,2 +1,5 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+*.sh text eol=lf
+postinst text eol=lf
+control text eol=lf
+dreadland-launcher text eol=lf
+*.desktop text eol=lf

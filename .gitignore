@@ -1,0 +1,50 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+/release
+/DREADLAND LAUNCHER.dist
+DREADLAND LAUNCHER.exe
+DREADLAND LAUNCHER.cmd
+DREADLAND LAUNCHER.spec
+/temp
+/logs
+/.vscode
+venv
+__pycache__
+compile-deb/usr/share/dreadland-launcher/*
+DREADLAND LAUNCHER.bin
+DREADLAND LAUNCHER.deb
+DREADLAND LAUNCHER.bin.spec
+config
+DREADLAND LAUNCHER
+output-build
+DREADLAND LAUNCHER-Portable-Windows.zip
+build_secret.py
+.env
+/admin
+DREADLAND LAUNCHER-Arch.bin
+
+pre-version.json
+performance-report.json
