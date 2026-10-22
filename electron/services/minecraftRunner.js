@@ -660,7 +660,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
     ...substitutions,
     '${natives_directory}': path.join(baseDir, 'native-extract', mcVer),
     '${launcher_name}': 'DREADLAND LAUNCHER',
-    '${launcher_version}': '1.1.2',
+    '${launcher_version}': app.getVersion(),
     '${classpath}': classpath,
     '${classpath_separator}': path.delimiter,
     '${library_directory}': path.join(baseDir, 'libraries'),
