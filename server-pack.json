@@ -1,7 +1,7 @@
 {
   "id": "dreadland",
   "name": "DREADLAND",
-  "packVersion": "1.0.0",
+  "packVersion": "1.0.1",
   "minecraftVersion": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -19,13 +19,6 @@
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/accessories-fabric-1.0.0-beta.48_1.20.1.jar",
       "size": 769376,
       "md5": "221b4a22e0d96453c949bcd7d913ad62"
-    },
-    {
-      "name": "The Aether",
-      "fileName": "aether-1.20.1-1.5.2-beta.9-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/aether-1.20.1-1.5.2-beta.9-fabric.jar",
-      "size": 51365899,
-      "md5": "afaa78c58efc52f3a44d48ba208d721d"
     },
     {
       "name": "AppleSkin",
@@ -147,18 +140,18 @@
       "md5": "733d163340ee5f8b07a5a018a53af1ac"
     },
     {
-      "name": "Emotecraft: Borrow Their Emote (EBTE)",
-      "fileName": "emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
-      "size": 304863,
-      "md5": "5d07a7eb5dc712ac92c07c23e802e1fc"
-    },
-    {
       "name": "Emotecraft",
       "fileName": "emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
       "size": 873611,
       "md5": "3a7abdac2462955c5a51af3cd14712ff"
+    },
+    {
+      "name": "Emotecraft: Borrow Their Emote (EBTE)",
+      "fileName": "emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
+      "size": 304863,
+      "md5": "5d07a7eb5dc712ac92c07c23e802e1fc"
     },
     {
       "name": "Enhanced Celestials",
@@ -238,18 +231,18 @@
       "md5": "de1a0808a3c61c44b57d2adcdaf52632"
     },
     {
-      "name": "Just Enough Items",
-      "fileName": "jei-1.20.1-fabric-15.49.0.194.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/jei-1.20.1-fabric-15.49.0.194.jar",
-      "size": 1696701,
-      "md5": "5c0710dc03094f50a320f2b15a4e3b3c"
-    },
-    {
       "name": "Journeymap",
       "fileName": "journeymap-fabric-1.20.1-6.0.7.jar",
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/journeymap-fabric-1.20.1-6.0.7.jar",
       "size": 4360409,
       "md5": "d35b817693c0cbd700a7ff5187c3b084"
+    },
+    {
+      "name": "Just Enough Items",
+      "fileName": "jei-1.20.1-fabric-15.49.0.194.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/jei-1.20.1-fabric-15.49.0.194.jar",
+      "size": 1696701,
+      "md5": "5c0710dc03094f50a320f2b15a4e3b3c"
     },
     {
       "name": "Litematica",
@@ -266,13 +259,6 @@
       "md5": "b8e9383e03928d6a3619d3dd6dd5f45d"
     },
     {
-      "name": "MaLiLib",
-      "fileName": "malilib-fabric-1.20.1-0.16.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/malilib-fabric-1.20.1-0.16.3.jar",
-      "size": 545403,
-      "md5": "007a02b4cbca762018d2a56237d36631"
-    },
-    {
       "name": "Macaw's Bridges",
       "fileName": "mcw-bridges-3.1.2-mc1.20.1fabric.jar",
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/mcw-bridges-3.1.2-mc1.20.1fabric.jar",
@@ -285,6 +271,13 @@
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/mcw-furniture-3.4.1-mc1.20.1fabric.jar",
       "size": 2102784,
       "md5": "dde7f5854b1a6d814ee6ba76023dc264"
+    },
+    {
+      "name": "MaLiLib",
+      "fileName": "malilib-fabric-1.20.1-0.16.3.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/malilib-fabric-1.20.1-0.16.3.jar",
+      "size": 545403,
+      "md5": "007a02b4cbca762018d2a56237d36631"
     },
     {
       "name": "MossyLib",
@@ -371,6 +364,13 @@
       "md5": "9ee6b3408916d4cb6370439719887f08"
     },
     {
+      "name": "The Aether",
+      "fileName": "aether-1.20.1-1.5.2-beta.9-fabric.jar",
+      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/aether-1.20.1-1.5.2-beta.9-fabric.jar",
+      "size": 51365899,
+      "md5": "afaa78c58efc52f3a44d48ba208d721d"
+    },
+    {
       "name": "The Graveyard",
       "fileName": "The_Graveyard_3.1__FABRIC__for_1.20.1.jar",
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/The_Graveyard_3.1__FABRIC__for_1.20.1.jar",
@@ -383,6 +383,13 @@
       "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/travelersbackpack-fabric-1.20.1-9.1.55.jar",
       "size": 1512753,
       "md5": "1d07ba0acaf5a8f4916de2121d2fc922"
+    },
+    {
+      "name": "Trinkets",
+      "fileName": "trinkets-3.7.2.jar",
+      "url": "https://cdn.modrinth.com/data/5aaWibi9/versions/AHxQGtuC/trinkets-3.7.2.jar",
+      "size": 238532,
+      "sha1": "d58cc8759587f03f320f188972ca66baa788d008"
     }
   ],
   "files": [

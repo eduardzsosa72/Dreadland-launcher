@@ -3,7 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
 import { getInstanceDir, getMinecraftRoot } from './paths.js';
+import { createRequire } from 'module';
 import { installMinecraft, saveResponseBodyToFile } from './minecraftInstaller.js';
+
+const require = createRequire(import.meta.url);
+const AdmZip = require('adm-zip');
 
 // Edit server-pack.json in the repo and push: every launcher picks it up on next start, no release needed
 export const SERVER_PACK_URL = 'https://raw.githubusercontent.com/eduardzsosa72/Dreadland-launcher/main/server-pack.json';
@@ -78,6 +82,22 @@ export function normalizeServerPack(raw) {
     };
   });
 
+  // Zips extracted into the instance folder, e.g. a mod config bundle or a custom main menu
+  const archives = (Array.isArray(raw.archives) ? raw.archives : []).map((archive) => {
+    const url = String(archive?.url || '').trim();
+    const fileName = path.basename(String(archive?.fileName || fileNameFromUrl(url)).trim());
+    if (!url || !fileName.toLowerCase().endsWith('.zip')) throw new Error(`Invalid archive entry: ${JSON.stringify(archive)}`);
+    return {
+      name: String(archive?.name || fileName),
+      fileName,
+      url,
+      sha1: archive?.sha1 ? String(archive.sha1).toLowerCase() : null,
+      md5: archive?.md5 ? String(archive.md5).toLowerCase() : null,
+      size: Number(archive?.size) || null,
+      overwrite: Boolean(archive?.overwrite),
+    };
+  });
+
   const address = String(raw.server?.address || '').trim();
   return {
     id,
@@ -90,6 +110,7 @@ export function normalizeServerPack(raw) {
     server: address ? { address, autoConnect: raw.server?.autoConnect !== false } : null,
     mods,
     files,
+    archives,
   };
 }
 
@@ -206,8 +227,8 @@ async function ensurePackInstance(pack) {
 
 async function syncPackFiles(pack, instanceDir, { onLog }) {
   const manifestPath = path.join(instanceDir, MANAGED_FILES_MANIFEST);
-  let manifest = { mods: {}, files: {} };
-  try { manifest = { mods: {}, files: {}, ...(await readJson(manifestPath)) }; } catch { }
+  let manifest = { mods: {}, files: {}, archives: {} };
+  try { manifest = { mods: {}, files: {}, archives: {}, ...(await readJson(manifestPath)) }; } catch { }
 
   const modsDir = path.join(instanceDir, 'mods');
   const wantedMods = new Map(pack.mods.map(mod => [mod.fileName, mod]));
@@ -244,7 +265,7 @@ async function syncPackFiles(pack, instanceDir, { onLog }) {
   const total = pendingMods.length + pendingFiles.length;
   if (total > 0) onLog?.('info', `Downloading ${total} server pack file(s)...`);
 
-  const nextManifest = { mods: {}, files: { ...manifest.files } };
+  const nextManifest = { mods: {}, files: { ...manifest.files }, archives: { ...manifest.archives } };
   for (const mod of pack.mods) {
     if (!pendingMods.includes(mod) && manifest.mods[mod.fileName]) nextManifest.mods[mod.fileName] = manifest.mods[mod.fileName];
   }
@@ -266,8 +287,42 @@ async function syncPackFiles(pack, instanceDir, { onLog }) {
     }
   });
 
+  let archiveFailures = 0;
+  for (const archive of pack.archives) {
+    const previous = manifest.archives[archive.fileName];
+    if (previous && previous.url === archive.url && previous.checksum === checksumOf(archive)) continue;
+    try {
+      await extractPackArchive(archive, instanceDir, { onLog });
+      nextManifest.archives[archive.fileName] = { url: archive.url, checksum: checksumOf(archive) };
+    } catch (error) {
+      archiveFailures += 1;
+      onLog?.('error', `Failed to apply ${archive.name}: ${error?.message || error}`);
+    }
+  }
+
   await fs.promises.writeFile(manifestPath, JSON.stringify(nextManifest, null, 2), 'utf8');
-  return { downloaded: total - errors.length, failed: errors.length };
+  return { downloaded: total - errors.length, failed: errors.length + archiveFailures };
+}
+
+async function extractPackArchive(archive, instanceDir, { onLog }) {
+  onLog?.('info', `Downloading ${archive.name}...`);
+  const tempPath = path.join(instanceDir, `.${archive.fileName}.download`);
+  try {
+    await downloadVerified(archive, tempPath);
+    let written = 0;
+    for (const entry of new AdmZip(tempPath).getEntries()) {
+      if (entry.isDirectory || !isSafeRelativePath(entry.entryName)) continue;
+      const target = path.join(instanceDir, entry.entryName);
+      // Without overwrite, files the player already has (and may have tweaked) are kept
+      if (!archive.overwrite && fs.existsSync(target)) continue;
+      await fs.promises.mkdir(path.dirname(target), { recursive: true });
+      await fs.promises.writeFile(target, entry.getData());
+      written += 1;
+    }
+    onLog?.('info', `${archive.name}: ${written} file(s) updated.`);
+  } finally {
+    await fs.promises.unlink(tempPath).catch(() => { });
+  }
 }
 
 async function runSync({ onLog = null, onProgress = null } = {}) {
