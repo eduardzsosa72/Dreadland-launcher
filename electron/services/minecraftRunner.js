@@ -844,15 +844,16 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
       // Generational ZGC is opt-in on 21-22, default on 23, and the flag was removed in 24
       if (detectedJavaMajor < 23) gcFlags.push('-XX:+ZGenerational');
     } else {
-      // Default optimized GC flags (Aikar's G1GC) for low latency, smooth FPS, and full Java 8/17 compatibility
+      // G1 tuned for a game client: Aikar's server flags pre-touch the whole heap (slow start) and allow 200 ms pauses (stutter)
       gcFlags = [
         '-XX:+IgnoreUnrecognizedVMOptions',
         '-XX:+UnlockExperimentalVMOptions',
         '-XX:+UseG1GC',
         '-XX:+ParallelRefProcEnabled',
-        '-XX:MaxGCPauseMillis=200',
+        '-XX:MaxGCPauseMillis=50',
         '-XX:+DisableExplicitGC',
-        '-XX:+AlwaysPreTouch',
+        '-XX:+UseStringDeduplication',
+        '-XX:G1HeapRegionSize=16M',
         '-XX:G1NewSizePercent=30',
         '-XX:G1MaxNewSizePercent=40',
         '-XX:G1ReservePercent=20',

@@ -1,13 +1,13 @@
 {
   "id": "dreadland",
   "name": "DREADLAND",
-  "packVersion": "1.1.0",
+  "packVersion": "1.2.0",
   "minecraftVersion": "1.20.1",
   "loader": {
     "type": "fabric",
     "version": "0.19.5"
   },
-  "ram": 4,
+  "ram": 6,
   "server": {
     "address": "altaria.proxy.rlwy.net:28649",
     "autoConnect": true
@@ -196,6 +196,13 @@
       "sha1": "4be82588549b7001700dc3e329acaedcf72aeb2a"
     },
     {
+      "name": "Entity Culling",
+      "fileName": "entityculling-fabric-1.11.3-mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/xSrd3qsM/entityculling-fabric-1.11.3-mc1.20.1.jar",
+      "size": 1516696,
+      "sha1": "42d17e5455f5015fa9b9c918a9b599683ff83f1c"
+    },
+    {
       "name": "Fabric API",
       "fileName": "fabric-api-0.92.12+1.20.1.jar",
       "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",
@@ -231,6 +238,13 @@
       "sha1": "b8dded252730b2d47655813dde9d743785c0b107"
     },
     {
+      "name": "FerriteCore",
+      "fileName": "ferritecore-6.0.1-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/unerR5MN/ferritecore-6.0.1-fabric.jar",
+      "size": 125197,
+      "sha1": "8fa3b84fc5860dbc30fdf8cced02af68dffcf3fa"
+    },
+    {
       "name": "Fusion (Connected Textures)",
       "fileName": "fusion-1.3.16-fabric-mc1.20.1.jar",
       "url": "https://cdn.modrinth.com/data/p19vrgc2/versions/2auYvwbQ/fusion-1.3.16-fabric-mc1.20.1.jar",
@@ -257,6 +271,13 @@
       "url": "https://cdn.modrinth.com/data/8ThKJGCF/versions/6lZZBzyk/GokiSkills-fabric-1.1.3-1.20.1.jar",
       "size": 154673,
       "sha1": "c8ccd6863babf366cc170f497f4afcc787593489"
+    },
+    {
+      "name": "ImmediatelyFast",
+      "fileName": "ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
+      "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/iwYUrQJO/ImmediatelyFast-Fabric-1.5.5%2B1.20.4.jar",
+      "size": 348818,
+      "sha1": "9f0110b60dc752ca093f2fc10a72d221b6dc8ac3"
     },
     {
       "name": "Immersive Aircraft",
@@ -355,6 +376,13 @@
       "url": "https://github.com/eduardzsosa72/Dreadland-launcher/releases/download/server-pack/minevegas-casino-fabric-1.20.1-1.0.3.jar",
       "size": 26036702,
       "sha1": "246cde69031eeb94f4020e8b4ce98cebfefc94ca"
+    },
+    {
+      "name": "ModernFix",
+      "fileName": "modernfix-fabric-5.25.2+mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/nmDcB62a/versions/rPmgLeZC/modernfix-fabric-5.25.2%2Bmc1.20.1.jar",
+      "size": 545175,
+      "sha1": "be03b9eb570c1e9df7593e68623f0fecbd039460"
     },
     {
       "name": "MossyLib",

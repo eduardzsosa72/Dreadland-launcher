@@ -2,6 +2,7 @@ import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
+import os from 'os';
 import { getInstanceDir, getMinecraftRoot } from './paths.js';
 import { createRequire } from 'module';
 import { installMinecraft, saveResponseBodyToFile } from './minecraftInstaller.js';
@@ -206,20 +207,27 @@ async function ensurePackInstance(pack) {
     await fs.promises.mkdir(path.join(instanceDir, sub), { recursive: true });
   }
 
-  // Version, loader and server come from the pack; RAM, Java and icon stay whatever the player picked
+  // Never hand the game more than half the PC's memory, or Windows starts paging and the game stutters
+  const totalRamGb = Math.floor(os.totalmem() / 1073741824);
+  const defaultRam = Math.max(2, Math.min(pack.ram, Math.floor(totalRamGb / 2)));
+  // Older launchers stored the pack default without recording it; 4 GB was that default
+  const previousDefault = existing?.serverPack?.defaultRam ?? (existing?.serverPack ? 4 : null);
+  const playerChangedRam = existing && existing.ram !== previousDefault;
+
+  // Version, loader and server come from the pack; Java and icon stay whatever the player picked, RAM too once they change it
   const config = {
     icon: 'grass_block',
-    ram: pack.ram,
     jvmArguments: '',
     javaPath: '',
     created: Date.now(),
     lastPlayed: null,
     ...(existing || {}),
+    ram: playerChangedRam ? existing.ram : defaultRam,
     id: pack.id,
     name: pack.name,
     version: pack.versionId,
     loader: pack.loader.type,
-    serverPack: { packVersion: pack.packVersion, server: pack.server },
+    serverPack: { packVersion: pack.packVersion, server: pack.server, defaultRam },
   };
   await fs.promises.writeFile(configPath, JSON.stringify(config, null, 2), 'utf8');
   return { instanceDir, created: !existing };
