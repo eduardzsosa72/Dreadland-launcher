@@ -1,7 +1,7 @@
 {
   "id": "dreadland",
   "name": "DREADLAND",
-  "packVersion": "1.0.1",
+  "packVersion": "1.1.0",
   "minecraftVersion": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -15,374 +15,472 @@
   "mods": [
     {
       "name": "Accessories",
-      "fileName": "accessories-fabric-1.0.0-beta.48_1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/accessories-fabric-1.0.0-beta.48_1.20.1.jar",
+      "fileName": "accessories-fabric-1.0.0-beta.48+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/jtmvUHXj/versions/A7wwzJ0e/accessories-fabric-1.0.0-beta.48%2B1.20.1.jar",
       "size": 769376,
-      "md5": "221b4a22e0d96453c949bcd7d913ad62"
+      "sha1": "38e3d368d97914966bdda5c6719f77c7f1f9a58d"
     },
     {
       "name": "AppleSkin",
       "fileName": "appleskin-fabric-mc1.20.1-2.5.2.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/appleskin-fabric-mc1.20.1-2.5.2.jar",
+      "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/N5XeV21r/appleskin-fabric-mc1.20.1-2.5.2.jar",
       "size": 1097240,
-      "md5": "0f5aeb43d6949ddad88449ad29884b2b"
+      "sha1": "f859bb13130788ae2dc2e76a9c80c89e4bbbef5f"
     },
     {
-      "name": "Architectury",
+      "name": "Architectury API",
       "fileName": "architectury-9.2.14-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/architectury-9.2.14-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/WbL7MStR/architectury-9.2.14-fabric.jar",
       "size": 585207,
-      "md5": "2ae04e0dad60a390031ee341e0b2ab45"
+      "sha1": "4fa65e32dbf63a871a30fe8ec6fbff9a4b8d007d"
     },
     {
       "name": "Automobility",
-      "fileName": "automobility-0.4.2_1.20.1-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/automobility-0.4.2_1.20.1-fabric.jar",
+      "fileName": "automobility-0.4.2+1.20.1-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/rqIsPf9F/versions/G97BY8OB/automobility-0.4.2%2B1.20.1-fabric.jar",
       "size": 1108056,
-      "md5": "ae13f136fc6081cc9242fe330b9f2252"
+      "sha1": "c820b82890d0192ccf1e8bc05d1ff081bc5954b7"
     },
     {
-      "name": "BitsAndChisels",
+      "name": "Bits And Chisels",
       "fileName": "bitsandchisels-2.7.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/bitsandchisels-2.7.3.jar",
+      "url": "https://cdn.modrinth.com/data/q8MC5tW2/versions/kqHohJYy/bitsandchisels-2.7.3.jar",
       "size": 303304,
-      "md5": "8aa26b5527db8b732912d427adcb9dd8"
+      "sha1": "67da7240e5948cd898725b95933466fd3776ad33"
     },
     {
       "name": "Botania",
       "fileName": "Botania-1.20.1-456-FABRIC.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Botania-1.20.1-456-FABRIC.jar",
+      "url": "https://cdn.modrinth.com/data/pfjLUfGv/versions/n4HwegBU/Botania-1.20.1-456-FABRIC.jar",
       "size": 12671936,
-      "md5": "ed80c68561f579d588dbe3d2c7ac7cbf"
+      "sha1": "5dac641d57f29ec3927bfab33c8d19d0d4b0a1e8"
     },
     {
       "name": "Cardinal Components API",
       "fileName": "cardinal-components-api-5.2.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cardinal-components-api-5.2.3.jar",
+      "url": "https://cdn.modrinth.com/data/K01OU20C/versions/Ielhod3p/cardinal-components-api-5.2.3.jar",
       "size": 228709,
-      "md5": "b902397d35fbbf6df232f46fb483024a"
+      "sha1": "d0d687d8fc3f367bf696fa0059bccdf0591c51f4"
     },
     {
       "name": "Carry On",
       "fileName": "carryon-fabric-1.20.1-2.1.2.7.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/carryon-fabric-1.20.1-2.1.2.7.jar",
+      "url": "https://cdn.modrinth.com/data/joEfVgkn/versions/Mkla4B3q/carryon-fabric-1.20.1-2.1.2.7.jar",
       "size": 443033,
-      "md5": "c050f3d0934bbd8893fe2353eab906bb"
+      "sha1": "8f3858977becfbc26f67f4a5579881e15e07d69d"
     },
     {
-      "name": "Cloth Config v11",
+      "name": "Cloth Config API",
       "fileName": "cloth-config-11.1.136-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cloth-config-11.1.136-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/2xQdCMyG/cloth-config-11.1.136-fabric.jar",
       "size": 1172214,
-      "md5": "45d8bada7797af61d1f5543313b1f9f0"
+      "sha1": "d5fe84a0cc9ed5c7290a76ba570e1f8716afecab"
     },
     {
       "name": "Comforts",
-      "fileName": "comforts-fabric-6.4.0_1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/comforts-fabric-6.4.0_1.20.1.jar",
+      "fileName": "comforts-fabric-6.4.0+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/SaCpeal4/versions/pMr60Kkq/comforts-fabric-6.4.0%2B1.20.1.jar",
       "size": 693624,
-      "md5": "681a5788b12195e5b2243947203c701e"
+      "sha1": "96c1b52fa6dcff140b56e17ce980d2a5c528fad2"
     },
     {
       "name": "CorgiLib",
       "fileName": "Corgilib-Fabric-1.20.1-4.0.3.6.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Corgilib-Fabric-1.20.1-4.0.3.6.jar",
+      "url": "https://cdn.modrinth.com/data/ziOp6EO8/versions/pPMtrkJ7/Corgilib-Fabric-1.20.1-4.0.3.6.jar",
       "size": 700309,
-      "md5": "9892e1cc4dbc78c59a6684d5664f0f75"
+      "sha1": "1f03910c63924db2e6df9d295d42c0f919a6a990"
     },
     {
       "name": "CoroUtil",
       "fileName": "coroutil-fabric-1.20.1-1.3.7.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/coroutil-fabric-1.20.1-1.3.7.jar",
+      "url": "https://cdn.modrinth.com/data/rLLJ1OZM/versions/7tRnsYkP/coroutil-fabric-1.20.1-1.3.7.jar",
       "size": 2392617,
-      "md5": "44365b7447c9b4c3aeadcadf454494aa"
+      "sha1": "0b9a1b0db34d1271fe7bcc4ec0e451c3fb25a04c"
     },
     {
       "name": "Cosmetic Lib",
       "fileName": "cosmetic-lib-1.0.4.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cosmetic-lib-1.0.4.jar",
+      "url": "https://cdn.modrinth.com/data/bATGbVcU/versions/ohTRaQpO/cosmetic-lib-1.0.4.jar",
       "size": 149425,
-      "md5": "8ecd07a99a5f7b78214a5bd0ae5b7145"
+      "sha1": "ef03ddf6978772ee8624fb507693a4d0a17cdc3c"
     },
     {
       "name": "CosmeticAnew",
       "fileName": "cosmeticanew-1.1.0.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/cosmeticanew-1.1.0.jar",
+      "url": "https://cdn.modrinth.com/data/WtHgO7gN/versions/pebiprHx/cosmeticanew-1.1.0.jar",
       "size": 190757,
-      "md5": "cdedfb42dee29f5adc21b8fe0f339b53"
+      "sha1": "5e63504205617307ab2670368fe3741160f12960"
     },
     {
       "name": "CreativeCore",
       "fileName": "CreativeCore_FABRIC_v2.12.41_mc1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/CreativeCore_FABRIC_v2.12.41_mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/OsZiaDHq/versions/3q9j0cNZ/CreativeCore_FABRIC_v2.12.41_mc1.20.1.jar",
       "size": 1207852,
-      "md5": "54c1a949f488c1bbbe79ddf057a1accf"
+      "sha1": "1ebed67d2594bb2b441aef68bab540ca5a62869a"
     },
     {
       "name": "Customizable Player Models",
       "fileName": "CustomPlayerModels-Fabric-1.20-0.6.27a.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/CustomPlayerModels-Fabric-1.20-0.6.27a.jar",
+      "url": "https://cdn.modrinth.com/data/h1E7sQNL/versions/3XedKRav/CustomPlayerModels-Fabric-1.20-0.6.27a.jar",
       "size": 2847779,
-      "md5": "b8c69a754194e684c4a22143b903ba79"
+      "sha1": "4c89d4ed47cc07b5d08d72cef13f4867cb8b7a4e"
     },
     {
       "name": "Data Anchor",
       "fileName": "Data_Anchor-fabric-1.20.1-1.0.0.23.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Data_Anchor-fabric-1.20.1-1.0.0.23.jar",
+      "url": "https://cdn.modrinth.com/data/z2XEADmE/versions/PnfBedfn/Data_Anchor-fabric-1.20.1-1.0.0.23.jar",
       "size": 122341,
-      "md5": "4b907156fab27b307859eb63303c6390"
+      "sha1": "85dc46f51ecb2d358182fb0419cf4301d0ff7b5d"
     },
     {
       "name": "Decocraft",
       "fileName": "decocraft-3.0.7-1.20.1-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/decocraft-3.0.7-1.20.1-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/IZJSgKZe/versions/MNnrYEjS/decocraft-3.0.7-1.20.1-fabric.jar",
       "size": 93791809,
-      "md5": "733d163340ee5f8b07a5a018a53af1ac"
+      "sha1": "32ee062a50e8f5440977976eb33ff21b00ee6c68"
+    },
+    {
+      "name": "DEDSAFIO 4 Mechanics",
+      "fileName": "dedsafio4-1.0.0.jar",
+      "url": "https://github.com/eduardzsosa72/Dreadland-launcher/releases/download/server-pack/dedsafio4-1.0.0.jar",
+      "size": 204814758,
+      "sha1": "5c8d5bf6dbbfd163a6c7fbe3a7ad7eb2e810449d"
+    },
+    {
+      "name": "Dynamic Lights",
+      "fileName": "dynamiclights-v1.9.3-mc1.17-26.2.9-mod.jar",
+      "url": "https://cdn.modrinth.com/data/7YjclEGc/versions/XAsq3xsq/dynamiclights-v1.9.3-mc1.17-26.2.9-mod.jar",
+      "size": 426439,
+      "sha1": "4194919ace5fa7764af6f8f0f85500f664e5f0bd"
+    },
+    {
+      "name": "Easy NPC",
+      "fileName": "easy_npc_bundle-fabric-1.20.1-7.15.0.jar",
+      "url": "https://cdn.modrinth.com/data/CgGEe1h3/versions/zvMbXUXr/easy_npc_bundle-fabric-1.20.1-7.15.0.jar",
+      "size": 25261,
+      "sha1": "f47035b26b80e2afea9ef101d4d55e3e1de95da3"
+    },
+    {
+      "name": "Easy NPC: Config UI",
+      "fileName": "easy_npc_config_ui-fabric-1.20.1-7.15.0.jar",
+      "url": "https://cdn.modrinth.com/data/uTGjf7vA/versions/5HN4zHQT/easy_npc_config_ui-fabric-1.20.1-7.15.0.jar",
+      "size": 1147105,
+      "sha1": "7b67ada697bed6176260a0a85005aa651fda3f22"
+    },
+    {
+      "name": "Easy NPC: Core",
+      "fileName": "easy_npc-fabric-1.20.1-7.15.0.jar",
+      "url": "https://cdn.modrinth.com/data/Epm6R3P2/versions/U1vbxiwt/easy_npc-fabric-1.20.1-7.15.0.jar",
+      "size": 3126148,
+      "sha1": "852f8a63e629ec4093930bb7ed271c1a5d988cc1"
     },
     {
       "name": "Emotecraft",
       "fileName": "emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/pZ2wrerK/versions/NFPdxMt9/emotecraft-for-MC1.20.1-2.2.7-b.build.50-fabric.jar",
       "size": 873611,
-      "md5": "3a7abdac2462955c5a51af3cd14712ff"
+      "sha1": "222c93e8a63a6b486f223714a5b20b2e0f206954"
     },
     {
       "name": "Emotecraft: Borrow Their Emote (EBTE)",
-      "fileName": "emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/emotecraft-borrow-their-emote-1.0.1_1.20.1_fabric.jar",
+      "fileName": "emotecraft-borrow-their-emote-1.0.1+1.20.1+fabric.jar",
+      "url": "https://cdn.modrinth.com/data/KM1YbXvb/versions/fUW55ueE/emotecraft-borrow-their-emote-1.0.1%2B1.20.1%2Bfabric.jar",
       "size": 304863,
-      "md5": "5d07a7eb5dc712ac92c07c23e802e1fc"
+      "sha1": "58404d1c4daf3db454d9d052de9361b8d84b0b13"
     },
     {
       "name": "Enhanced Celestials",
       "fileName": "Enhanced-Celestials-fabric-1.20.1-5.0.3.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Enhanced-Celestials-fabric-1.20.1-5.0.3.3.jar",
+      "url": "https://cdn.modrinth.com/data/2rL16t1O/versions/XVlIRb4H/Enhanced-Celestials-fabric-1.20.1-5.0.3.3.jar",
       "size": 1632623,
-      "md5": "0a9c5cd6e7396a88646acaafcb349552"
+      "sha1": "4be82588549b7001700dc3e329acaedcf72aeb2a"
     },
     {
       "name": "Fabric API",
-      "fileName": "fabric-api-0.92.12_1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fabric-api-0.92.12_1.20.1.jar",
+      "fileName": "fabric-api-0.92.12+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",
       "size": 2137232,
-      "md5": "0e405ca544d986fb65f3f524e393c11a"
+      "sha1": "3e9cdd3e2f827ca9a259df9eb8e31949437b6bd4"
     },
     {
       "name": "Fabric Language Kotlin",
-      "fileName": "fabric-language-kotlin-1.13.14_kotlin.2.4.20.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fabric-language-kotlin-1.13.14_kotlin.2.4.20.jar",
+      "fileName": "fabric-language-kotlin-1.13.14+kotlin.2.4.20.jar",
+      "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/KcCe0rZz/fabric-language-kotlin-1.13.14%2Bkotlin.2.4.20.jar",
       "size": 8143094,
-      "md5": "88658e66def762d6e80ed38e3ab8c7a3"
+      "sha1": "02000838e2b814b80a30de04db9a011e0772cfa9"
     },
     {
       "name": "Faewulf's Lib",
       "fileName": "faewulf_lib-fabric-1.20.1-1.4.0.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/faewulf_lib-fabric-1.20.1-1.4.0.jar",
+      "url": "https://cdn.modrinth.com/data/q4N9H96q/versions/gvHbg4Bk/faewulf_lib-fabric-1.20.1-1.4.0.jar",
       "size": 540280,
-      "md5": "b04e43ae8ee77b8cfe8b3fbb0965fff6"
+      "sha1": "7cf340051a93200b1ee3714cf8b87b238c0372a9"
     },
     {
-      "name": "Farmer's Delight",
-      "fileName": "FarmersDelight-1.20.1-2.4.1_refabricated.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/FarmersDelight-1.20.1-2.4.1_refabricated.jar",
+      "name": "FancyMenu",
+      "fileName": "fancymenu_fabric_3.9.1_MC_1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/Wq5SjeWM/versions/CIMrqM91/fancymenu_fabric_3.9.1_MC_1.20.1.jar",
+      "size": 25649467,
+      "sha1": "d05c6c13bf120a96328ec1bea056b237b52b5157"
+    },
+    {
+      "name": "Farmer's Delight Refabricated",
+      "fileName": "FarmersDelight-1.20.1-2.4.1+refabricated.jar",
+      "url": "https://cdn.modrinth.com/data/7vxePowz/versions/Z8UNayLO/FarmersDelight-1.20.1-2.4.1%2Brefabricated.jar",
       "size": 8056758,
-      "md5": "f4f3c88e3a2c463d125c45c44980b1ca"
+      "sha1": "b8dded252730b2d47655813dde9d743785c0b107"
     },
     {
-      "name": "Fusion",
+      "name": "Fusion (Connected Textures)",
       "fileName": "fusion-1.3.16-fabric-mc1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fusion-1.3.16-fabric-mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/p19vrgc2/versions/2auYvwbQ/fusion-1.3.16-fabric-mc1.20.1.jar",
       "size": 931032,
-      "md5": "7b4faa20f61e51985e0f8152426f1ac5"
+      "sha1": "801e30bb82698e973f756ca6bc0762598aaf9a9a"
     },
     {
       "name": "Fzzy Config",
-      "fileName": "fzzy_config-0.7.7_1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/fzzy_config-0.7.7_1.20.1.jar",
+      "fileName": "fzzy_config-0.7.7+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/hYykXjDp/versions/JHYH0fYB/fzzy_config-0.7.7%2B1.20.1.jar",
       "size": 2395040,
-      "md5": "576803e6acda4d82c55b7571dab54a54"
+      "sha1": "1e2aa73a64385b5696b177f846ba26abb5b1f2e7"
     },
     {
-      "name": "GeckoLib 4",
+      "name": "Geckolib",
       "fileName": "geckolib-fabric-1.20.1-4.8.4.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/geckolib-fabric-1.20.1-4.8.4.jar",
+      "url": "https://cdn.modrinth.com/data/8BmcQJ2H/versions/SD2lOScS/geckolib-fabric-1.20.1-4.8.4.jar",
       "size": 969016,
-      "md5": "8632c2274d4c37f2122b202c02050370"
+      "sha1": "c9a5016380d6d17134bc7322f4d67d6e9cbf4c68"
     },
     {
       "name": "GokiSkills",
       "fileName": "GokiSkills-fabric-1.1.3-1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/GokiSkills-fabric-1.1.3-1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/8ThKJGCF/versions/6lZZBzyk/GokiSkills-fabric-1.1.3-1.20.1.jar",
       "size": 154673,
-      "md5": "f5c789286903be8929473362c6be388a"
+      "sha1": "c8ccd6863babf366cc170f497f4afcc787593489"
     },
     {
       "name": "Immersive Aircraft",
-      "fileName": "immersive_aircraft-1.5.0_1.20.1-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/immersive_aircraft-1.5.0_1.20.1-fabric.jar",
+      "fileName": "immersive_aircraft-1.5.0+1.20.1-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/x3HZvrj6/versions/dNHanmFP/immersive_aircraft-1.5.0%2B1.20.1-fabric.jar",
       "size": 2430374,
-      "md5": "75e8dcc9948acc754566db7587a268fa"
+      "sha1": "fdef095611a1986b386eb9d679857fd5a5113914"
     },
     {
-      "name": "Jade",
+      "name": "Indium",
+      "fileName": "indium-1.0.36+mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/Orvt0mRa/versions/nQHYSjxO/indium-1.0.36%2Bmc1.20.1.jar",
+      "size": 105382,
+      "sha1": "d824614e7a173d273167969f427702f51846aca7"
+    },
+    {
+      "name": "Iris Shaders",
+      "fileName": "iris-1.7.6+mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/YL57xq9U/versions/s5eFLITc/iris-1.7.6%2Bmc1.20.1.jar",
+      "size": 2726899,
+      "sha1": "880c0b9ce38bb4997645793407c1801df83f4233"
+    },
+    {
+      "name": "Jade 🔍",
       "fileName": "Jade-1.20-Fabric-11.13.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Jade-1.20-Fabric-11.13.3.jar",
+      "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/ahavHbAT/Jade-1.20-Fabric-11.13.3.jar",
       "size": 553868,
-      "md5": "de1a0808a3c61c44b57d2adcdaf52632"
+      "sha1": "cf46f3ddc2a5b9751750671da26b48b20e93836b"
     },
     {
-      "name": "Journeymap",
+      "name": "JourneyMap",
       "fileName": "journeymap-fabric-1.20.1-6.0.7.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/journeymap-fabric-1.20.1-6.0.7.jar",
+      "url": "https://cdn.modrinth.com/data/lfHFW1mp/versions/Dk3AKHGe/journeymap-fabric-1.20.1-6.0.7.jar",
       "size": 4360409,
-      "md5": "d35b817693c0cbd700a7ff5187c3b084"
+      "sha1": "3a7090b1d05aa585933707701427de00157066c6"
     },
     {
-      "name": "Just Enough Items",
+      "name": "Just Enough Items (JEI)",
       "fileName": "jei-1.20.1-fabric-15.49.0.194.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/jei-1.20.1-fabric-15.49.0.194.jar",
+      "url": "https://cdn.modrinth.com/data/u6dRKJwZ/versions/1BXsO0ZU/jei-1.20.1-fabric-15.49.0.194.jar",
       "size": 1696701,
-      "md5": "5c0710dc03094f50a320f2b15a4e3b3c"
+      "sha1": "f22e4f93c2916523edf469308fbf5d52aee2807f"
+    },
+    {
+      "name": "Konkrete",
+      "fileName": "konkrete_fabric_1.8.1_MC_1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/J81TRJWm/versions/RlBGFlWp/konkrete_fabric_1.8.1_MC_1.20.1.jar",
+      "size": 892067,
+      "sha1": "38d3201d95a08bdeb12a8cd3687c6d0b8f5e7f3d"
     },
     {
       "name": "Litematica",
       "fileName": "litematica-fabric-1.20.1-0.15.4.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/litematica-fabric-1.20.1-0.15.4.jar",
+      "url": "https://cdn.modrinth.com/data/bEpr0Arc/versions/1ZTpW1lr/litematica-fabric-1.20.1-0.15.4.jar",
       "size": 923876,
-      "md5": "4f716692227e2e5290aa862984104316"
+      "sha1": "68bc88228d567ec0c56dd5d308d51c4cb5eab3ff"
     },
     {
       "name": "Lootr",
       "fileName": "lootr-fabric-1.20-0.7.35.86.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/lootr-fabric-1.20-0.7.35.86.jar",
+      "url": "https://cdn.modrinth.com/data/EltpO5cN/versions/nj1zDLc6/lootr-fabric-1.20-0.7.35.86.jar",
       "size": 575601,
-      "md5": "b8e9383e03928d6a3619d3dd6dd5f45d"
+      "sha1": "7750c9abdc5b0e023b69461e9d0350fbfb066fda"
     },
     {
       "name": "Macaw's Bridges",
       "fileName": "mcw-bridges-3.1.2-mc1.20.1fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/mcw-bridges-3.1.2-mc1.20.1fabric.jar",
+      "url": "https://cdn.modrinth.com/data/GURcjz8O/versions/bt7noi5F/mcw-bridges-3.1.2-mc1.20.1fabric.jar",
       "size": 672903,
-      "md5": "5465a911363fc466da49489457e2c4b1"
+      "sha1": "097e84a2289a4ba3a2fababad0a56faad712b9d3"
     },
     {
       "name": "Macaw's Furniture",
       "fileName": "mcw-furniture-3.4.1-mc1.20.1fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/mcw-furniture-3.4.1-mc1.20.1fabric.jar",
+      "url": "https://cdn.modrinth.com/data/dtWC90iB/versions/Pv6Czgi4/mcw-furniture-3.4.1-mc1.20.1fabric.jar",
       "size": 2102784,
-      "md5": "dde7f5854b1a6d814ee6ba76023dc264"
+      "sha1": "9cbd93106dd90fcb94962783b4f0f571b7902fce"
     },
     {
       "name": "MaLiLib",
       "fileName": "malilib-fabric-1.20.1-0.16.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/malilib-fabric-1.20.1-0.16.3.jar",
+      "url": "https://cdn.modrinth.com/data/GcWjdA9I/versions/V7yLDtJV/malilib-fabric-1.20.1-0.16.3.jar",
       "size": 545403,
-      "md5": "007a02b4cbca762018d2a56237d36631"
+      "sha1": "94d4dd8a82e493d956b423019134d8c48ee737be"
+    },
+    {
+      "name": "Melody",
+      "fileName": "melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar",
+      "url": "https://cdn.modrinth.com/data/CVT4pFB2/versions/2o0oW8Yv/melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar",
+      "size": 39696,
+      "sha1": "15eeff0c0fd8b4734492915c656077592b2d9e67"
+    },
+    {
+      "name": "MineVegas Casino",
+      "fileName": "minevegas-casino-fabric-1.20.1-1.0.3.jar",
+      "url": "https://github.com/eduardzsosa72/Dreadland-launcher/releases/download/server-pack/minevegas-casino-fabric-1.20.1-1.0.3.jar",
+      "size": 26036702,
+      "sha1": "246cde69031eeb94f4020e8b4ce98cebfefc94ca"
     },
     {
       "name": "MossyLib",
-      "fileName": "MossyLib-1.6.0_1.20.1_fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/MossyLib-1.6.0_1.20.1_fabric.jar",
+      "fileName": "MossyLib-1.6.0+1.20.1+fabric.jar",
+      "url": "https://cdn.modrinth.com/data/ffLDUGbm/versions/wl1N1Ts7/MossyLib-1.6.0%2B1.20.1%2Bfabric.jar",
       "size": 189952,
-      "md5": "b1f6e8f297dbd67f2d3e95af1cbb0130"
+      "sha1": "324554d0a7c27139f9568ae822be17dd9553d768"
     },
     {
       "name": "Naturalist",
       "fileName": "naturalist-fabric-4.0.3-1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/naturalist-fabric-4.0.3-1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/F8BQNPWX/versions/dMGBsRgz/naturalist-fabric-4.0.3-1.20.1.jar",
       "size": 4310075,
-      "md5": "5313f863f10d2fd2abaa30c18d3c7b02"
+      "sha1": "309142b01014a047cf8cbdded96b085ca59fac85"
     },
     {
       "name": "Patchouli",
       "fileName": "Patchouli-1.20.1-85-FABRIC.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/Patchouli-1.20.1-85-FABRIC.jar",
+      "url": "https://cdn.modrinth.com/data/nU0bVIaL/versions/nm6fiGRx/Patchouli-1.20.1-85-FABRIC.jar",
       "size": 857123,
-      "md5": "de8c80f59fb6b70381c82649c950e3df"
+      "sha1": "0a77a88d465f4b14c376cbafa5c393507a97fe21"
     },
     {
       "name": "Piggyback",
       "fileName": "piggyback-fabric-1.20.1-1.1.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/piggyback-fabric-1.20.1-1.1.1.jar",
+      "url": "https://cdn.modrinth.com/data/yP77bAiA/versions/hY2jOr2y/piggyback-fabric-1.20.1-1.1.1.jar",
       "size": 342696,
-      "md5": "3f700033550bce65d01374faf22c86cd"
+      "sha1": "7429562061deb9e2fa783aa310dc033484749a00"
     },
     {
       "name": "Polymorph",
-      "fileName": "polymorph-fabric-0.49.11_1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/polymorph-fabric-0.49.11_1.20.1.jar",
+      "fileName": "polymorph-fabric-0.49.11+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/tagwiZkJ/versions/YGcahGOD/polymorph-fabric-0.49.11%2B1.20.1.jar",
       "size": 683213,
-      "md5": "94326a451c3ef94ed3f44a119d5b866d"
+      "sha1": "90669063d2abd60b62c0a92ecc64efb0d30a403c"
     },
     {
       "name": "Rechiseled",
       "fileName": "rechiseled-1.1.6-fabric-mc1.20.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/rechiseled-1.1.6-fabric-mc1.20.jar",
+      "url": "https://cdn.modrinth.com/data/B0g2vT6l/versions/UG6Mfv39/rechiseled-1.1.6-fabric-mc1.20.jar",
       "size": 3577691,
-      "md5": "90af959efd53e54bb9ec7c1794860361"
+      "sha1": "41b47ec0256e9871f150518a9c60344a2c7482fd"
     },
     {
-      "name": "Simple armor hud",
+      "name": "Simple Armor Hud",
       "fileName": "simple-armor-hud-1.20.2-1.3.2.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/simple-armor-hud-1.20.2-1.3.2.jar",
+      "url": "https://cdn.modrinth.com/data/tJflAtvJ/versions/qZuBkKeD/simple-armor-hud-1.20.2-1.3.2.jar",
       "size": 18923,
-      "md5": "9f58bc3de0c64d374edf870eeda320e0"
+      "sha1": "3f8c56c07ba6592d7658ba18d14ca65d3bb8f2e8"
+    },
+    {
+      "name": "Simple Voice Chat",
+      "fileName": "voicechat-fabric-1.20.1-2.6.22.jar",
+      "url": "https://cdn.modrinth.com/data/9eGKb6K1/versions/u5T0ji6n/voicechat-fabric-1.20.1-2.6.22.jar",
+      "size": 5279173,
+      "sha1": "389d1b23340cb3ef547b021cfd6378b1bb1bd22a"
     },
     {
       "name": "Simply Swords",
       "fileName": "simplyswords-fabric-1.70.2-1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/simplyswords-fabric-1.70.2-1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/bK3Ubu9p/versions/Tq7tcDiO/simplyswords-fabric-1.70.2-1.20.1.jar",
       "size": 15700827,
-      "md5": "99b8c86380a7431c91b2fd466515fc50"
+      "sha1": "902fd3ac7558bebb249f61572227d499f51b3bde"
     },
     {
       "name": "Simply Tooltips",
       "fileName": "SimplyTooltips-fabric-0.1.5-1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/SimplyTooltips-fabric-0.1.5-1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/6avVoBVB/versions/MAwQRftH/SimplyTooltips-fabric-0.1.5-1.20.1.jar",
       "size": 5518319,
-      "md5": "10686d1b21e699266d4455ca75582135"
+      "sha1": "754b2989e11389f99a032b9031e28b90d8f63205"
+    },
+    {
+      "name": "Sodium",
+      "fileName": "sodium-fabric-0.5.13+mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/AANobbMI/versions/OihdIimA/sodium-fabric-0.5.13%2Bmc1.20.1.jar",
+      "size": 971552,
+      "sha1": "bcdbf37d9494e405cba210d7a80ed58e756297b5"
     },
     {
       "name": "Status Effect Bars",
       "fileName": "status-effect-bars-1.0.3.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/status-effect-bars-1.0.3.jar",
+      "url": "https://cdn.modrinth.com/data/x02cBj9Y/versions/mTjPtAMK/status-effect-bars-1.0.3.jar",
       "size": 44632,
-      "md5": "fc1642fa6d4a6a3cf8e3c392d367124a"
+      "sha1": "ef6d7078a0e7afd0fabd8bc32394c5a84b2c2bc2"
     },
     {
       "name": "SuperMartijn642's Config Lib",
       "fileName": "supermartijn642configlib-1.1.8a-fabric-mc1.20.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/supermartijn642configlib-1.1.8a-fabric-mc1.20.jar",
+      "url": "https://cdn.modrinth.com/data/LN9BxssP/versions/Ur02nrUT/supermartijn642configlib-1.1.8a-fabric-mc1.20.jar",
       "size": 207990,
-      "md5": "b8e27e4c98a70e3034774f5b31a3044e"
+      "sha1": "964df96c16afe775efd467b22f24458915805ad8"
     },
     {
       "name": "SuperMartijn642's Core Lib",
       "fileName": "supermartijn642corelib-1.1.25-fabric-mc1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/supermartijn642corelib-1.1.25-fabric-mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/rOUBggPv/versions/AJuV6YBG/supermartijn642corelib-1.1.25-fabric-mc1.20.1.jar",
       "size": 608479,
-      "md5": "9ee6b3408916d4cb6370439719887f08"
+      "sha1": "ffa6a758cdc68bfb794e65df490c29f5de36c71b"
     },
     {
       "name": "The Aether",
       "fileName": "aether-1.20.1-1.5.2-beta.9-fabric.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/aether-1.20.1-1.5.2-beta.9-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/YhmgMVyu/versions/d0gCQ3in/aether-1.20.1-1.5.2-beta.9-fabric.jar",
       "size": 51365899,
-      "md5": "afaa78c58efc52f3a44d48ba208d721d"
+      "sha1": "c758410ffc1b0ec7c92120a6a86ac91d3d7df662"
     },
     {
-      "name": "The Graveyard",
-      "fileName": "The_Graveyard_3.1__FABRIC__for_1.20.1.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/The_Graveyard_3.1__FABRIC__for_1.20.1.jar",
+      "name": "The Graveyard (FABRIC)",
+      "fileName": "The_Graveyard_3.1_(FABRIC)_for_1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/QivVPB8W/versions/Hpn2GMza/The_Graveyard_3.1_%28FABRIC%29_for_1.20.1.jar",
       "size": 10272185,
-      "md5": "9263a6e1ca3b9c955b14278e3a11e4bd"
+      "sha1": "a5cb5de7f0cb9931cae5526eb310e4c3017b7cfe"
     },
     {
       "name": "Traveler's Backpack",
       "fileName": "travelersbackpack-fabric-1.20.1-9.1.55.jar",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/mods/dreadland/travelersbackpack-fabric-1.20.1-9.1.55.jar",
+      "url": "https://cdn.modrinth.com/data/rlloIFEV/versions/G60CBuLj/travelersbackpack-fabric-1.20.1-9.1.55.jar",
       "size": 1512753,
-      "md5": "1d07ba0acaf5a8f4916de2121d2fc922"
+      "sha1": "b935d2baeac518ac2b1aa20aaa535e1e03f62a25"
+    },
+    {
+      "name": "Traverse",
+      "fileName": "traverse-7.0.12.jar",
+      "url": "https://cdn.modrinth.com/data/kXygSBVI/versions/3Y1Ukt65/traverse-7.0.12.jar",
+      "size": 6025518,
+      "sha1": "ee5116459ef899298b7f7784f3661e4fd8564a90"
     },
     {
       "name": "Trinkets",
@@ -390,19 +488,80 @@
       "url": "https://cdn.modrinth.com/data/5aaWibi9/versions/AHxQGtuC/trinkets-3.7.2.jar",
       "size": 238532,
       "sha1": "d58cc8759587f03f320f188972ca66baa788d008"
-    }
-  ],
-  "files": [
-    {
-      "path": "options.txt",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/files/dreadland/options.txt",
-      "size": 40,
-      "overwrite": false
     },
     {
-      "path": "servers.dat",
-      "url": "https://cdn.craftlauncher.app/users/699e7a6b-d36a-42e6-a105-f4798b331a97/launchers/457597fd-d960-42aa-ab59-eedcae65c61e/files/dreadland/servers.dat",
-      "size": 101,
+      "name": "WATERFrAMES: Multimedia Displays",
+      "fileName": "waterframes-FABRIC-mc1.20.1-v2.1.22.jar",
+      "url": "https://cdn.modrinth.com/data/eBzFuVTM/versions/arCNnrup/waterframes-FABRIC-mc1.20.1-v2.1.22.jar",
+      "size": 261974,
+      "sha1": "e8e5a1c8042fac7f0630d41cc0f47e89dc53cea5"
+    },
+    {
+      "name": "WATERMeDIA: Multimedia API",
+      "fileName": "watermedia-2.1.37.jar",
+      "url": "https://cdn.modrinth.com/data/G922NeHS/versions/fB0LmHnR/watermedia-2.1.37.jar",
+      "size": 37046674,
+      "sha1": "4a91d20d9a3aa8d66e01f7962d77c974ad538f4f"
+    },
+    {
+      "name": "WATERMeDIA: Youtube Extension",
+      "fileName": "watermedia_youtube_plugin-2.1.2.jar",
+      "url": "https://cdn.modrinth.com/data/P0w3IrnX/versions/rDtJujm2/watermedia_youtube_plugin-2.1.2.jar",
+      "size": 3830072,
+      "sha1": "1f4d208ed9292189dd99147a9dae7c1d4bc95ad5"
+    },
+    {
+      "name": "WATERViSION: VideoPlayer",
+      "fileName": "watervision-FB-mc1.20.1-v0.1.0-alpha.jar",
+      "url": "https://cdn.modrinth.com/data/dGGbEGoV/versions/BclZMXef/watervision-FB-mc1.20.1-v0.1.0-alpha.jar",
+      "size": 81782,
+      "sha1": "d3334eb61ba5f15a9b8f3d456284eb5422d641c3"
+    },
+    {
+      "name": "What Are They Up To (Watut)",
+      "fileName": "watut-fabric-1.20.1-1.2.3.jar",
+      "url": "https://cdn.modrinth.com/data/AtB5mHky/versions/Ub8MHZaV/watut-fabric-1.20.1-1.2.3.jar",
+      "size": 789018,
+      "sha1": "e3b5da7d097e95d5b8c244f8f6c7947e1f5fdf92"
+    },
+    {
+      "name": "YetAnotherConfigLib (YACL)",
+      "fileName": "yet_another_config_lib_v3-3.6.6+1.20.1-fabric.jar",
+      "url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/dvS5DjUA/yet_another_config_lib_v3-3.6.6%2B1.20.1-fabric.jar",
+      "size": 1294234,
+      "sha1": "dc5ac6c6c4d1e48e8e520b9a41b41e704e82cf55"
+    },
+    {
+      "name": "You're in Grave Danger",
+      "fileName": "youre-in-grave-danger-fabric-2.0.16.jar",
+      "url": "https://cdn.modrinth.com/data/HnD1GX6e/versions/FsXdhUb2/youre-in-grave-danger-fabric-2.0.16.jar",
+      "size": 825112,
+      "sha1": "b396513f5e9bb8c2e0adf00e011011cf7d90a0b3"
+    },
+    {
+      "name": "Zoomify (Zoom)",
+      "fileName": "zoomify-2.15.2+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/w7ThoJFB/versions/PEJt9yRp/zoomify-2.15.2%2B1.20.1.jar",
+      "size": 871089,
+      "sha1": "38037defa483b7ee92a979313faf10f27d129174"
+    }
+  ],
+  "files": [],
+  "archives": [
+    {
+      "name": "Menú DREADLAND (FancyMenu)",
+      "fileName": "dreadland-menu.zip",
+      "url": "https://github.com/eduardzsosa72/Dreadland-launcher/releases/download/server-pack/dreadland-menu.zip",
+      "size": 66225874,
+      "sha1": "890809ede2f9266f9154039a31ec2e34ec57ba38",
+      "overwrite": true
+    },
+    {
+      "name": "Configuración de mods",
+      "fileName": "dreadland-config.zip",
+      "url": "https://github.com/eduardzsosa72/Dreadland-launcher/releases/download/server-pack/dreadland-config.zip",
+      "size": 93761,
+      "sha1": "6e35d0a704d70fce029b1cf224a692cf0046d938",
       "overwrite": false
     }
   ]
