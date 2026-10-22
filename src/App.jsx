@@ -207,6 +207,7 @@ export default function App() {
   const selectedInstalledVersionId = activeProfile?.version || (installedVersions[0] ? installedVersions[0].id : '');
 
   const stateRef = useRef({ profiles, activeProfileId, activeInstanceId, mods, shaders, resourcePacks, datapacks, logs, settings, versionCatalog, installTargets });
+  const hydratedRef = useRef(false);
   useEffect(() => {
     stateRef.current = { profiles, activeProfileId, activeInstanceId, mods, shaders, resourcePacks, datapacks, logs, settings, versionCatalog, installTargets };
   }, [profiles, activeProfileId, activeInstanceId, mods, shaders, resourcePacks, datapacks, logs, settings, versionCatalog, installTargets]);
@@ -306,6 +307,8 @@ export default function App() {
       settings: updates.settings !== undefined ? updates.settings : currentState.settings,
     };
     stateRef.current = { ...currentState, ...nextState, versionCatalog: nextState.versions, logs: nextState.logs };
+    // Content loaders run on mount and can finish before the saved state is read; writing then would wipe the profiles
+    if (!hydratedRef.current) return;
     if (nextState.activeInstanceId !== undefined) {
       try {
         if (nextState.activeInstanceId) {
@@ -426,14 +429,15 @@ export default function App() {
     const initializeLauncher = async () => {
       try {
         const state = await launcher.minecraftGetState();
+        let hydratedProfiles;
+        let hydratedActiveId;
         if (state?.profiles && Array.isArray(state.profiles) && state.profiles.length > 0) {
-          setProfiles(state.profiles);
-          const activeId = state.activeProfileId && state.profiles.some(p => p.id === state.activeProfileId)
+          hydratedProfiles = state.profiles;
+          hydratedActiveId = state.activeProfileId && state.profiles.some(p => p.id === state.activeProfileId)
             ? state.activeProfileId
             : state.profiles[0].id;
-          setActiveProfileId(activeId);
         } else {
-          const defaultProfile = {
+          hydratedProfiles = [{
             id: 'default',
             name: 'Default',
             localName: 'Player',
@@ -441,18 +445,20 @@ export default function App() {
             ram: 4,
             jvmArguments: '',
             javaPath: '',
-          };
-          setProfiles([defaultProfile]);
-          setActiveProfileId('default');
+          }];
+          hydratedActiveId = 'default';
         }
+        setProfiles(hydratedProfiles);
+        setActiveProfileId(hydratedActiveId);
 
-        if (state?.settings) {
-          setSettings(prev => ({
-            ...prev,
-            ...state.settings,
-            language: state.settings.language || language,
-          }));
-        }
+        const hydratedSettings = state?.settings
+          ? { ...stateRef.current.settings, ...state.settings, language: state.settings.language || language }
+          : stateRef.current.settings;
+        if (state?.settings) setSettings(prev => ({ ...prev, ...hydratedSettings }));
+
+        // Saved profiles and settings are in memory now, so later saves can no longer overwrite them with empty defaults
+        stateRef.current = { ...stateRef.current, profiles: hydratedProfiles, activeProfileId: hydratedActiveId, settings: hydratedSettings };
+        hydratedRef.current = true;
 
         if (state?.mods && Array.isArray(state.mods)) {
           setMods(state.mods);

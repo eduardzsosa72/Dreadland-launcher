@@ -1,4 +1,4 @@
 {
-  "version": "1.1.6",
-  "changelog": "### Release 1.1.6\n\n## Pack del servidor DREADLAND completo\n- **76 mods del servidor:** ahora se instalan todos los mods del servidor, incluidos **DEDSAFIO 4 Mechanics**, **MineVegas Casino**, Easy NPC, Simple Voice Chat, WaterFrames, Sodium, Iris, Traverse, You're in Grave Danger y Trinkets (faltaba y Botania no arrancaba sin él).\n- **Menú personalizado de DREADLAND:** se instala el menú principal de FancyMenu del servidor y se actualiza solo cuando cambia.\n- **Configuración de los mods:** se instala la configuración del servidor para cada mod. Solo se agregan los archivos que no tengas, así que tus ajustes no se pisan.\n- **Descargas verificadas:** 74 mods se descargan desde Modrinth y el resto desde las releases de DREADLAND, todos verificados con SHA-1."
+  "version": "1.1.7",
+  "changelog": "### Release 1.1.7\n\n## Correcciones\n- **Tu nombre ya se guarda:** el nombre de jugador (y tus perfiles) se perdían al cerrar el launcher y volvía a aparecer el nombre por defecto. Ahora se conservan entre sesiones."
 }
