@@ -1,7 +1,7 @@
 {
   "id": "dreadland",
   "name": "DREADLAND",
-  "packVersion": "1.2.2",
+  "packVersion": "2.0.0",
   "minecraftVersion": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -21,6 +21,13 @@
       "sha1": "d974b50d00ed0eabdce593edeb9e4cbbe7bb0e35"
     },
     {
+      "name": "AdventureZ",
+      "fileName": "adventurez-1.4.20.jar",
+      "url": "https://cdn.modrinth.com/data/defK2XM3/versions/mBYmRou0/adventurez-1.4.20.jar",
+      "size": 4952938,
+      "sha1": "a727891db0b750fda3c4e6f15e2781b89c490647"
+    },
+    {
       "name": "AppleSkin",
       "fileName": "appleskin-fabric-mc1.20.1-2.5.2.jar",
       "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/N5XeV21r/appleskin-fabric-mc1.20.1-2.5.2.jar",
@@ -35,6 +42,13 @@
       "sha1": "4fa65e32dbf63a871a30fe8ec6fbff9a4b8d007d"
     },
     {
+      "name": "Armor of the Ages",
+      "fileName": "Armor of the Ages-fabric-1.20.1-1.3.12.jar",
+      "url": "https://cdn.modrinth.com/data/vEgtiJIY/versions/o3hZjCfx/Armor%20of%20the%20Ages-fabric-1.20.1-1.3.12.jar",
+      "size": 335025,
+      "sha1": "1dae968297d744c02599aa4faf7c6f0bf94ab76d"
+    },
+    {
       "name": "Automobility",
       "fileName": "automobility-0.4.2+1.20.1-fabric.jar",
       "url": "https://cdn.modrinth.com/data/rqIsPf9F/versions/G97BY8OB/automobility-0.4.2%2B1.20.1-fabric.jar",
@@ -47,6 +61,13 @@
       "url": "https://cdn.modrinth.com/data/q8MC5tW2/versions/kqHohJYy/bitsandchisels-2.7.3.jar",
       "size": 303304,
       "sha1": "67da7240e5948cd898725b95933466fd3776ad33"
+    },
+    {
+      "name": "Bosses of Mass Destruction",
+      "fileName": "BOMD-1.7.5-1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/du3UfiLL/versions/yoCCX4Cc/BOMD-1.7.5-1.20.1.jar",
+      "size": 2746075,
+      "sha1": "6312dfbbc64f5621a3f5169ff6c53f567baee56b"
     },
     {
       "name": "Botania",
@@ -502,6 +523,13 @@
       "url": "https://cdn.modrinth.com/data/QivVPB8W/versions/cgUy6o7y/graveyard-FABRIC-4.0.0%2Bmc1.20.1.jar",
       "size": 10949740,
       "sha1": "878ece15bde32fff743085c8ae02be4402a96d8c"
+    },
+    {
+      "name": "Too Many Bows",
+      "fileName": "too_many_bows-fabric-4.0.1.jar",
+      "url": "https://cdn.modrinth.com/data/FOiJ92uI/versions/NFByDdRd/too_many_bows-fabric-4.0.1.jar",
+      "size": 842645,
+      "sha1": "26adf3bf149692993f8b5bb4b5bfb329a288b98f"
     },
     {
       "name": "Traveler's Backpack",
