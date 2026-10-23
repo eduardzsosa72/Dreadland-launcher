@@ -1,4 +1,4 @@
 {
-  "version": "1.1.8",
-  "changelog": "### Release 1.1.8\n\n## Rendimiento\n- **Minecraft abre ~30% más rápido:** con los 80 mods del servidor el juego pasa de ~58 s a ~42 s en arrancar.\n- **Mods de optimización incluidos:** ModernFix (arranque y memoria), FerriteCore (menos RAM), ImmediatelyFast (dibujado más rápido) y Entity Culling (más FPS). Son solo del cliente y no cambian nada del servidor.\n- **Menos tirones en el juego:** ajustes de Java pensados para el juego en lugar de los de servidor. Ya no se reserva toda la RAM al arrancar y las pausas de memoria bajan de 200 ms a 50 ms.\n- **RAM automática:** la instancia de DREADLAND usa 6 GB por defecto, pero nunca más de la mitad de la RAM de tu PC. Si la cambiaste a mano, se respeta tu valor."
+  "version": "1.1.9",
+  "changelog": "### Release 1.1.9\n\n## Nueva interfaz DREADLAND\n- **Banner con el logo de DREADLAND** sobre la luna roja y el castillo.\n- **Fondo del castillo** detrás de todo el launcher, con paneles semitransparentes.\n- **Tema rojo sangre:** títulos de sección, menú, pestañas, contadores y botones en rojo con brillo.\n- **Botón Jugar** más grande y llamativo."
 }
