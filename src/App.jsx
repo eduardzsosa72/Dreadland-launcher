@@ -13,7 +13,7 @@ import {
   searchModrinthProjects,
 } from './lib/modrinth';
 import { useI18n } from './context/I18nContext';
-import dreadlandLogo from './assets/branding/dreadland-logo.jpg';
+import logoIcon from '/icon.webp';
 import { launcher } from './services/launcherClient';
 import { ICONS } from './constants/icons';
 import {
@@ -2044,7 +2044,10 @@ export default function App() {
       {/* ── WINDOW TITLEBAR ── */}
       <div className="titlebar">
         <div className="titlebar-brand">
-          <img className="titlebar-banner-logo" src={dreadlandLogo} alt={t('app.name')} draggable={false} />
+          <div className="titlebar-logo">
+            <img src={logoIcon} alt="Logo" style={{ width: 20, height: 20 }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          </div>
+          <span className="titlebar-name">{t('app.name')}</span>
           <span className="titlebar-version">{appVersion ? `v${appVersion}` : '1.0.0'}</span>
         </div>
         {!launcher?.isMac && launcher?.platform !== 'darwin' && (

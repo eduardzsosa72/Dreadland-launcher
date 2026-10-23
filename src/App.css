@@ -4,24 +4,24 @@
 :root {
   color-scheme: dark;
   /* Surface colors */
-  --bg-void: #050203;
-  --bg-base: #0a0406;
-  --bg-sidebar: rgba(12, 5, 7, 0.82);
-  --bg-panel: rgba(16, 7, 9, 0.86);
-  --bg-card: rgba(18, 7, 9, 0.78);
-  --bg-card-hover: rgba(30, 10, 13, 0.88);
-  --bg-card-active: rgba(42, 12, 16, 0.94);
-  --bg-input: #160a0c;
-  --bg-modal: #12070a;
-  --bg-backdrop: rgba(4, 1, 2, 0.8);
+  --bg-void: #06080c;
+  --bg-base: #0a0d14;
+  --bg-sidebar: #0e121b;
+  --bg-panel: #121722;
+  --bg-card: rgba(22, 28, 41, 0.65);
+  --bg-card-hover: rgba(29, 37, 54, 0.85);
+  --bg-card-active: rgba(35, 45, 66, 0.95);
+  --bg-input: #141926;
+  --bg-modal: #111622;
+  --bg-backdrop: rgba(3, 5, 8, 0.78);
 
-  /* Blood moon accents */
-  --accent: #e3262f;
-  --accent-hover: #b8141d;
-  --accent-bright: #ff4d4d;
-  --accent-glow: rgba(255, 40, 40, 0.38);
-  --accent-subtle: rgba(227, 38, 47, 0.14);
-  --accent-border: rgba(255, 60, 60, 0.45);
+  /* Emerald craft accents */
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-bright: #34d399;
+  --accent-glow: rgba(16, 185, 129, 0.28);
+  --accent-subtle: rgba(16, 185, 129, 0.12);
+  --accent-border: rgba(16, 185, 129, 0.4);
 
   /* Status and auxiliary accents */
   --danger: #f43f5e;
@@ -47,19 +47,19 @@
   --quilt-subtle: rgba(100, 181, 246, 0.14);
 
   /* Typography colors */
-  --text-primary: #fbf3f3;
-  --text-secondary: #c9b4b6;
-  --text-muted: #8e7477;
-  --text-faint: #5e4649;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-faint: #475569;
 
   /* Borders & Shadows */
-  --border-subtle: rgba(255, 70, 70, 0.12);
-  --border-medium: rgba(255, 70, 70, 0.22);
-  --border-bright: rgba(255, 90, 90, 0.38);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.11);
+  --border-bright: rgba(255, 255, 255, 0.18);
 
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --shadow-glow: 0 0 22px rgba(255, 40, 40, 0.45), 0 0 6px rgba(255, 60, 60, 0.6);
+  --shadow-glow: 0 0 24px rgba(16, 185, 129, 0.32);
   --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
   /* Radii */
@@ -86,7 +86,7 @@
   --duration-smooth: 240ms;
 
   /* Layout dimensions */
-  --titlebar-height: 112px;
+  --titlebar-height: 40px;
   --play-deck-height: 74px;
 }
 
@@ -96,11 +96,9 @@
   flex-direction: column;
   background-color: var(--bg-void);
   background-image:
-    linear-gradient(180deg, rgba(5, 2, 3, 0.55) 0%, rgba(5, 2, 3, 0.82) 35%, rgba(5, 2, 3, 0.92) 100%),
-    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255, 30, 30, 0.18), transparent 70%),
-    url('./assets/branding/dreadland-bg.jpg');
-  background-size: cover, cover, auto 200%;
-  background-position: center, center, center 100%;
+    radial-gradient(ellipse 65% 45% at 85% -5%, rgba(16, 185, 129, 0.07), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 15% 105%, rgba(56, 189, 248, 0.05), transparent 55%),
+    linear-gradient(180deg, #07090e 0%, #090d14 40%, #06080c 100%);
   color: var(--text-primary);
   font-family: var(--font-sans);
   height: 100vh;
@@ -142,46 +140,42 @@ select option {
 /* ── TOP TITLEBAR ── */
 .titlebar {
   height: var(--titlebar-height);
-  background:
-    linear-gradient(180deg, rgba(5, 2, 3, 0.15) 0%, rgba(5, 2, 3, 0.35) 60%, rgba(5, 2, 3, 0.95) 100%),
-    url('./assets/branding/dreadland-bg.jpg') center 0% / cover no-repeat;
-  border-bottom: 1px solid rgba(255, 50, 50, 0.45);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.8), 0 6px 24px rgba(255, 20, 20, 0.18);
+  background: rgba(10, 13, 20, 0.85);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  padding: 0 12px 0 22px;
+  padding: 0 12px 0 16px;
   -webkit-app-region: drag;
   z-index: 100;
   flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Logo art has a black background; screen blending drops it so only the lettering glows */
-.titlebar-banner-logo {
-  height: 104px;
-  margin-top: 4px;
-  mix-blend-mode: screen;
-  /* Fade the art's edges so no rectangle shows against the banner */
-  -webkit-mask-image: radial-gradient(ellipse 52% 60% at 50% 50%, #000 70%, transparent 100%);
-  mask-image: radial-gradient(ellipse 52% 60% at 50% 50%, #000 70%, transparent 100%);
-  filter: drop-shadow(0 0 12px rgba(255, 30, 30, 0.35)) saturate(1.1);
-  pointer-events: none;
-  user-select: none;
+  backdrop-filter: blur(20px);
 }
 
 .titlebar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-logo {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));
+}
+
+.titlebar-name {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 .titlebar-version {
-  align-self: flex-end;
-  margin-bottom: 14px;
-  -webkit-app-region: no-drag;
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 500;
@@ -195,11 +189,6 @@ select option {
 .titlebar-controls {
   display: flex;
   gap: 4px;
-  margin-top: 10px;
-  padding: 3px;
-  border-radius: var(--radius-md);
-  background: rgba(8, 2, 3, 0.6);
-  border: 1px solid rgba(255, 60, 60, 0.3);
   -webkit-app-region: no-drag;
 }
 
@@ -215,7 +204,7 @@ select option {
 }
 
 .win-btn:hover {
-  background: rgba(255, 60, 60, 0.18);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
 }
 
@@ -296,9 +285,9 @@ select option {
 }
 
 .profile-card.active {
-  background: rgba(220, 38, 38, 0.1);
+  background: rgba(16, 185, 129, 0.1);
   border-color: var(--accent-border);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(220, 38, 38, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(16, 185, 129, 0.2);
 }
 
 .profile-avatar {
@@ -372,7 +361,7 @@ select option {
 .profile-chip.version {
   color: var(--accent-bright);
   background: var(--accent-subtle);
-  border-color: rgba(220, 38, 38, 0.2);
+  border-color: rgba(16, 185, 129, 0.2);
 }
 
 .profile-actions {
@@ -427,7 +416,7 @@ select option {
 }
 
 .add-profile-btn:hover {
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(16, 185, 129, 0.08);
   border-color: var(--accent-border);
   color: var(--accent-bright);
   transform: translateY(-1px);
@@ -460,7 +449,7 @@ select option {
 }
 
 .nav-item.active {
-  background: rgba(220, 38, 38, 0.12);
+  background: rgba(16, 185, 129, 0.12);
   color: var(--accent-bright);
   font-weight: 600;
 }
@@ -483,7 +472,7 @@ select option {
 }
 
 .nav-item.active .nav-counter {
-  background: rgba(220, 38, 38, 0.25);
+  background: rgba(16, 185, 129, 0.25);
   color: var(--accent-bright);
 }
 
@@ -925,7 +914,7 @@ select option {
 .update-banner {
   margin: 12px 18px 0;
   padding: 12px 16px;
-  background: rgba(220, 38, 38, 0.1);
+  background: rgba(16, 185, 129, 0.1);
   border: 1px solid var(--accent-border);
   border-radius: var(--radius-md);
   display: flex;
@@ -1091,7 +1080,7 @@ select option {
   width: 56px;
   height: 56px;
   border-radius: var(--radius-lg);
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(16, 185, 129, 0.08);
   border: 1px solid var(--accent-border);
   display: flex;
   align-items: center;
@@ -1493,7 +1482,7 @@ select option {
 .instance-card.is-active {
   background: rgba(74, 158, 255, 0.08);
   border-color: var(--accent);
-  box-shadow: 0 0 16px rgba(220, 38, 38, 0.12);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.12);
 }
 
 .instance-card.is-active:hover {
@@ -2638,7 +2627,7 @@ select option {
 .loader-badge.vanilla {
   background: var(--accent-subtle);
   color: var(--accent-bright);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .ram-pill {
@@ -2678,12 +2667,12 @@ select option {
   min-width: 170px;
   padding: 0 24px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast) ease, background var(--duration-normal) ease;
   position: relative;
   overflow: hidden;
@@ -2691,8 +2680,8 @@ select option {
 }
 
 .hero-play-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
-  box-shadow: 0 6px 26px rgba(220, 38, 38, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+  box-shadow: 0 6px 26px rgba(16, 185, 129, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.45);
   transform: translateY(-1.5px);
 }
 
@@ -3991,9 +3980,9 @@ select option {
 }
 
 .version-type-badge.release {
-  background: rgba(220, 38, 38, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .version-type-badge.beta {
@@ -4332,7 +4321,7 @@ select option {
   font-family: var(--font-mono);
   font-size: 11.5px;
   color: var(--accent-bright);
-  background: rgba(220, 38, 38, 0.1);
+  background: rgba(16, 185, 129, 0.1);
   padding: 2px 6px;
   border-radius: var(--radius-xs);
 }
@@ -5167,157 +5156,4 @@ select option {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-}
-/* ══════════════════════════════════════════════════════════════
-   DREADLAND SKIN
-   Blood-moon theme layered over the base layout: translucent panels
-   so the castle backdrop shows through, red framed cards and glows.
-   ══════════════════════════════════════════════════════════════ */
-
-.sidebar {
-  background: linear-gradient(180deg, rgba(14, 4, 6, 0.78) 0%, rgba(8, 2, 4, 0.86) 100%);
-  border-right: 1px solid rgba(255, 50, 50, 0.32);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.6), 6px 0 24px rgba(0, 0, 0, 0.45);
-}
-
-.main-content {
-  background: rgba(6, 2, 3, 0.5);
-}
-
-.action-bar {
-  background: linear-gradient(180deg, rgba(16, 4, 6, 0.82), rgba(10, 3, 5, 0.72));
-  border-bottom: 1px solid rgba(255, 50, 50, 0.3);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
-}
-
-.sidebar-title {
-  color: var(--accent-bright);
-  letter-spacing: 0.12em;
-  text-shadow: 0 0 10px rgba(255, 40, 40, 0.55);
-}
-
-/* Sidebar navigation */
-.nav-item:hover {
-  background: rgba(255, 50, 50, 0.08);
-}
-
-.nav-item.active {
-  background: linear-gradient(90deg, rgba(200, 20, 28, 0.55) 0%, rgba(120, 10, 16, 0.35) 100%);
-  color: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(255, 70, 70, 0.6), 0 0 16px rgba(255, 30, 30, 0.35);
-  text-shadow: 0 0 8px rgba(255, 80, 80, 0.6);
-}
-
-.nav-item.active .nav-icon {
-  color: #ff6b6b;
-  filter: drop-shadow(0 0 4px rgba(255, 60, 60, 0.8));
-}
-
-.nav-counter {
-  background: rgba(200, 20, 28, 0.85);
-  color: #ffffff;
-  font-weight: 700;
-  box-shadow: 0 0 8px rgba(255, 30, 30, 0.45);
-}
-
-.nav-item.active .nav-counter {
-  background: #ff3b3b;
-  color: #ffffff;
-}
-
-/* Top tabs */
-.tab-group {
-  background: rgba(10, 3, 5, 0.7);
-  border: 1px solid rgba(255, 50, 50, 0.28);
-}
-
-.tab-btn:hover {
-  background: rgba(255, 50, 50, 0.08);
-}
-
-.tab-btn.active {
-  background: linear-gradient(180deg, rgba(210, 24, 32, 0.75) 0%, rgba(130, 10, 18, 0.75) 100%);
-  color: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(255, 90, 90, 0.65), 0 0 14px rgba(255, 30, 30, 0.45);
-}
-
-/* Cards: dark glass with a red frame that glows on hover */
-.profile-card,
-.news-card,
-.mod-card {
-  background: rgba(14, 5, 7, 0.8);
-  border: 1px solid rgba(255, 60, 60, 0.26);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 120, 120, 0.06);
-}
-
-.profile-card:hover,
-.news-card:hover,
-.mod-card:hover {
-  background: rgba(24, 7, 10, 0.88);
-  border-color: rgba(255, 70, 70, 0.6);
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), 0 0 18px rgba(255, 30, 30, 0.28);
-}
-
-.profile-card.active {
-  background: linear-gradient(135deg, rgba(120, 12, 18, 0.55), rgba(30, 6, 9, 0.8));
-  border-color: rgba(255, 70, 70, 0.7);
-  box-shadow: 0 0 18px rgba(255, 30, 30, 0.3), inset 0 1px 0 rgba(255, 120, 120, 0.15);
-}
-
-.news-card-title {
-  color: #ffffff;
-}
-
-/* Buttons */
-.btn-primary {
-  background: linear-gradient(180deg, #e8323a 0%, #a3121b 100%);
-  border: 1px solid rgba(255, 110, 110, 0.55);
-  box-shadow: 0 0 14px rgba(255, 30, 30, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: linear-gradient(180deg, #ff4a4a 0%, #b8141d 100%);
-  box-shadow: 0 0 22px rgba(255, 40, 40, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Play deck and the big Play button */
-.play-deck {
-  background: linear-gradient(180deg, rgba(14, 4, 6, 0.88), rgba(6, 2, 3, 0.95));
-  border-top: 1px solid rgba(255, 50, 50, 0.38);
-  box-shadow: 0 -6px 24px rgba(255, 20, 20, 0.12), 0 -1px 0 rgba(0, 0, 0, 0.8);
-}
-
-.hero-play-btn {
-  height: 52px;
-  min-width: 220px;
-  font-size: 18px;
-  letter-spacing: 0.04em;
-  background: linear-gradient(180deg, #f0343c 0%, #b3121c 55%, #7c0a12 100%);
-  border: 1px solid rgba(255, 120, 120, 0.7);
-  box-shadow: 0 0 24px rgba(255, 30, 30, 0.6), 0 0 6px rgba(255, 80, 80, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.hero-play-btn:hover:not(:disabled) {
-  background: linear-gradient(180deg, #ff4d4d 0%, #c4141e 55%, #8a0b14 100%);
-  box-shadow: 0 0 34px rgba(255, 40, 40, 0.8), 0 0 8px rgba(255, 100, 100, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.version-capsule {
-  background: rgba(14, 5, 7, 0.85);
-  border-color: rgba(255, 60, 60, 0.35);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 60, 60, 0.28);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 70, 70, 0.5);
-}
-
-select option {
-  background-color: #160a0c;
-  color: #fbf3f3;
 }
