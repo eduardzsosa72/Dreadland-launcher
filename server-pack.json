@@ -1,7 +1,7 @@
 {
   "id": "dreadland",
   "name": "DREADLAND",
-  "packVersion": "1.2.0",
+  "packVersion": "1.2.1",
   "minecraftVersion": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -490,11 +490,11 @@
       "sha1": "c758410ffc1b0ec7c92120a6a86ac91d3d7df662"
     },
     {
-      "name": "The Graveyard (FABRIC)",
-      "fileName": "The_Graveyard_3.1_(FABRIC)_for_1.20.1.jar",
-      "url": "https://cdn.modrinth.com/data/QivVPB8W/versions/Hpn2GMza/The_Graveyard_3.1_%28FABRIC%29_for_1.20.1.jar",
-      "size": 10272185,
-      "sha1": "a5cb5de7f0cb9931cae5526eb310e4c3017b7cfe"
+      "name": "The Graveyard",
+      "fileName": "graveyard-FABRIC-4.0.0+mc1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/QivVPB8W/versions/cgUy6o7y/graveyard-FABRIC-4.0.0%2Bmc1.20.1.jar",
+      "size": 10949740,
+      "sha1": "878ece15bde32fff743085c8ae02be4402a96d8c"
     },
     {
       "name": "Traveler's Backpack",
@@ -516,6 +516,13 @@
       "url": "https://cdn.modrinth.com/data/5aaWibi9/versions/AHxQGtuC/trinkets-3.7.2.jar",
       "size": 238532,
       "sha1": "d58cc8759587f03f320f188972ca66baa788d008"
+    },
+    {
+      "name": "VillagersTradingPlus",
+      "fileName": "villagertradingplus-fabric-mc1.20.1-1.1.0.jar",
+      "url": "https://cdn.modrinth.com/data/DhOXUfnP/versions/zrUa5MIs/villagertradingplus-fabric-mc1.20.1-1.1.0.jar",
+      "size": 224886,
+      "sha1": "9662f9bbf5eb0afdcb8cf7068f9a12f313e25b4f"
     },
     {
       "name": "WATERFrAMES: Multimedia Displays",
