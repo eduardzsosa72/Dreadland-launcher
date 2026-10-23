@@ -678,7 +678,7 @@ function parseFormattedInline(text) {
             e.preventDefault();
             launcher.openExternal?.(token).catch(() => { });
           }}
-          style={{ color: 'var(--accent, #10b981)', textDecoration: 'underline', cursor: 'pointer', wordBreak: 'break-all' }}
+          style={{ color: 'var(--accent, #dc2626)', textDecoration: 'underline', cursor: 'pointer', wordBreak: 'break-all' }}
         >
           {token}
         </a>
@@ -789,7 +789,7 @@ export function ChangelogRenderer({ content }) {
           style={{
             margin: '8px 0',
             paddingLeft: 12,
-            borderLeft: '3px solid var(--accent, #10b981)',
+            borderLeft: '3px solid var(--accent, #dc2626)',
             color: 'var(--text-dim, #aaa)',
             fontSize: 13,
             fontStyle: 'italic',
