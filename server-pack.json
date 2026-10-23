@@ -1,7 +1,7 @@
 {
   "id": "dreadland",
   "name": "DREADLAND",
-  "packVersion": "1.2.1",
+  "packVersion": "1.2.2",
   "minecraftVersion": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -15,10 +15,10 @@
   "mods": [
     {
       "name": "Accessories",
-      "fileName": "accessories-fabric-1.0.0-beta.48+1.20.1.jar",
-      "url": "https://cdn.modrinth.com/data/jtmvUHXj/versions/A7wwzJ0e/accessories-fabric-1.0.0-beta.48%2B1.20.1.jar",
-      "size": 769376,
-      "sha1": "38e3d368d97914966bdda5c6719f77c7f1f9a58d"
+      "fileName": "accessories-fabric-1.0.0-beta.49+1.20.1.jar",
+      "url": "https://cdn.modrinth.com/data/jtmvUHXj/versions/mee7rWXz/accessories-fabric-1.0.0-beta.49%2B1.20.1.jar",
+      "size": 769482,
+      "sha1": "d974b50d00ed0eabdce593edeb9e4cbbe7bb0e35"
     },
     {
       "name": "AppleSkin",
@@ -161,18 +161,18 @@
       "sha1": "f47035b26b80e2afea9ef101d4d55e3e1de95da3"
     },
     {
-      "name": "Easy NPC: Config UI",
-      "fileName": "easy_npc_config_ui-fabric-1.20.1-7.15.0.jar",
-      "url": "https://cdn.modrinth.com/data/uTGjf7vA/versions/5HN4zHQT/easy_npc_config_ui-fabric-1.20.1-7.15.0.jar",
-      "size": 1147105,
-      "sha1": "7b67ada697bed6176260a0a85005aa651fda3f22"
+      "name": "Easy NPC",
+      "fileName": "easy_npc-fabric-1.20.1-7.16.0.jar",
+      "url": "https://cdn.modrinth.com/data/Epm6R3P2/versions/VDwfffY6/easy_npc-fabric-1.20.1-7.16.0.jar",
+      "size": 3182175,
+      "sha1": "1eff57594ca546217ff1d7b18b325ee7cc1ba4d8"
     },
     {
-      "name": "Easy NPC: Core",
-      "fileName": "easy_npc-fabric-1.20.1-7.15.0.jar",
-      "url": "https://cdn.modrinth.com/data/Epm6R3P2/versions/U1vbxiwt/easy_npc-fabric-1.20.1-7.15.0.jar",
-      "size": 3126148,
-      "sha1": "852f8a63e629ec4093930bb7ed271c1a5d988cc1"
+      "name": "Easy NPC: Config UI",
+      "fileName": "easy_npc_config_ui-fabric-1.20.1-7.16.0.jar",
+      "url": "https://cdn.modrinth.com/data/uTGjf7vA/versions/pJmhGNla/easy_npc_config_ui-fabric-1.20.1-7.16.0.jar",
+      "size": 1152395,
+      "sha1": "bb63858d3bf6e6dc17853aece2aaa2eaa3600019"
     },
     {
       "name": "Emotecraft",
@@ -397,6 +397,13 @@
       "url": "https://cdn.modrinth.com/data/F8BQNPWX/versions/dMGBsRgz/naturalist-fabric-4.0.3-1.20.1.jar",
       "size": 4310075,
       "sha1": "309142b01014a047cf8cbdded96b085ca59fac85"
+    },
+    {
+      "name": "oωo (owo-lib)",
+      "fileName": "owo-lib-0.11.2+1.20.jar",
+      "url": "https://cdn.modrinth.com/data/ccKDOlHs/versions/zyOBB7J4/owo-lib-0.11.2%2B1.20.jar",
+      "size": 905421,
+      "sha1": "be88938ca5df78271e64bc9f85c3575754f33e2a"
     },
     {
       "name": "Patchouli",
