@@ -62,8 +62,16 @@ export function getInstancesDir() {
   return path.join(getMinecraftRoot(), 'instances');
 }
 
+// An instance id is one folder name inside instances/. Anything with separators or ".."
+// could escape that folder (e.g. "../.." would point at the whole .minecraft).
+export function isValidInstanceId(instanceId) {
+  const id = String(instanceId ?? '').trim();
+  return Boolean(id) && id !== '.' && id !== '..' && !/[\\/\0]/.test(id) && !/^[a-zA-Z]:/.test(id);
+}
+
 export function getInstanceDir(instanceId) {
   if (!instanceId) return getMinecraftRoot();
+  if (!isValidInstanceId(instanceId)) throw new Error(`Invalid instance id: ${String(instanceId)}`);
   return path.join(getInstancesDir(), String(instanceId));
 }
 

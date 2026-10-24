@@ -1,6 +1,7 @@
 import { app, shell } from 'electron';
 import path from 'path';
 import fs from 'fs';
+import crypto from 'crypto';
 import { spawn } from 'child_process';
 import { Readable } from 'stream';
 import { fileURLToPath } from 'url';
@@ -12,8 +13,15 @@ const __dirname = path.dirname(__filename);
 const UPDATE_REPOSITORY = 'eduardzsosa72/Dreadland-launcher';
 const UPDATE_RELEASES_API = `https://api.github.com/repos/${UPDATE_REPOSITORY}/releases/latest`;
 const UPDATE_RELEASES_PAGE = `https://github.com/${UPDATE_REPOSITORY}/releases/latest`;
+// Only files attached to this repo's releases may be downloaded and run
+const UPDATE_DOWNLOAD_PREFIX = `https://github.com/${UPDATE_REPOSITORY}/releases/download/`;
+const CHECKSUMS_ASSET_NAME = 'SHA256SUMS.txt';
 
 const localeCache = new Map();
+
+// Last update found by checkForLauncherUpdate. The renderer only asks to apply it;
+// it never gets to choose which URL is downloaded and executed.
+let pendingUpdate = null;
 
 export async function loadLocaleData(language = 'en') {
   const lang = String(language || 'en').trim().toLowerCase();
@@ -138,6 +146,50 @@ export function pickUpdateAsset(release) {
   return scoredAssets[0].asset;
 }
 
+export function isTrustedUpdateUrl(url) {
+  return typeof url === 'string' && url.startsWith(UPDATE_DOWNLOAD_PREFIX) && !url.includes('..');
+}
+
+function normalizeSha256(value) {
+  const hex = String(value || '').trim().toLowerCase().replace(/^sha256:/, '');
+  return /^[a-f0-9]{64}$/.test(hex) ? hex : null;
+}
+
+// Parses "sha256sum" output: "<hex>  <file name>" per line
+export function parseChecksumsFile(text) {
+  const map = new Map();
+  for (const line of String(text || '').split(/\r?\n/)) {
+    const match = line.trim().match(/^([a-fA-F0-9]{64})\s+\*?(.+)$/);
+    if (match) map.set(path.basename(match[2].trim()), match[1].toLowerCase());
+  }
+  return map;
+}
+
+// GitHub publishes a "digest" (sha256) for every release asset; SHA256SUMS.txt is the fallback
+async function resolveExpectedSha256(release, asset) {
+  const fromDigest = normalizeSha256(asset?.digest);
+  if (fromDigest) return fromDigest;
+
+  const assets = Array.isArray(release?.assets) ? release.assets : [];
+  const sumsAsset = assets.find(a => a?.name === CHECKSUMS_ASSET_NAME);
+  if (!sumsAsset || !isTrustedUpdateUrl(sumsAsset.browser_download_url)) return null;
+  try {
+    const response = await fetch(sumsAsset.browser_download_url, { headers: { 'User-Agent': 'DREADLAND-Launcher-Updater' } });
+    if (!response.ok) return null;
+    return parseChecksumsFile(await response.text()).get(asset.name) || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function sha256File(filePath) {
+  const hash = crypto.createHash('sha256');
+  await new Promise((resolve, reject) => {
+    fs.createReadStream(filePath).on('data', chunk => hash.update(chunk)).on('end', resolve).on('error', reject);
+  });
+  return hash.digest('hex');
+}
+
 export async function downloadFileToPath(url, outPath, options = {}) {
   const onProgress = typeof options.onProgress === 'function' ? options.onProgress : null;
   const response = await fetch(url, {
@@ -250,23 +302,30 @@ export async function launchDownloadedUpdate(filePath) {
   return { ok: true, launched: false, path: resolvedPath };
 }
 
-export async function downloadAndApplyUpdate(updatePayload = {}, { onEvent = null } = {}) {
+// Takes nothing from the renderer on purpose: we only apply the update that this
+// process found itself, so a compromised UI cannot make us run another file.
+export async function downloadAndApplyUpdate({ onEvent = null } = {}) {
+  if (!pendingUpdate) await checkForLauncherUpdate({ onEvent });
   const currentVersion = String(app.getVersion() || '').trim();
-  const latestVersion = updatePayload.latestVersion || '';
-  const asset = updatePayload.asset;
+  if (!pendingUpdate) return { ok: true, upToDate: true, currentVersion };
+
+  const { release, asset, latestVersion } = pendingUpdate;
+  const releaseUrl = UPDATE_RELEASES_PAGE;
   const updaterStrings = await getUpdaterStrings(await getPreferredLanguage());
 
-  if (!asset || !asset.browser_download_url) {
+  const openReleasePage = async () => {
     onEvent?.('minecraft:update-status', { phase: 'release-page', currentVersion, latestVersion, message: updaterStrings.openingReleasePage });
-    await shell.openExternal(updatePayload.releaseUrl || UPDATE_RELEASES_PAGE);
+    await shell.openExternal(releaseUrl);
     return { ok: true, available: true, openedReleasePage: true, currentVersion, latestVersion };
+  };
+
+  if (!asset || !isTrustedUpdateUrl(asset.browser_download_url) || !isLaunchableUpdateAsset(asset.name)) {
+    return openReleasePage();
   }
 
-  if (!isLaunchableUpdateAsset(asset.name)) {
-    onEvent?.('minecraft:update-status', { phase: 'release-page', currentVersion, latestVersion, message: updaterStrings.openingReleasePage });
-    await shell.openExternal(updatePayload.releaseUrl || UPDATE_RELEASES_PAGE);
-    return { ok: true, available: true, openedReleasePage: true, currentVersion, latestVersion };
-  }
+  // Without a known hash we cannot prove the file is intact, so let the user download it by hand
+  const expectedSha256 = await resolveExpectedSha256(release, asset);
+  if (!expectedSha256) return openReleasePage();
 
   onEvent?.('minecraft:update-status', {
     phase: 'downloading',
@@ -278,7 +337,7 @@ export async function downloadAndApplyUpdate(updatePayload = {}, { onEvent = nul
 
   const updatesDir = path.join(app.getPath('userData'), 'updates');
   await fs.promises.mkdir(updatesDir, { recursive: true });
-  const downloadPath = path.join(updatesDir, String(asset.name || `DREADLAND-Launcher-${latestVersion}`));
+  const downloadPath = path.join(updatesDir, path.basename(String(asset.name || `DREADLAND-Launcher-${latestVersion}`)));
   try { await fs.promises.rm(downloadPath, { force: true }).catch(() => { }); } catch { }
 
   await downloadFileToPath(asset.browser_download_url, downloadPath, {
@@ -286,6 +345,15 @@ export async function downloadAndApplyUpdate(updatePayload = {}, { onEvent = nul
       onEvent?.('minecraft:update-progress', { phase: 'downloading', loaded, total, percent, currentVersion, latestVersion, assetName: asset.name });
     },
   });
+
+  onEvent?.('minecraft:update-status', { phase: 'verifying', currentVersion, latestVersion, assetName: asset.name, message: updaterStrings.verifying });
+  const actualSha256 = await sha256File(downloadPath);
+  if (actualSha256 !== expectedSha256) {
+    await fs.promises.rm(downloadPath, { force: true }).catch(() => { });
+    const message = updaterStrings.verifyFailed || 'The downloaded update is corrupted or was tampered with. It was deleted and not installed.';
+    onEvent?.('minecraft:update-status', { phase: 'error', currentVersion, latestVersion, assetName: asset.name, message });
+    return { error: 'ChecksumMismatch', message, expected: expectedSha256, actual: actualSha256, currentVersion, latestVersion };
+  }
 
   onEvent?.('minecraft:update-status', { phase: 'launching', currentVersion, latestVersion, assetName: asset.name, message: updaterStrings.launching });
   const launchResult = await launchDownloadedUpdate(downloadPath);
@@ -318,11 +386,13 @@ export async function checkForLauncherUpdate({ onEvent = null } = {}) {
   const latestTuple = versionToTuple(latestVersion);
 
   if (compareVersionTuples(latestTuple, currentTuple) <= 0) {
+    pendingUpdate = null;
     onEvent?.('minecraft:update-status', { phase: 'up-to-date', currentVersion, latestVersion, message: updaterStrings.upToDate });
     return { ok: true, upToDate: true, currentVersion, latestVersion };
   }
 
   const asset = pickUpdateAsset(release);
+  pendingUpdate = { release, asset, latestVersion };
   const updateInfo = {
     ok: true,
     available: true,

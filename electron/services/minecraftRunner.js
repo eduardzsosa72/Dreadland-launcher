@@ -739,6 +739,12 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
     }
   }
 
+  // The path comes from renderer-saved state, so only accept something that is actually a Java binary
+  if (configuredJavaPath && !/^javaw?(\.exe)?$/i.test(path.basename(configuredJavaPath))) {
+    onLog?.('warn', `⚠️ Ignoring Java path from ${javaPathSource}: "${configuredJavaPath}" is not a java/javaw executable.`);
+    configuredJavaPath = '';
+  }
+
   const requiredJavaMajor = Number(versionJson?.javaVersion?.majorVersion || 0) || null;
 
   async function findCompatibleJava() {

@@ -1,8 +1,27 @@
-const { contextBridge, ipcRenderer } = require('electron');
+// Runs sandboxed: only the 'electron' module is available here, no Node APIs.
+const { contextBridge, ipcRenderer, webUtils } = require('electron');
+
+// The generic invoke/on helpers may only reach the launcher's own channels,
+// never Electron's internal ones.
+const ALLOWED_CHANNEL = /^(minecraft|instances|serverPack|app|system|window|shell):[a-z0-9-]+$/i;
+
+function assertChannel(channel) {
+  if (typeof channel !== 'string' || !ALLOWED_CHANNEL.test(channel)) {
+    throw new Error(`Blocked IPC channel: ${String(channel)}`);
+  }
+}
 
 contextBridge.exposeInMainWorld('launcher', {
   platform: process.platform,
   isMac: process.platform === 'darwin',
+  // File.path was removed from Electron; this is the supported way to get a dropped file's path
+  getPathForFile(file) {
+    try {
+      return webUtils.getPathForFile(file) || '';
+    } catch {
+      return '';
+    }
+  },
   minecraftGetCatalog(options) {
     return ipcRenderer.invoke('minecraft:get-catalog', options);
   },
@@ -171,10 +190,12 @@ contextBridge.exposeInMainWorld('launcher', {
   openExternal(url) {
     return ipcRenderer.invoke('shell:open-external', url);
   },
-  invoke(channel, data) {
-    return ipcRenderer.invoke(channel, data);
+  invoke(channel, ...args) {
+    assertChannel(channel);
+    return ipcRenderer.invoke(channel, ...args);
   },
   on(channel, listener) {
+    assertChannel(channel);
     const cb = (_, ...args) => listener(...args);
     // store reference so caller can remove if needed
     ipcRenderer.on(channel, cb);

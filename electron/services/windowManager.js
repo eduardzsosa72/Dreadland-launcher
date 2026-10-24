@@ -109,6 +109,8 @@ export async function createMainWindow({ isDev, electronDir }) {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: true,
+      webSecurity: true,
       spellcheck: false,
       backgroundThrottling: false,
       v8CacheOptions: 'bypassHeatCheckAndEagerCompile',
@@ -141,7 +143,10 @@ export async function createMainWindow({ isDev, electronDir }) {
       return;
     }
     event.preventDefault();
-    shell.openExternal(url).catch(() => {});
+    // Only hand web links to the OS; file:, smb:, custom protocols etc. could launch programs
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      shell.openExternal(url).catch(() => {});
+    }
   });
 
   mainWindow.on('resize', scheduleWindowStateSave);

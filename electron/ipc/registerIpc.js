@@ -56,6 +56,32 @@ import {
   scanBaseDirectory,
   migrateBaseToInstance,
 } from '../services/instanceManager.js';
+import {
+  validated,
+  asObject,
+  asString,
+  asFileName,
+  asInstanceId,
+  asHttpUrl,
+  asAbsolutePath,
+  asPositiveInt,
+  isSafeSegment,
+  ValidationError,
+} from './validators.js';
+
+// Files offered by Modrinth search are only ever downloaded from Modrinth's CDN
+const MODRINTH_HOSTS = ['modrinth.com'];
+const ARTICLE_HOSTS = ['minecraft.net'];
+const CONTENT_TYPES = ['mod', 'mods', 'shader', 'shaders', 'shaderpacks', 'resourcepack', 'resourcepacks', 'texturepack', 'textures', 'datapack', 'datapacks'];
+const FOLDER_TYPES = ['mods', 'instance', 'root', 'shaders', 'shaderpacks', 'texturepacks', 'resourcepacks', 'textures', 'datapacks', 'datapack', 'saves', 'worlds', 'config', 'logs', 'screenshots'];
+
+// Version ids end up as folder names under versions/, so they must be a single segment
+function asVersionId(value, label, { optional = false } = {}) {
+  if ((value === undefined || value === null || value === '') && optional) return value;
+  const id = asString(String(value ?? ''), label, { max: 128 });
+  if (!isSafeSegment(id)) throw new ValidationError(`${label} is not valid.`);
+  return id;
+}
 
 export function registerAllIpc() {
   const sendToRenderer = (channel, payload) => {
@@ -78,7 +104,8 @@ export function registerAllIpc() {
     else win.maximize();
   });
   ipcMain.handle('window:close', () => getMainWindow()?.close());
-  ipcMain.handle('shell:open-external', (_, url) => shell.openExternal(url));
+  // Only web links: file:, smb: or custom protocol URLs could launch programs on the PC
+  ipcMain.handle('shell:open-external', validated((_, url) => shell.openExternal(asHttpUrl(url))));
 
   // ── Directory and System Information ──
   ipcMain.handle('minecraft:open-root-directory', async () => {
@@ -141,12 +168,13 @@ export function registerAllIpc() {
     return { ...state, minecraftRoot: getMinecraftRoot() };
   });
 
-  ipcMain.handle('minecraft:save-state', async (_, state) => {
+  ipcMain.handle('minecraft:save-state', validated(async (_, rawState) => {
+    const state = asObject(rawState, 'state');
     if (state.settings && typeof state.settings === 'object') {
       state.settings.javaPath = state.settings.javaPath || '';
     }
     return saveLauncherState(app.getPath('userData'), state);
-  });
+  }));
 
   ipcMain.handle('minecraft:get-settings', async () => {
     const state = await loadLauncherState(app.getPath('userData'));
@@ -213,29 +241,32 @@ export function registerAllIpc() {
 
   ipcMain.handle('minecraft:get-article', async (_, url) => {
     try {
-      return await loadMinecraftArticle(url);
+      // Relative paths are resolved against minecraft.net by the loader; absolute URLs must point there
+      const value = asString(url, 'url', { max: 4096 });
+      return await loadMinecraftArticle(/^https?:/i.test(value) ? asHttpUrl(value, 'url', { hosts: ARTICLE_HOSTS }) : value);
     } catch (error) {
       return { error: error?.message || 'Failed to load article content.', url };
     }
   });
 
   // ── Authentication ──
-  ipcMain.handle('minecraft:get-auth-state', async (_, profileKey = 'default', options = {}) => {
+  ipcMain.handle('minecraft:get-auth-state', validated(async (_, profileKey = 'default', options = {}) => {
     return getMicrosoftAuthState({
-      profileKey,
+      profileKey: asString(profileKey, 'profileKey', { max: 128 }),
       storageDir: app.getPath('userData'),
       forceRefresh: Boolean(options?.forceRefresh),
     });
-  });
+  }));
 
-  ipcMain.handle('minecraft:login', async (event, profileKey = 'default', abortSignal) => {
+  ipcMain.handle('minecraft:login', validated(async (event, profileKey = 'default') => {
     const controller = new AbortController();
+    const key = asString(profileKey, 'profileKey', { max: 128 });
     try {
       return await loginMicrosoftInteractive({
-        profileKey,
+        profileKey: key,
         storageDir: app.getPath('userData'),
         openExternal: url => shell.openExternal(url),
-        abortSignal: abortSignal || controller.signal,
+        abortSignal: controller.signal,
       });
     } catch (error) {
       if (error?.message === 'Login cancelled by user') {
@@ -243,19 +274,22 @@ export function registerAllIpc() {
       }
       return { error: error?.message || 'Microsoft login failed.' };
     }
-  });
+  }));
 
-  ipcMain.handle('minecraft:logout', async (_, profileKey = 'default') => {
-    return logoutMicrosoft({ profileKey, storageDir: app.getPath('userData') });
-  });
+  ipcMain.handle('minecraft:logout', validated(async (_, profileKey = 'default') => {
+    return logoutMicrosoft({ profileKey: asString(profileKey, 'profileKey', { max: 128 }), storageDir: app.getPath('userData') });
+  }));
 
   // ── Instances ──
   ipcMain.handle('instances:get-all', async () => readAllInstances());
-  ipcMain.handle('instances:create', async (_, payload) => createInstance(payload));
-  ipcMain.handle('instances:update', async (_, { id, updates }) => updateInstance(id, updates));
-  ipcMain.handle('instances:delete', async (_, id) => deleteInstance(id));
+  ipcMain.handle('instances:create', validated(async (_, payload) => createInstance(asObject(payload))));
+  ipcMain.handle('instances:update', validated(async (_, payload) => {
+    const { id, updates } = asObject(payload);
+    return updateInstance(asInstanceId(id, { optional: false }), asObject(updates, 'updates'));
+  }));
+  ipcMain.handle('instances:delete', validated(async (_, id) => deleteInstance(asInstanceId(id, { optional: false }))));
   ipcMain.handle('instances:scan-base', async () => scanBaseDirectory());
-  ipcMain.handle('instances:migrate-base', async (_, payload) => migrateBaseToInstance(payload));
+  ipcMain.handle('instances:migrate-base', validated(async (_, payload) => migrateBaseToInstance(asObject(payload))));
   ipcMain.handle('instances:pick-image', async () => {
     const win = getMainWindow();
     const result = await dialog.showOpenDialog(win || undefined, {
@@ -280,20 +314,56 @@ export function registerAllIpc() {
 
   // ── Content Management (Mods, Shaders, Resource Packs, Data Packs) ──
   ipcMain.handle('minecraft:get-installed-versions', async () => readInstalledVersions());
-  ipcMain.handle('minecraft:get-installed-mods', async (_, instanceId) => readInstalledMods(instanceId));
-  ipcMain.handle('minecraft:get-installed-shaders', async (_, instanceId) => readInstalledShaders(instanceId));
-  ipcMain.handle('minecraft:get-installed-resourcepacks', async (_, instanceId) => readInstalledResourcePacks(instanceId));
-  ipcMain.handle('minecraft:get-installed-datapacks', async (_, instanceId) => readInstalledDatapacks(instanceId));
+  ipcMain.handle('minecraft:get-installed-mods', validated(async (_, instanceId) => readInstalledMods(asInstanceId(instanceId))));
+  ipcMain.handle('minecraft:get-installed-shaders', validated(async (_, instanceId) => readInstalledShaders(asInstanceId(instanceId))));
+  ipcMain.handle('minecraft:get-installed-resourcepacks', validated(async (_, instanceId) => readInstalledResourcePacks(asInstanceId(instanceId))));
+  ipcMain.handle('minecraft:get-installed-datapacks', validated(async (_, instanceId) => readInstalledDatapacks(asInstanceId(instanceId))));
 
-  ipcMain.handle('minecraft:toggle-mod', async (_, { modId, enable, instanceId }) => toggleMod(modId, enable, instanceId));
-  ipcMain.handle('minecraft:set-all-mods-enabled', async (_, { enable, instanceId }) => setAllModsEnabled(Boolean(enable), instanceId));
-  ipcMain.handle('minecraft:delete-mod', async (_, { modId, instanceId }) => deleteMod(modId, instanceId));
-  ipcMain.handle('minecraft:delete-shader', async (_, { fileName, instanceId }) => deleteShader(fileName, instanceId));
-  ipcMain.handle('minecraft:delete-resourcepack', async (_, { fileName, instanceId }) => deleteResourcePack(fileName, instanceId));
-  ipcMain.handle('minecraft:delete-datapack', async (_, { fileName, instanceId }) => deleteDatapack(fileName, instanceId));
-  ipcMain.handle('minecraft:open-content-folder', async (_, folderType, instanceId) => openContentFolder(folderType, instanceId));
-  ipcMain.handle('minecraft:install-mod-file', async (_, { sourcePath, instanceId }) => importModFile({ sourcePath }, instanceId));
-  ipcMain.handle('minecraft:import-content-file', async (_, payload, instanceId) => importContentFile(payload, instanceId));
+  // modId / fileName become file names inside mods/, shaderpacks/... so they must not contain "../"
+  ipcMain.handle('minecraft:toggle-mod', validated(async (_, payload) => {
+    const { modId, enable, instanceId } = asObject(payload);
+    return toggleMod(asFileName(modId, 'modId'), Boolean(enable), asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:set-all-mods-enabled', validated(async (_, payload) => {
+    const { enable, instanceId } = asObject(payload);
+    return setAllModsEnabled(Boolean(enable), asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:delete-mod', validated(async (_, payload) => {
+    const { modId, instanceId } = asObject(payload);
+    return deleteMod(asFileName(modId, 'modId'), asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:delete-shader', validated(async (_, payload) => {
+    const { fileName, instanceId } = asObject(payload);
+    return deleteShader(asFileName(fileName), asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:delete-resourcepack', validated(async (_, payload) => {
+    const { fileName, instanceId } = asObject(payload);
+    return deleteResourcePack(asFileName(fileName), asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:delete-datapack', validated(async (_, payload) => {
+    const { fileName, instanceId } = asObject(payload);
+    return deleteDatapack(asFileName(fileName), asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:open-content-folder', validated(async (_, folderType = 'mods', instanceId) => {
+    if (!FOLDER_TYPES.includes(folderType)) throw new ValidationError('Unknown folder type.');
+    return openContentFolder(folderType, asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:install-mod-file', validated(async (_, payload) => {
+    const { sourcePath, instanceId } = asObject(payload);
+    return importModFile({ sourcePath: asAbsolutePath(sourcePath, 'sourcePath') }, asInstanceId(instanceId));
+  }));
+  ipcMain.handle('minecraft:import-content-file', validated(async (_, rawPayload, instanceId) => {
+    const payload = asObject(rawPayload);
+    const type = payload.type ?? 'mod';
+    if (!CONTENT_TYPES.includes(type)) throw new ValidationError('Unknown content type.');
+    return importContentFile({
+      type,
+      sourcePath: payload.sourcePath ? asAbsolutePath(payload.sourcePath, 'sourcePath') : undefined,
+      fileName: payload.fileName ? asFileName(payload.fileName) : undefined,
+      fileBytes: payload.fileBytes,
+      instanceId: asInstanceId(payload.instanceId),
+    }, asInstanceId(instanceId));
+  }));
 
   ipcMain.handle('minecraft:pick-mod-files', async () => {
     const win = getMainWindow();
@@ -306,14 +376,28 @@ export function registerAllIpc() {
     return { canceled: false, filePaths: result.filePaths || [] };
   });
 
-  ipcMain.handle('minecraft:pick-content-files', async (_, type) => pickContentFiles(type));
+  ipcMain.handle('minecraft:pick-content-files', validated(async (_, type = 'mod') => {
+    if (!CONTENT_TYPES.includes(type)) throw new ValidationError('Unknown content type.');
+    return pickContentFiles(type);
+  }));
 
   // ── Modrinth Integration ──
   ipcMain.handle('minecraft:modrinth-search', async (_, params) => searchModrinthProjects(params));
   ipcMain.handle('minecraft:modrinth-get-project', async (_, idOrSlug) => getModrinthProject(idOrSlug));
   ipcMain.handle('minecraft:modrinth-get-versions', async (_, params) => getModrinthProjectVersions(params));
-  ipcMain.handle('minecraft:modrinth-install', async (_, payload) => installModrinthProject(payload, { onLog: sendLog }));
-  ipcMain.handle('minecraft:check-mod-updates', async (_, params) => checkInstalledModsUpdates(params));
+  ipcMain.handle('minecraft:modrinth-install', validated(async (_, rawPayload) => {
+    const payload = asObject(rawPayload);
+    return installModrinthProject({
+      ...payload,
+      fileUrl: payload.fileUrl ? asHttpUrl(payload.fileUrl, 'fileUrl', { hosts: MODRINTH_HOSTS }) : undefined,
+      fileName: payload.fileName ? asFileName(payload.fileName) : undefined,
+      instanceId: asInstanceId(payload.instanceId),
+    }, { onLog: sendLog });
+  }));
+  ipcMain.handle('minecraft:check-mod-updates', validated(async (_, params) => {
+    const payload = asObject(params);
+    return checkInstalledModsUpdates({ ...payload, instanceId: asInstanceId(payload.instanceId) });
+  }));
 
   // ── Updates ──
   ipcMain.handle('minecraft:check-update', async () => {
@@ -322,14 +406,17 @@ export function registerAllIpc() {
     });
   });
 
-  ipcMain.handle('minecraft:apply-update', async (_, updatePayload) => {
-    return downloadAndApplyUpdate(updatePayload, {
-      onEvent: sendToRenderer,
-    });
+  // The renderer's payload is ignored: main only installs the update it found itself
+  ipcMain.handle('minecraft:apply-update', async () => {
+    return downloadAndApplyUpdate({ onEvent: sendToRenderer });
   });
 
   // ── Game Installation and Execution ──
-  ipcMain.handle('minecraft:install', async (_, opts) => {
+  ipcMain.handle('minecraft:install', validated(async (_, rawOpts) => {
+    const opts = asObject(rawOpts, 'opts');
+    asVersionId(opts.version, 'version', { optional: true });
+    asVersionId(opts.gameVersion, 'gameVersion', { optional: true });
+    asVersionId(opts.loaderVersion, 'loaderVersion', { optional: true });
     return installMinecraft(opts, {
       onLog: sendLog,
       onProgress: (p) => {
@@ -338,15 +425,16 @@ export function registerAllIpc() {
       },
       onComplete: (c) => sendToRenderer('minecraft:install-complete', c),
     });
-  });
+  }));
 
-  ipcMain.handle('minecraft:install-cancel', async (_, { installId }) => {
+  ipcMain.handle('minecraft:install-cancel', validated(async (_, payload) => {
+    const installId = asString(asObject(payload).installId, 'installId', { max: 128 });
     const result = cancelInstall(installId);
     if (result.ok) {
       sendToRenderer('minecraft:install-cancelled', { installId });
     }
     return result;
-  });
+  }));
 
   const packSyncCallbacks = {
     onLog: sendLog,
@@ -355,8 +443,10 @@ export function registerAllIpc() {
 
   ipcMain.handle('serverPack:sync', async () => syncServerPack(packSyncCallbacks));
 
-  ipcMain.handle('minecraft:run', async (_, opts) => {
-    if (await readServerPackInstanceConfig(opts?.instanceId)) {
+  ipcMain.handle('minecraft:run', validated(async (_, rawOpts) => {
+    let opts = asObject(rawOpts, 'opts');
+    opts = { ...opts, instanceId: asInstanceId(opts.instanceId) };
+    if (await readServerPackInstanceConfig(opts.instanceId)) {
       // Sync right before playing so a pack pushed while the launcher was open is still applied
       const sync = await syncServerPack(packSyncCallbacks);
       if (!sync.ok && sync.error !== 'NoServerPack') {
@@ -373,7 +463,7 @@ export function registerAllIpc() {
       onExit: (e) => sendToRenderer('minecraft:run-exit', e),
       onConflict: (c) => sendToRenderer('minecraft:mod-conflict', c),
     });
-  });
+  }));
 
-  ipcMain.handle('minecraft:stop', async (_, { pid }) => stopMinecraft(pid));
+  ipcMain.handle('minecraft:stop', validated(async (_, payload) => stopMinecraft(asPositiveInt(asObject(payload).pid, 'pid'))));
 }

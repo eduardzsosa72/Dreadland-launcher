@@ -429,6 +429,8 @@
     "openingReleasePage": "Ouverture de la page de la version pour cette mise à jour.",
     "downloading": "Téléchargement de {assetName}",
     "launching": "Lancement de la mise à jour téléchargée",
+    "verifying": "Vérification du fichier de mise à jour",
+    "verifyFailed": "La mise à jour téléchargée est corrompue ou a été modifiée. Elle a été supprimée et n'a pas été installée.",
     "updateAvailableTitle": "Mise à jour disponible",
     "updateAvailableMessage": "DREADLAND LAUNCHER {latestVersion} est disponible.",
     "detailWithAsset": "Version actuelle : {currentVersion}\nFichier de mise à jour : {assetName}",

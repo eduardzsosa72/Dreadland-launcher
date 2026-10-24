@@ -429,6 +429,8 @@
     "openingReleasePage": "Opening the release page for this update.",
     "downloading": "Downloading {assetName}",
     "launching": "Launching downloaded update",
+    "verifying": "Verifying the update file",
+    "verifyFailed": "The downloaded update is corrupted or was tampered with. It was deleted and not installed.",
     "updateAvailableTitle": "Update available",
     "updateAvailableMessage": "DREADLAND LAUNCHER {latestVersion} is available.",
     "detailWithAsset": "Current version: {currentVersion}\nUpdate file: {assetName}",

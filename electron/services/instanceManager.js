@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { getMinecraftRoot, getInstancesDir, getInstanceDir } from './paths.js';
+import { getMinecraftRoot, getInstancesDir, getInstanceDir, isValidInstanceId } from './paths.js';
 
 export const DEFAULT_INSTANCE_ICON = 'grass';
 
@@ -267,6 +267,10 @@ export async function updateInstance(id, updates) {
 }
 
 export async function deleteInstance(id) {
+  // Never fall through to getInstanceDir('') -> the whole Minecraft folder
+  if (!isValidInstanceId(id)) {
+    return { error: 'InvalidInput', message: `Invalid instance id: ${String(id)}` };
+  }
   const instancePath = getInstanceDir(id);
   if (!fs.existsSync(instancePath)) {
     return { error: 'NotFound', message: `Instance ${id} not found` };

@@ -190,6 +190,17 @@ jobs:
           name: macos-apple-silicon-build
           path: ./release/macos
 
+      # Backup for the launcher updater, which checks every download against these hashes.
+      # GitHub renames spaces to dots in asset names, so the list uses the renamed form.
+      - name: Generate SHA256SUMS.txt
+        run: |
+          : > release/SHA256SUMS.txt
+          find release/windows release/linux release/macos -type f | sort | while read -r f; do
+            name=$(basename "$f" | tr ' ' '.')
+            echo "$(sha256sum "$f" | cut -d' ' -f1)  $name" >> release/SHA256SUMS.txt
+          done
+          cat release/SHA256SUMS.txt
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -200,6 +211,7 @@ jobs:
             release/windows/*
             release/linux/*
             release/macos/*
+            release/SHA256SUMS.txt
           draft: false
           prerelease: false
         env:

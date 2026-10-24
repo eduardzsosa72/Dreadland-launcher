@@ -1104,7 +1104,7 @@ export default function App() {
         let imported = 0;
         for (const file of files) {
           if (!file.name.toLowerCase().endsWith('.zip')) continue;
-          const filePath = file.path || file.name;
+          const filePath = launcher.getPathForFile?.(file) || file.path || file.name;
           const res = await launcher.minecraftImportContentFile?.({ type: 'shader', sourcePath: filePath, fileName: file.name }, activeInstanceId);
           if (res?.ok) imported++;
         }
@@ -1116,7 +1116,7 @@ export default function App() {
         let imported = 0;
         for (const file of files) {
           if (!file.name.toLowerCase().endsWith('.zip')) continue;
-          const filePath = file.path || file.name;
+          const filePath = launcher.getPathForFile?.(file) || file.path || file.name;
           const res = await launcher.minecraftImportContentFile?.({ type: 'resourcepack', sourcePath: filePath, fileName: file.name }, activeInstanceId);
           if (res?.ok) imported++;
         }
@@ -1128,7 +1128,7 @@ export default function App() {
         let imported = 0;
         for (const file of files) {
           if (!file.name.toLowerCase().endsWith('.zip')) continue;
-          const filePath = file.path || file.name;
+          const filePath = launcher.getPathForFile?.(file) || file.path || file.name;
           const res = await launcher.minecraftImportContentFile?.({ type: 'datapack', sourcePath: filePath, fileName: file.name }, activeInstanceId);
           if (res?.ok) imported++;
         }
@@ -1138,7 +1138,7 @@ export default function App() {
         }
       } else {
         for (const file of files) {
-          const filePath = file.path || file.name;
+          const filePath = launcher.getPathForFile?.(file) || file.path || file.name;
           await launcher.minecraftInstallModFile(filePath, activeInstanceId);
         }
         loadMods();
@@ -1971,7 +1971,12 @@ export default function App() {
       message: t('updater.downloading', { assetName: updateInfo?.asset?.name || '' }),
     });
     try {
-      await launcher.minecraftApplyUpdate(updateInfo);
+      const result = await launcher.minecraftApplyUpdate(updateInfo);
+      if (result?.error) {
+        setUpdateState({ phase: 'idle', progress: 0, message: '' });
+        addLog('error', `Update not installed: ${result.message || result.error}`);
+        pushToast({ tone: 'error', title: t('update.launcherUpdate'), message: result.message || result.error });
+      }
     } catch (e) {
       addLog('error', `Failed to apply update: ${e?.message || e}`);
     }
