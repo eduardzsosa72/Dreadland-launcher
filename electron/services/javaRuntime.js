@@ -123,7 +123,7 @@ async function downloadRuntime(major, { onLog = null } = {}) {
     await fs.promises.rename(extractedRoot, targetDir);
 
     const finalPath = findJavaInside(targetDir);
-    const detected = detectJavaMajor(finalPath);
+    const detected = await detectJavaMajor(finalPath);
     if (detected !== Number(major)) throw new Error(`Downloaded Java reports version ${detected}, expected ${major}.`);
     onLog?.('success', `Java ${major} installed.`);
     return finalPath;
@@ -145,7 +145,7 @@ export function ensureJavaRuntime(major, { onLog = null } = {}) {
 
 // For installers (Fabric, Forge...) that only need some Java of at least minMajor
 export async function resolveJavaForInstaller(minMajor, preferredPath = '', { onLog = null } = {}) {
-  const found = findJavaCommand(minMajor, preferredPath);
+  const found = await findJavaCommand(minMajor, preferredPath);
   if (found?.javaCmd && found.javaMajor >= minMajor) return found.javaCmd;
   return ensureJavaRuntime(Math.max(minMajor, 17), { onLog });
 }

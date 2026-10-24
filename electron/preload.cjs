@@ -79,8 +79,8 @@ contextBridge.exposeInMainWorld('launcher', {
   pickInstanceImage() {
     return ipcRenderer.invoke('instances:pick-image');
   },
-  minecraftGetNews() {
-    return ipcRenderer.invoke('minecraft:get-news');
+  minecraftGetNews(options) {
+    return ipcRenderer.invoke('minecraft:get-news', options);
   },
   minecraftGetArticle(url) {
     return ipcRenderer.invoke('minecraft:get-article', url);

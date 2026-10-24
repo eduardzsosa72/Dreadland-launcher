@@ -119,6 +119,71 @@ export function cleanMinecraftText(raw) {
   return text;
 }
 
+// ── Jar metadata cache ──
+// Opening every jar with AdmZip took ~1.1 s of frozen main thread for 86 mods, on every
+// mods-tab load. Metadata is now cached by file name + size + mtime (a .jar <-> .olpkg rename
+// keeps both, so toggling a mod is still a hit) and persisted between launcher sessions.
+const JAR_CACHE_FILE = 'mods-jar-cache.json';
+const JAR_CACHE_VERSION = 1;
+const JAR_CACHE_MAX_ENTRIES = 1500; // oldest entries (updated/removed mods) are dropped first
+let jarCache = null; // Map<key, meta|null>, insertion order = age
+let jarCacheSaveTimer = null;
+
+function jarCacheKey(fileName, stat) {
+  const base = String(fileName).toLowerCase().replace(/\.(jar|olpkg)$/i, '');
+  return `${base}|${stat.size}|${Math.round(stat.mtimeMs)}`;
+}
+
+async function loadJarCache() {
+  if (jarCache) return jarCache;
+  jarCache = new Map();
+  try {
+    const raw = JSON.parse(await fs.promises.readFile(path.join(app.getPath('userData'), JAR_CACHE_FILE), 'utf8'));
+    if (raw?.version === JAR_CACHE_VERSION && raw.entries && typeof raw.entries === 'object') {
+      for (const [key, meta] of Object.entries(raw.entries)) jarCache.set(key, meta);
+    }
+  } catch { /* no cache yet or unreadable: start empty */ }
+  return jarCache;
+}
+
+function scheduleJarCacheSave() {
+  if (jarCacheSaveTimer) clearTimeout(jarCacheSaveTimer);
+  jarCacheSaveTimer = setTimeout(async () => {
+    jarCacheSaveTimer = null;
+    if (!jarCache) return;
+    for (const key of jarCache.keys()) {
+      if (jarCache.size <= JAR_CACHE_MAX_ENTRIES) break;
+      jarCache.delete(key);
+    }
+    try {
+      const file = path.join(app.getPath('userData'), JAR_CACHE_FILE);
+      await fs.promises.writeFile(file, JSON.stringify({ version: JAR_CACHE_VERSION, entries: Object.fromEntries(jarCache) }), 'utf8');
+    } catch { /* cache is an optimisation; ignore write errors */ }
+  }, 500);
+}
+
+const yieldToEventLoop = () => new Promise(resolve => setTimeout(resolve, 0));
+
+// Async + cached version of extractJarMetadata: the file is read off-thread and the
+// event loop gets a turn between jars, so the window keeps responding.
+export async function getJarMetadataCached(fullPath, fileName = path.basename(fullPath)) {
+  const cache = await loadJarCache();
+  const info = await fs.promises.stat(fullPath).catch(() => null);
+  if (!info) return null;
+  const key = jarCacheKey(fileName, info);
+  if (cache.has(key)) return cache.get(key);
+  let meta = null;
+  try {
+    const buffer = await fs.promises.readFile(fullPath);
+    await yieldToEventLoop();
+    meta = extractJarMetadata(buffer);
+  } catch { /* not a readable jar: cache "no metadata" */ }
+  cache.set(key, meta);
+  scheduleJarCacheSave();
+  return meta;
+}
+
+// Accepts a path or a Buffer with the jar contents
 export function extractJarMetadata(jarFilePath) {
   try {
     const zip = new AdmZip(jarFilePath);
@@ -269,8 +334,8 @@ export async function readInstalledMods(instanceId = null) {
 
         let meta = metadataStore[baseKey] || metadataStore[fileName.toLowerCase()] || null;
 
-        if (!meta && fs.existsSync(fullPath)) {
-          meta = extractJarMetadata(fullPath);
+        if (!meta) {
+          meta = await getJarMetadataCached(fullPath, fileName);
         }
 
         installed.push({
@@ -1276,9 +1341,22 @@ export async function installModrinthProject({
   };
 }
 
+// Hashing a whole jar in one call blocked the main thread ~250 ms per large mod (552 MB of mods
+// in the server pack). The file is now hashed as a stream, and results are reused while the
+// file's size and mtime stay the same.
+const sha512Cache = new Map(); // `${path}|${size}|${mtime}` -> hex
+
 export async function getFileSha512(filePath) {
-  const fileBuffer = await fs.promises.readFile(filePath);
-  return crypto.createHash('sha512').update(fileBuffer).digest('hex');
+  const stat = await fs.promises.stat(filePath);
+  const key = `${filePath}|${stat.size}|${Math.round(stat.mtimeMs)}`;
+  if (sha512Cache.has(key)) return sha512Cache.get(key);
+  const hash = crypto.createHash('sha512');
+  await new Promise((resolve, reject) => {
+    fs.createReadStream(filePath).on('data', chunk => hash.update(chunk)).on('end', resolve).on('error', reject);
+  });
+  const hex = hash.digest('hex');
+  sha512Cache.set(key, hex);
+  return hex;
 }
 
 export async function checkInstalledModsUpdates({ gameVersion, loader, instanceId } = {}) {

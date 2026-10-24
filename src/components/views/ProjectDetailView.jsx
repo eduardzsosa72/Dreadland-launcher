@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useI18n } from '../../context/I18nContext';
 import { ICONS } from '../../constants/icons';
 import { Icon } from '../common/CommonComponents';
-import { launcher } from '../../services/launcherClient';
-import { getModrinthProject, getModrinthProjectVersions, searchModrinthProjects } from '../../lib/modrinth';
+import { api } from '../../api';
 import { formatFileSize, formatRelativeTime, cleanMinecraftText } from '../../utils/formatters';
 import { MarkdownRenderer } from '../common/MarkdownRenderer';
 
@@ -89,13 +88,7 @@ export function ProjectDetailView({
 
   const handleOpenExternal = (url) => {
     if (!url) return;
-    if (typeof launcher?.openExternal === 'function') {
-      launcher.openExternal(url).catch(() => {});
-    } else if (typeof launcher?.minecraftOpenFolder === 'function') {
-      launcher.minecraftOpenFolder(url);
-    } else {
-      window.open(url, '_blank');
-    }
+    api.system.openExternal(url).catch(() => {});
   };
 
   const title = projectDetails?.title || currentProject?.title || currentProject?.name || currentProject?.slug;
@@ -112,16 +105,9 @@ export function ProjectDetailView({
     const fetchDetails = async () => {
       try {
         let data = null;
-        if (typeof window !== 'undefined' && window.launcher?.minecraftModrinthGetProject) {
-          try {
-            data = await window.launcher.minecraftModrinthGetProject(projectId);
-          } catch {}
-        }
-        if (!data) {
-          try {
-            data = await getModrinthProject(projectId);
-          } catch {}
-        }
+        try {
+          data = await api.modrinth.getProject(projectId);
+        } catch {}
 
         // Fallback: search Modrinth if direct lookup failed
         if (!data) {
@@ -140,11 +126,7 @@ export function ProjectDetailView({
           for (const cand of slugCandidates) {
             if (cand && cand !== projectId) {
               try {
-                if (typeof window !== 'undefined' && window.launcher?.minecraftModrinthGetProject) {
-                  data = await window.launcher.minecraftModrinthGetProject(cand);
-                } else {
-                  data = await getModrinthProject(cand);
-                }
+                data = await api.modrinth.getProject(cand);
                 if (data?.id) break;
               } catch {}
             }
@@ -158,7 +140,7 @@ export function ProjectDetailView({
             ].filter((q, idx, arr) => q && q.length >= 2 && arr.indexOf(q) === idx);
 
             for (const q of queryCandidates) {
-              const searchRes = await searchModrinthProjects({
+              const searchRes = await api.modrinth.search({
                 projectType: projectType || 'mod',
                 query: q,
                 limit: 5,
@@ -171,11 +153,7 @@ export function ProjectDetailView({
 
                 const resolvedId = bestHit.project_id || bestHit.slug || bestHit.id;
                 try {
-                  if (typeof window !== 'undefined' && window.launcher?.minecraftModrinthGetProject) {
-                    data = await window.launcher.minecraftModrinthGetProject(resolvedId);
-                  } else {
-                    data = await getModrinthProject(resolvedId);
-                  }
+                  data = await api.modrinth.getProject(resolvedId);
                 } catch {
                   data = bestHit;
                 }
@@ -207,16 +185,9 @@ export function ProjectDetailView({
     const fetchVersions = async () => {
       try {
         let vers = [];
-        if (typeof window !== 'undefined' && window.launcher?.minecraftModrinthGetVersions) {
-          try {
-            vers = await window.launcher.minecraftModrinthGetVersions({ idOrSlug: targetId });
-          } catch {}
-        }
-        if (!vers || vers.length === 0) {
-          try {
-            vers = await getModrinthProjectVersions({ idOrSlug: targetId });
-          } catch {}
-        }
+        try {
+          vers = await api.modrinth.getVersions({ idOrSlug: targetId });
+        } catch {}
         if (isMounted && Array.isArray(vers)) {
           setVersions(vers);
           const allLoaders = Array.from(new Set(vers.flatMap(v => v.loaders || []).map(l => l.toLowerCase())));

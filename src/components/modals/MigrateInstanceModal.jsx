@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { api } from '../../api';
 import { useI18n } from '../../context/I18nContext';
 import { ICONS } from '../../constants/icons';
 import { Icon } from '../common/CommonComponents';
@@ -34,10 +35,8 @@ export function MigrateInstanceModal({
     let isMounted = true;
     (async () => {
       try {
-        if (typeof window !== 'undefined' && window.launcher?.scanBaseDirectory) {
-          const res = await window.launcher.scanBaseDirectory();
-          if (isMounted) setScan(res);
-        }
+        const res = await api.instances.scanBaseFolder();
+        if (isMounted) setScan(res);
       } catch (err) {
         console.error('Scan error:', err);
       } finally {

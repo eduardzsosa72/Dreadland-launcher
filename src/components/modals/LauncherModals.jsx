@@ -3,8 +3,8 @@ import { useI18n } from '../../context/I18nContext';
 import { ICONS } from '../../constants/icons';
 import { Icon, Toggle } from '../common/CommonComponents';
 import { LoaderLogo } from '../common/LoaderLogo';
-import { launcher } from '../../services/launcherClient';
-import { getInstallInfo, loadLauncherCatalog } from '../../lib/minecraftLauncher';
+import { api } from '../../api';
+import { getInstallInfo } from '../../lib/minecraftLauncher';
 import logoIcon from '/icon.webp';
 
 export function ProfileModal({ mode = 'new', profile, versions, systemTotalRam: initialSystemRam, onClose, onSave }) {
@@ -12,11 +12,9 @@ export function ProfileModal({ mode = 'new', profile, versions, systemTotalRam: 
   const [detectedRam, setDetectedRam] = useState(
     typeof initialSystemRam === 'number' && initialSystemRam > 0
       ? initialSystemRam
-      : (typeof launcher?.systemTotalRamGb === 'number' && launcher.systemTotalRamGb > 0
-        ? launcher.systemTotalRamGb
-        : (typeof navigator !== 'undefined' && typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0
-          ? navigator.deviceMemory
-          : null))
+      : (typeof navigator !== 'undefined' && typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0
+        ? navigator.deviceMemory
+        : null)
   );
 
   useEffect(() => {
@@ -24,7 +22,7 @@ export function ProfileModal({ mode = 'new', profile, versions, systemTotalRam: 
       setDetectedRam(initialSystemRam);
       return;
     }
-    launcher.getSystemInfo?.()
+    api.system.getInfo()
       .then(info => {
         if (info?.totalRamGb && info.totalRamGb > 0) {
           setDetectedRam(info.totalRamGb);
@@ -208,11 +206,7 @@ export function InstallModal({ initialType = 'minecraft', installTargets, showSn
   const fetchCatalogForSnapshots = useCallback(async (snapshotsEnabled) => {
     setLoading(true);
     try {
-      const fetchFn = launcher.minecraftGetCatalog
-        ? () => launcher.minecraftGetCatalog({ includeSnapshots: snapshotsEnabled, showSnapshots: snapshotsEnabled })
-        : () => loadLauncherCatalog({ includeSnapshots: snapshotsEnabled });
-
-      const catalog = await fetchFn();
+      const catalog = await api.game.getCatalog({ includeSnapshots: snapshotsEnabled, showSnapshots: snapshotsEnabled });
       if (catalog && onCatalogLoaded) {
         onCatalogLoaded(catalog);
       }
@@ -554,7 +548,7 @@ export function AboutModal({ appVersion, onClose, onOpenSourceCode, onOpenReleas
         {/* Developer / Project Metadata */}
         <div className="about-meta-box">
           <div className="about-meta-row">
-            <span className="about-meta-label">{t('settings.developedByLabel', { developer: 'CesarGarza55' })}</span>
+            <span className="about-meta-label">{t('settings.developedByLabel', { developer: 'eduardzsosa72' })}</span>
             <span className="about-meta-pill">{t('settings.licenseLabel', { license: 'GPL-2.0' })}</span>
           </div>
         </div>
@@ -631,7 +625,7 @@ function parseFormattedInline(text) {
             href={url}
             onClick={(e) => {
               e.preventDefault();
-              launcher.openExternal?.(url).catch(() => { });
+              api.system.openExternal(url).catch(() => { });
             }}
             style={{ color: 'var(--accent-bright, #38ef7d)', textDecoration: 'underline', cursor: 'pointer', fontWeight: 500 }}
           >
@@ -676,7 +670,7 @@ function parseFormattedInline(text) {
           href={token}
           onClick={(e) => {
             e.preventDefault();
-            launcher.openExternal?.(token).catch(() => { });
+            api.system.openExternal(token).catch(() => { });
           }}
           style={{ color: 'var(--accent, #dc2626)', textDecoration: 'underline', cursor: 'pointer', wordBreak: 'break-all' }}
         >

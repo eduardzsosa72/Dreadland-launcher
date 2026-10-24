@@ -3,7 +3,7 @@ import { ICONS } from '../../../constants/icons';
 import { Icon, EmptyState } from '../../common/CommonComponents';
 import { ModrinthCard, ModrinthCardSkeleton } from '../../cards/Cards';
 import { useI18n } from '../../../context/I18nContext';
-import { launcher } from '../../../services/launcherClient';
+import { api } from '../../../api';
 
 export function ExploreTab({
   active,
@@ -79,7 +79,7 @@ export function ExploreTab({
                       className="btn-ghost"
                       style={{ fontSize: 11, padding: '4px 8px', height: 'auto', textDecoration: 'none' }}
                       onClick={() => {
-                        launcher.openExternal?.('https://modrinth.com').catch(() => { });
+                        api.system.openExternal('https://modrinth.com').catch(() => { });
                       }}
                     >
                       <Icon d={ICONS.external} size={11} />

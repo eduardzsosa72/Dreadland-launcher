@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { marked } from 'marked';
+import { api } from '../../api';
 
 // Configure marked with GFM, line breaks, and smart typography
 marked.setOptions({
@@ -10,15 +11,7 @@ marked.setOptions({
 
 function openExternalLink(url) {
   if (!url) return;
-  try {
-    if (typeof window !== 'undefined' && window.launcher?.minecraftOpenFolder) {
-      window.launcher.minecraftOpenFolder(url);
-    } else {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-  } catch {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
+  api.system.openExternal(url).catch(() => {});
 }
 
 export function parseModrinthUrl(url) {

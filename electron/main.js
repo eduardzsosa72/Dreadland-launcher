@@ -3,8 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createMainWindow } from './services/windowManager.js';
 import { registerAllIpc } from './ipc/registerIpc.js';
-import { checkForLauncherUpdate } from './services/updater.js';
-import { loadLauncherState } from '../src/lib/launcherState.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,26 +51,12 @@ async function init() {
 
   registerAllIpc();
 
-  const mainWindow = await createMainWindow({
+  await createMainWindow({
     isDev,
     electronDir: __dirname,
   });
-
-  // Auto-check for updates if enabled in settings
-  setTimeout(async () => {
-    try {
-      const state = await loadLauncherState(app.getPath('userData'));
-      if (state.settings?.autoUpdate !== false) {
-        checkForLauncherUpdate({
-          onEvent: (channel, payload) => {
-            try { mainWindow?.webContents.send(channel, payload); } catch { }
-          },
-        }).catch((err) => {
-          console.warn('Auto update check error:', err?.message || err);
-        });
-      }
-    } catch { }
-  }, 3000);
+  // The launcher update check runs from the UI once it has loaded (src/App.jsx), so the
+  // "update available" dialog can never be missed and GitHub is asked only once per start.
 }
 
 app.whenReady().then(init);

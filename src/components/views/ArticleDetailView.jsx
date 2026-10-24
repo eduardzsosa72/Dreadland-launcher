@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useI18n } from '../../context/I18nContext';
 import { ICONS } from '../../constants/icons';
 import { Icon } from '../common/CommonComponents';
-import { launcher } from '../../services/launcherClient';
-import { loadMinecraftArticle } from '../../lib/minecraftNews';
+import { api } from '../../api';
 
 export function ArticleDetailView({ item, onBack }) {
   const { t } = useI18n();
@@ -15,13 +14,7 @@ export function ArticleDetailView({ item, onBack }) {
 
   const handleOpenInBrowser = (url) => {
     const finalUrl = url || targetUrl;
-    if (typeof launcher?.openExternal === 'function') {
-      launcher.openExternal(finalUrl).catch(() => {});
-    } else if (typeof launcher?.minecraftOpenFolder === 'function') {
-      launcher.minecraftOpenFolder(finalUrl);
-    } else {
-      window.open(finalUrl, '_blank');
-    }
+    api.system.openExternal(finalUrl).catch(() => {});
   };
 
   const fetchArticle = async () => {
@@ -30,15 +23,7 @@ export function ArticleDetailView({ item, onBack }) {
     setError('');
 
     try {
-      let data = null;
-      if (typeof window !== 'undefined' && window.launcher?.minecraftGetArticle) {
-        try {
-          data = await window.launcher.minecraftGetArticle(targetUrl);
-        } catch {}
-      }
-      if (!data || data.error) {
-        data = await loadMinecraftArticle(targetUrl);
-      }
+      const data = await api.news.getArticle(targetUrl);
 
       if (data && !data.error) {
         setArticle(data);

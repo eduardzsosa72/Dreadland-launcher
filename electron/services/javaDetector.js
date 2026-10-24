@@ -1,9 +1,40 @@
 import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
-import { spawnSync } from 'child_process';
+import { spawn } from 'child_process';
 
-const javaVersionCache = new Map();
+// Everything here is async: spawnSync('java -version') and the sync directory scans used to
+// freeze the whole launcher window for 200-600 ms on every Play click.
+const javaVersionCache = new Map(); // cmd -> Promise<number|null>
+
+function runCommand(command, args, timeoutMs = 4000) {
+  return new Promise((resolve) => {
+    let stdout = '';
+    let stderr = '';
+    let child;
+    try {
+      child = spawn(command, args, { windowsHide: true });
+    } catch (error) {
+      resolve({ error, status: null, stdout, stderr });
+      return;
+    }
+    const timer = setTimeout(() => { try { child.kill(); } catch { } }, timeoutMs);
+    child.stdout?.on('data', (d) => { stdout += d; });
+    child.stderr?.on('data', (d) => { stderr += d; });
+    child.on('error', (error) => { clearTimeout(timer); resolve({ error, status: null, stdout, stderr }); });
+    child.on('close', (status) => { clearTimeout(timer); resolve({ error: null, status, stdout, stderr }); });
+  });
+}
+
+const pathExists = (p) => fs.promises.access(p).then(() => true, () => false);
+
+async function readDirEntries(dir) {
+  try {
+    return await fs.promises.readdir(dir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+}
 
 export function parseJavaMajorVersion(output) {
   const text = `${output || ''}`;
@@ -25,26 +56,16 @@ export function resolveJavaCommand(javaPath) {
   return process.platform === 'win32' ? 'java.exe' : 'java';
 }
 
-export function detectJavaMajor(javaCmd) {
+export async function detectJavaMajor(javaCmd) {
   if (!javaCmd) return null;
   const normalized = String(javaCmd).trim();
-  if (javaVersionCache.has(normalized)) {
-    return javaVersionCache.get(normalized);
+  if (!javaVersionCache.has(normalized)) {
+    javaVersionCache.set(normalized, runCommand(normalized, ['-version']).then((result) => {
+      if (result.error) return null;
+      return parseJavaMajorVersion(`${result.stderr || ''}\n${result.stdout || ''}`);
+    }));
   }
-  let result;
-  try {
-    result = spawnSync(normalized, ['-version'], { encoding: 'utf8', timeout: 4000 });
-  } catch {
-    javaVersionCache.set(normalized, null);
-    return null;
-  }
-  if (result.error) {
-    javaVersionCache.set(normalized, null);
-    return null;
-  }
-  const version = parseJavaMajorVersion(`${result.stderr || ''}\n${result.stdout || ''}`);
-  javaVersionCache.set(normalized, version);
-  return version;
+  return javaVersionCache.get(normalized);
 }
 
 export function expandJavaExecutableCandidate(candidate) {
@@ -60,7 +81,7 @@ export function expandJavaExecutableCandidate(candidate) {
   return candidates;
 }
 
-export function collectCommonJavaCandidates() {
+export async function collectCommonJavaCandidates() {
   const candidates = [];
   const add = (value) => {
     if (!value) return;
@@ -71,16 +92,16 @@ export function collectCommonJavaCandidates() {
   try {
     const runtimesDir = path.join(app.getPath('userData'), 'runtime');
     const exe = process.platform === 'win32' ? 'java.exe' : 'java';
-    for (const entry of fs.readdirSync(runtimesDir, { withFileTypes: true })) {
+    for (const entry of await readDirEntries(runtimesDir)) {
       if (!entry.isDirectory() || !/^java-\d+$/.test(entry.name)) continue;
       for (const candidate of [path.join(runtimesDir, entry.name, 'bin', exe), path.join(runtimesDir, entry.name, 'Contents', 'Home', 'bin', exe)]) {
-        if (fs.existsSync(candidate)) add(candidate);
+        if (await pathExists(candidate)) add(candidate);
       }
     }
   } catch { }
   const pathCandidates = process.platform === 'win32' ? ['java.exe', 'java'] : ['java'];
   for (const executable of pathCandidates) {
-    const lookup = spawnSync(process.platform === 'win32' ? 'where' : 'which', [executable], { encoding: 'utf8' });
+    const lookup = await runCommand(process.platform === 'win32' ? 'where' : 'which', [executable]);
     if (!lookup.error && lookup.status === 0) {
       for (const line of String(lookup.stdout || '').split(/\r?\n/)) add(line);
     }
@@ -88,7 +109,7 @@ export function collectCommonJavaCandidates() {
   if (process.platform === 'darwin') {
     // 1. Query macOS /usr/libexec/java_home -V
     try {
-      const jhLookup = spawnSync('/usr/libexec/java_home', ['-V'], { encoding: 'utf8' });
+      const jhLookup = await runCommand('/usr/libexec/java_home', ['-V']);
       const text = `${jhLookup.stderr || ''}\n${jhLookup.stdout || ''}`;
       for (const line of text.split(/\r?\n/)) {
         const match = line.match(/(\/[^\s]+(?:\/Contents\/Home)?)/);
@@ -107,20 +128,16 @@ export function collectCommonJavaCandidates() {
       '/usr/local/opt',
     ];
     for (const root of macJvmRoots) {
-      try {
-        if (!fs.existsSync(root)) continue;
-        const entries = fs.readdirSync(root, { withFileTypes: true });
-        for (const entry of entries) {
-          if (!entry.isDirectory()) continue;
-          const entryPath = path.join(root, entry.name);
-          const standardJava = path.join(entryPath, 'Contents', 'Home', 'bin', 'java');
-          if (fs.existsSync(standardJava)) add(standardJava);
-          const directJava = path.join(entryPath, 'bin', 'java');
-          if (fs.existsSync(directJava)) add(directJava);
-          const brewJvmJava = path.join(entryPath, 'libexec', 'openjdk.jdk', 'Contents', 'Home', 'bin', 'java');
-          if (fs.existsSync(brewJvmJava)) add(brewJvmJava);
-        }
-      } catch { }
+      for (const entry of await readDirEntries(root)) {
+        if (!entry.isDirectory()) continue;
+        const entryPath = path.join(root, entry.name);
+        const standardJava = path.join(entryPath, 'Contents', 'Home', 'bin', 'java');
+        if (await pathExists(standardJava)) add(standardJava);
+        const directJava = path.join(entryPath, 'bin', 'java');
+        if (await pathExists(directJava)) add(directJava);
+        const brewJvmJava = path.join(entryPath, 'libexec', 'openjdk.jdk', 'Contents', 'Home', 'bin', 'java');
+        if (await pathExists(brewJvmJava)) add(brewJvmJava);
+      }
     }
 
     // 3. SDKMAN and ASDF on macOS
@@ -128,17 +145,12 @@ export function collectCommonJavaCandidates() {
     const sdkmanPath = path.join(home, '.sdkman', 'candidates', 'java');
     const asdfPath = path.join(home, '.asdf', 'installs', 'java');
     for (const managerDir of [sdkmanPath, asdfPath]) {
-      try {
-        if (fs.existsSync(managerDir)) {
-          const entries = fs.readdirSync(managerDir, { withFileTypes: true });
-          for (const entry of entries) {
-            if (entry.isDirectory()) {
-              add(path.join(managerDir, entry.name, 'bin', 'java'));
-              add(path.join(managerDir, entry.name, 'Contents', 'Home', 'bin', 'java'));
-            }
-          }
+      for (const entry of await readDirEntries(managerDir)) {
+        if (entry.isDirectory()) {
+          add(path.join(managerDir, entry.name, 'bin', 'java'));
+          add(path.join(managerDir, entry.name, 'Contents', 'Home', 'bin', 'java'));
         }
-      } catch { }
+      }
     }
   }
   if (process.platform === 'win32') {
@@ -156,28 +168,25 @@ export function collectCommonJavaCandidates() {
       'C:\\Program Files (x86)\\Java',
     ].filter(Boolean);
     for (const root of roots) {
-      try {
-        const entries = fs.readdirSync(root, { withFileTypes: true });
-        for (const entry of entries) {
-          if (!entry.isDirectory()) continue;
-          const lower = entry.name.toLowerCase();
-          if (!/(jdk|jre|java|temurin|adoptium|corretto|zulu|bellsoft|openlogic|microsoft)/.test(lower)) continue;
-          add(path.join(root, entry.name, 'bin', 'java.exe'));
-        }
-      } catch { }
+      for (const entry of await readDirEntries(root)) {
+        if (!entry.isDirectory()) continue;
+        const lower = entry.name.toLowerCase();
+        if (!/(jdk|jre|java|temurin|adoptium|corretto|zulu|bellsoft|openlogic|microsoft)/.test(lower)) continue;
+        add(path.join(root, entry.name, 'bin', 'java.exe'));
+      }
     }
   }
   return Array.from(new Set(candidates.flatMap(expandJavaExecutableCandidate)));
 }
 
-export function findJavaCommand(requiredMajor, preferredPath = '') {
+export async function findJavaCommand(requiredMajor, preferredPath = '') {
   const preferredCandidates = expandJavaExecutableCandidate(preferredPath);
-  const fallbackCandidates = collectCommonJavaCandidates();
+  const fallbackCandidates = await collectCommonJavaCandidates();
   const allCandidates = Array.from(new Set([...preferredCandidates, ...fallbackCandidates]));
   let bestCandidate = null;
   let bestMajor = null;
   for (const candidate of allCandidates) {
-    const major = detectJavaMajor(candidate);
+    const major = await detectJavaMajor(candidate);
     if (!major) continue;
     if (!bestCandidate || major > bestMajor) {
       bestCandidate = candidate;

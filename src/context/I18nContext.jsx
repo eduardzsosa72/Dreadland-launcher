@@ -2,19 +2,14 @@ import { createContext, useContext, useState, useCallback, useEffect } from 'rea
 import en from '../locales/en.json';
 import es from '../locales/es.json';
 import fr from '../locales/fr.json';
+import { api } from '../api';
 
 const I18nContext = createContext(null);
 
 const translations = { en, es, fr };
 
-// IPC helper (safe for browser dev mode)
-const launcher = window?.launcher ?? {};
-const getAppLanguage = typeof launcher.getAppLanguage === 'function'
-  ? launcher.getAppLanguage.bind(launcher)
-  : () => Promise.resolve('en');
-const setAppLanguage = typeof launcher.setAppLanguage === 'function'
-  ? launcher.setAppLanguage.bind(launcher)
-  : () => Promise.resolve();
+const getAppLanguage = () => api.system.getLanguage();
+const setAppLanguage = (language) => api.system.setLanguage(language);
 
 const LANGUAGE_STORAGE_KEY = 'openlauncher.language';
 

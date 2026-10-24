@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import { Readable } from 'stream';
+import { Buffer } from 'buffer';
 import { createRequire } from 'module';
 import { getMinecraftRoot, getMinecraftRoots } from './paths.js';
 import { resolveJavaForInstaller } from './javaRuntime.js';
@@ -41,6 +42,28 @@ export function isValidJarFile(filePath) {
     const hasHeader = buffer[0] === 0x50 && buffer[1] === 0x4b && (buffer[2] === 0x03 || buffer[2] === 0x05 || buffer[2] === 0x07);
     return hasHeader && tail.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06])) !== -1;
   } catch { return false; }
+}
+
+// Same check as isValidJarFile but without blocking the main thread. With a cold disk
+// (first launch after boot) the sync version froze the window ~4 s across 147 libraries.
+export async function isValidJarFileAsync(filePath) {
+  let handle;
+  try {
+    handle = await fs.promises.open(filePath, 'r');
+    const stats = await handle.stat();
+    if (!stats.isFile() || stats.size < 22) return false;
+    const header = Buffer.alloc(4);
+    await handle.read(header, 0, 4, 0);
+    const tailSize = Math.min(stats.size, 65557);
+    const tail = Buffer.alloc(tailSize);
+    await handle.read(tail, 0, tailSize, stats.size - tailSize);
+    const hasHeader = header[0] === 0x50 && header[1] === 0x4b && (header[2] === 0x03 || header[2] === 0x05 || header[2] === 0x07);
+    return hasHeader && tail.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06])) !== -1;
+  } catch {
+    return false;
+  } finally {
+    await handle?.close().catch(() => { });
+  }
 }
 
 export async function findFirstMatchingJar(directoryPath, filterFn = null) {

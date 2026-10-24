@@ -19,6 +19,7 @@ import {
   persistInstalledVersion,
   saveResponseBodyToFile,
   isValidJarFile,
+  isValidJarFileAsync,
   resolveLibraryArtifactCandidates,
 } from './minecraftInstaller.js';
 import { loadLauncherState } from '../../src/lib/launcherState.js';
@@ -143,11 +144,12 @@ export function compareVersionTuples(left, right) {
   return 0;
 }
 
-function isLibraryIntact(filePath, expectedSize = null) {
+async function isLibraryIntact(filePath, expectedSize = null) {
   try {
-    if (!fs.existsSync(filePath)) return false;
-    if (expectedSize && fs.statSync(filePath).size !== expectedSize) return false;
-    return filePath.toLowerCase().endsWith('.jar') ? isValidJarFile(filePath) : true;
+    const stat = await fs.promises.stat(filePath).catch(() => null);
+    if (!stat) return false;
+    if (expectedSize && stat.size !== expectedSize) return false;
+    return filePath.toLowerCase().endsWith('.jar') ? await isValidJarFileAsync(filePath) : true;
   } catch {
     return false;
   }
@@ -368,7 +370,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
 
     if (resolvedLibraryPath) {
       const expectedSize = Number(lib?.downloads?.artifact?.size) || null;
-      if (!isLibraryIntact(resolvedLibraryPath, expectedSize) && candidateUrls.length > 0) {
+      if (!(await isLibraryIntact(resolvedLibraryPath, expectedSize)) && candidateUrls.length > 0) {
         missingLibraries.push({ urls: candidateUrls, path: resolvedLibraryPath, expectedSize });
       }
       if (lib?.name) {
@@ -399,7 +401,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
           ? path.join(libsDir, nativeArtifact.path)
           : getLibraryPathFromName(`${lib.name}:${classifier}`, baseDir);
         const expectedSize = Number(nativeArtifact?.size) || null;
-        if (!isLibraryIntact(nativeOut, expectedSize)) {
+        if (!(await isLibraryIntact(nativeOut, expectedSize))) {
           missingLibraries.push({ urls: [nativeUrl], path: nativeOut, expectedSize });
         }
       }
@@ -413,7 +415,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
       while (libIdx < missingLibraries.length) {
         const item = missingLibraries[libIdx++];
         if (!item) break;
-        if (isLibraryIntact(item.path, item.expectedSize)) continue;
+        if (await isLibraryIntact(item.path, item.expectedSize)) continue;
         let downloaded = false;
         for (const url of item.urls) {
           try {
@@ -468,14 +470,17 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
         const objects = ai.objects;
         const keys = Object.keys(objects);
         const missing = [];
-        for (const key of keys) {
-          const hash = objects[key].hash;
-          const sub = hash.slice(0, 2);
-          const outDir = path.join(objectsDir, sub);
-          const outPath = path.join(outDir, hash);
-          if (!fs.existsSync(outPath) || fs.statSync(outPath).size === 0) {
-            missing.push({ hash, sub, outDir, outPath });
-          }
+        // ~3600 files: checked async in batches so the window stays responsive
+        const ASSET_CHECK_BATCH = 64;
+        for (let i = 0; i < keys.length; i += ASSET_CHECK_BATCH) {
+          await Promise.all(keys.slice(i, i + ASSET_CHECK_BATCH).map(async (key) => {
+            const hash = objects[key].hash;
+            const sub = hash.slice(0, 2);
+            const outDir = path.join(objectsDir, sub);
+            const outPath = path.join(outDir, hash);
+            const stat = await fs.promises.stat(outPath).catch(() => null);
+            if (!stat || stat.size === 0) missing.push({ hash, sub, outDir, outPath });
+          }));
         }
 
         if (missing.length > 0) {
@@ -748,10 +753,13 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
   const requiredJavaMajor = Number(versionJson?.javaVersion?.majorVersion || 0) || null;
 
   async function findCompatibleJava() {
-    const allCandidates = collectCommonJavaCandidates();
+    const allCandidates = await collectCommonJavaCandidates();
     if (requiredJavaMajor) {
       // Prefer the exact major Mojang specifies: much newer Java often breaks older mods
-      const exact = allCandidates.find(candidate => detectJavaMajor(candidate) === requiredJavaMajor);
+      let exact = null;
+      for (const candidate of allCandidates) {
+        if (await detectJavaMajor(candidate) === requiredJavaMajor) { exact = candidate; break; }
+      }
       if (exact) return { javaCmd: exact, javaMajor: requiredJavaMajor, source: 'auto-detected' };
       try {
         const downloaded = await ensureJavaRuntime(requiredJavaMajor, { onLog });
@@ -759,7 +767,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
       } catch (error) {
         onLog?.('warn', `⚠️ Could not download Java ${requiredJavaMajor}: ${error?.message || error}. Trying other installed Java versions...`);
       }
-      const compatibleJava = findJavaCommand(requiredJavaMajor, '');
+      const compatibleJava = await findJavaCommand(requiredJavaMajor, '');
       if (compatibleJava?.javaCmd && compatibleJava.javaMajor >= requiredJavaMajor) {
         return { javaCmd: compatibleJava.javaCmd, javaMajor: compatibleJava.javaMajor, source: 'auto-detected (compatible)' };
       }
@@ -767,7 +775,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
     let bestCandidate = null;
     let bestMajor = 0;
     for (const candidate of allCandidates) {
-      const major = detectJavaMajor(candidate);
+      const major = await detectJavaMajor(candidate);
       if (major && major > bestMajor) {
         bestMajor = major;
         bestCandidate = candidate;
@@ -782,7 +790,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
         return { javaCmd: downloaded, javaMajor: 17, source: 'launcher-managed' };
       } catch { }
     }
-    return { javaCmd: resolveJavaCommand(''), javaMajor: detectJavaMajor(resolveJavaCommand('')), source: 'system default' };
+    return { javaCmd: resolveJavaCommand(''), javaMajor: await detectJavaMajor(resolveJavaCommand('')), source: 'system default' };
   }
 
   let finalJavaCmd = '';
@@ -790,7 +798,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
 
   if (configuredJavaPath) {
     if (fs.existsSync(configuredJavaPath)) {
-      detectedJavaMajor = detectJavaMajor(configuredJavaPath);
+      detectedJavaMajor = await detectJavaMajor(configuredJavaPath);
       if (requiredJavaMajor && detectedJavaMajor && detectedJavaMajor >= requiredJavaMajor) {
         finalJavaCmd = configuredJavaPath;
         onLog?.('info', `✅ Using configured Java ${detectedJavaMajor} from ${javaPathSource} (meets requirement Java ${requiredJavaMajor}+)`);
@@ -818,7 +826,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
         onLog?.('info', `✅ Using ${compatible.source} Java ${detectedJavaMajor} from ${finalJavaCmd}`);
       } else {
         finalJavaCmd = resolveJavaCommand('');
-        detectedJavaMajor = detectJavaMajor(finalJavaCmd);
+        detectedJavaMajor = await detectJavaMajor(finalJavaCmd);
         onLog?.('warn', `⚠️ Using system default Java ${detectedJavaMajor || '?'} from ${finalJavaCmd}`);
       }
     }
@@ -830,7 +838,7 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
       onLog?.('info', `✅ Using ${compatible.source} Java ${detectedJavaMajor} from ${finalJavaCmd}`);
     } else {
       finalJavaCmd = resolveJavaCommand('');
-      detectedJavaMajor = detectJavaMajor(finalJavaCmd);
+      detectedJavaMajor = await detectJavaMajor(finalJavaCmd);
       onLog?.('warn', `⚠️ Using system default Java ${detectedJavaMajor || '?'} from ${finalJavaCmd}`);
     }
   }

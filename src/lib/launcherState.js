@@ -2,6 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const STATE_FILE_NAME = 'launcher-state.json';
+const MAX_SAVED_LOGS = 200;
+let saveQueue = Promise.resolve();
 
 export const DEFAULT_LAUNCHER_STATE = {
   profiles: [],
@@ -134,11 +136,13 @@ export async function saveLauncherState(storageDir, state) {
     profiles,
     activeProfileId: typeof state?.activeProfileId === 'string' && state.activeProfileId ? state.activeProfileId : (profiles[0]?.id || 'default'),
     activeInstanceId: typeof state?.activeInstanceId === 'string' && state.activeInstanceId ? state.activeInstanceId : null,
-    mods: Array.isArray(state?.mods) ? state.mods : [],
-    shaders: Array.isArray(state?.shaders) ? state.shaders : [],
-    resourcePacks: Array.isArray(state?.resourcePacks) ? state.resourcePacks : [],
-    datapacks: Array.isArray(state?.datapacks) ? state.datapacks : [],
-    logs: Array.isArray(state?.logs) ? state.logs : [],
+    // Installed content is always re-read from disk; storing it (with base64 icons) made this
+    // file ~6 MB, and it is parsed by many main-process calls.
+    mods: [],
+    shaders: [],
+    resourcePacks: [],
+    datapacks: [],
+    logs: Array.isArray(state?.logs) ? state.logs.slice(-MAX_SAVED_LOGS) : [],
     versions: Array.isArray(state?.versions) ? state.versions : [],
     settings: normalizeSettings(state?.settings, DEFAULT_LAUNCHER_STATE.settings),
     installTargets: state?.installTargets && typeof state.installTargets === 'object'
@@ -149,7 +153,16 @@ export async function saveLauncherState(storageDir, state) {
       : DEFAULT_LAUNCHER_STATE.latest,
   };
 
-  await fs.mkdir(storageDir, { recursive: true });
-  await fs.writeFile(stateFilePath(storageDir), JSON.stringify(normalizedState, null, 2), 'utf8');
+  // Saves are serialized and written to a temp file + renamed, so two overlapping saves
+  // (or a crash mid-write) can never leave a half-written, unparseable state file.
+  const target = stateFilePath(storageDir);
+  const write = async () => {
+    await fs.mkdir(storageDir, { recursive: true });
+    const tmp = `${target}.${Date.now()}.tmp`;
+    await fs.writeFile(tmp, JSON.stringify(normalizedState), 'utf8');
+    await fs.rename(tmp, target);
+  };
+  saveQueue = saveQueue.then(write, write);
+  await saveQueue;
   return normalizedState;
 }

@@ -3,7 +3,7 @@ import { useI18n } from '../../context/I18nContext';
 import { ICONS } from '../../constants/icons';
 import { Icon } from '../common/CommonComponents';
 import { MINECRAFT_INSTANCE_ICONS, getInstanceIconSrc } from '../../constants/instanceIcons';
-import { launcher } from '../../services/launcherClient';
+import { api } from '../../api';
 
 export function InstanceModal({
   mode = 'create', // 'create' | 'edit'
@@ -51,10 +51,10 @@ export function InstanceModal({
   };
 
   const handlePickCustomImage = async () => {
-    // If running in Electron with native file picker available
-    if (typeof window !== 'undefined' && window.launcher?.pickInstanceImage) {
+    // Desktop app: native file picker. Browser dev mode: hidden <input type="file">
+    if (api.isDesktop) {
       try {
-        const res = await launcher.pickInstanceImage();
+        const res = await api.instances.pickImage();
         if (!res?.canceled && res?.dataUri) {
           setCustomIconData(res.dataUri);
           setIcon('custom');

@@ -362,18 +362,7 @@ function buildInstallTargets(versions) {
 }
 
 export async function loadLauncherCatalog({ includeSnapshots = false } = {}) {
-  // If running in renderer with Electron bridge available, prefer IPC to avoid CORS on Forge/Mojang
-  if (typeof window !== 'undefined' && window.launcher && typeof window.launcher.minecraftGetCatalog === 'function') {
-    try {
-      const catalog = await window.launcher.minecraftGetCatalog({ includeSnapshots });
-      if (catalog && Array.isArray(catalog.versions) && catalog.versions.length > 0) {
-        return catalog;
-      }
-    } catch (e) {
-      console.warn('IPC catalog fetch failed, falling back to direct fetch:', e);
-    }
-  }
-
+  // Runs in the main process (renderer code goes through src/api)
   try {
     const [
       vanillaResult,
@@ -597,32 +586,4 @@ export function getVersionById(versionId, catalog = VERSION_CATALOG) {
 
 export function getInstallInfo(type, installTargets = INSTALL_TARGETS) {
   return installTargets[type] || installTargets.minecraft;
-}
-
-export async function install({ type, version, profileKey, gameVersion, loaderVersion } = {}) {
-  // Prefer calling the Electron main process via the preload bridge.
-  if (typeof window !== 'undefined' && window.launcher) {
-    if (typeof window.launcher.minecraftInstall === 'function') {
-      return await window.launcher.minecraftInstall({ type, version, profileKey, gameVersion, loaderVersion });
-    }
-    if (typeof window.launcher.invoke === 'function') {
-      return await window.launcher.invoke('minecraft:install', { type, version, profileKey, gameVersion, loaderVersion });
-    }
-  }
-
-  throw new Error('Installer not available: must run inside Electron with launcher.minecraftInstall exposed.');
-}
-
-export async function run(options = {}) {
-  // options should match the expected run contract (username, uuid, token, jvmArguments, etc.)
-  if (typeof window !== 'undefined' && window.launcher) {
-    if (typeof window.launcher.minecraftRun === 'function') {
-      return await window.launcher.minecraftRun(options);
-    }
-    if (typeof window.launcher.invoke === 'function') {
-      return await window.launcher.invoke('minecraft:run', options);
-    }
-  }
-
-  throw new Error('Runner not available: must run inside Electron with launcher.minecraftRun exposed.');
 }
