@@ -971,9 +971,6 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
       mainWindow.hide();
       mainWindow.webContents.setAudioMuted(true);
       mainWindow.webContents.setBackgroundThrottling(true);
-      if (typeof global.gc === 'function') {
-        try { global.gc(); } catch (e) { }
-      }
       try {
         mainWindow.webContents.session.clearCache();
       } catch (e) { }
@@ -1014,7 +1011,8 @@ export async function launchMinecraft(opts, { onLog = null, onAssetProgress = nu
       const currentBehavior = currentSettings?.settings?.launchBehavior || (currentSettings?.settings?.keepOpen ? 'keepOpen' : 'hide');
       if (currentBehavior === 'hide') {
         try {
-          mainWindow.webContents.setBackgroundThrottling(false);
+          // Throttling stays on (Chromium's default): turning it off here kept the
+          // launcher burning CPU whenever it was minimized after a game
           mainWindow.webContents.setAudioMuted(false);
           mainWindow.show();
           mainWindow.focus();
