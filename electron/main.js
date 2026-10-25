@@ -16,10 +16,10 @@ if (isDev) {
 
 app.setName('DREADLAND LAUNCHER');
 
-// Electron & Chromium engine optimizations (Ultra low RAM, disk cache, background processes)
-app.commandLine.appendSwitch('js-flags', '--max-old-space-size=128 --expose-gc');
-app.commandLine.appendSwitch('renderer-process-limit', '1');
-app.commandLine.appendSwitch('disk-cache-size', '16777216');
+// Turn off Chromium services the launcher never uses (sync, translate, autofill, crash upload...).
+// Memory, GC, renderer-process, GPU and timer-throttling flags were removed on purpose: they kept
+// the hidden window burning ~50% of a core and a 128 MB heap cap risked GC thrash / OOM. Measure
+// before adding any of them back.
 app.commandLine.appendSwitch('disable-background-networking');
 app.commandLine.appendSwitch('disable-component-update');
 app.commandLine.appendSwitch('disable-domain-reliability');
@@ -27,10 +27,7 @@ app.commandLine.appendSwitch('disable-sync');
 app.commandLine.appendSwitch('disable-speech-api');
 app.commandLine.appendSwitch('disable-breakpad');
 app.commandLine.appendSwitch('disable-print-preview');
-app.commandLine.appendSwitch('disable-features', 'Autofill,CalculateNativeWinOcclusion,InterestFeedContentSuggestions,MediaSessionService,Translate,PreloadMediaEngagementData');
-app.commandLine.appendSwitch('enable-gpu-rasterization');
-app.commandLine.appendSwitch('enable-zero-copy');
-app.commandLine.appendSwitch('disable-background-timer-throttling');
+app.commandLine.appendSwitch('disable-features', 'Autofill,InterestFeedContentSuggestions,MediaSessionService,Translate,PreloadMediaEngagementData');
 
 // Enforce single instance lock
 const gotTheLock = app.requestSingleInstanceLock();

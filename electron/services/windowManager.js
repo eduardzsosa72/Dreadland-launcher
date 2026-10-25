@@ -112,8 +112,6 @@ export async function createMainWindow({ isDev, electronDir }) {
       sandbox: true,
       webSecurity: true,
       spellcheck: false,
-      backgroundThrottling: false,
-      v8CacheOptions: 'bypassHeatCheckAndEagerCompile',
       preload: path.join(electronDir, 'preload.cjs'),
     },
   };
@@ -153,10 +151,15 @@ export async function createMainWindow({ isDev, electronDir }) {
   mainWindow.on('move', scheduleWindowStateSave);
   mainWindow.on('maximize', scheduleWindowStateSave);
   mainWindow.on('unmaximize', scheduleWindowStateSave);
-  mainWindow.on('minimize', () => {
-    if (typeof global.gc === 'function') {
-      try { global.gc(); } catch { }
-    }
+  // Freeze / crash diagnostics for the UI process
+  mainWindow.webContents.on('unresponsive', () => {
+    console.error('[Dreadland] Renderer no responde');
+  });
+  mainWindow.webContents.on('responsive', () => {
+    console.info('[Dreadland] Renderer recuperado');
+  });
+  mainWindow.webContents.on('render-process-gone', (_, details) => {
+    console.error('[Dreadland] Renderer terminado:', details);
   });
   mainWindow.on('close', () => {
     if (windowStateSaveTimer) {
