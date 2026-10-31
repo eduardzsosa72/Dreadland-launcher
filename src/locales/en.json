@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "DREADLAND LAUNCHER"
+    "name": "LS Launcher"
   },
   "common": {
     "required": "Required",
@@ -136,7 +136,7 @@
     "french": "French",
     "aboutButton": "About app",
     "aboutTitle": "About this app",
-    "aboutDescription": "DREADLAND LAUNCHER is a lightweight Minecraft launcher with profile management, mod controls, and update handling.",
+    "aboutDescription": "LS Launcher is a lightweight Minecraft launcher with profile management, mod controls, and update handling.",
     "versionLabel": "Version",
     "devBuild": "dev build",
     "openSourceCode": "Source code",
@@ -432,7 +432,7 @@
     "verifying": "Verifying the update file",
     "verifyFailed": "The downloaded update is corrupted or was tampered with. It was deleted and not installed.",
     "updateAvailableTitle": "Update available",
-    "updateAvailableMessage": "DREADLAND LAUNCHER {latestVersion} is available.",
+    "updateAvailableMessage": "LS Launcher {latestVersion} is available.",
     "detailWithAsset": "Current version: {currentVersion}\nUpdate file: {assetName}",
     "detailWithoutAsset": "Current version: {currentVersion}\nNo launchable asset was found for this platform, so the release page will open instead.",
     "downloadAndInstall": "Download and install",
