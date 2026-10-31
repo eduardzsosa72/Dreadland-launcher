@@ -1,7 +1,7 @@
 {
   "name": "dreadland-launcher",
   "private": true,
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "DREADLAND LAUNCHER is an open source Minecraft launcher developed by eduardzsosa72",
   "author": "eduardzsosa72",
   "type": "module",
