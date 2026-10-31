@@ -103,7 +103,7 @@ export async function createMainWindow({ isDev, electronDir }) {
     minWidth: WINDOW_MIN_WIDTH,
     minHeight: WINDOW_MIN_HEIGHT,
     frame: isMac ? true : false,
-    title: 'DREADLAND LAUNCHER',
+    title: 'LS Launcher',
     backgroundColor: '#0e0e0e',
     show: false,
     webPreferences: {

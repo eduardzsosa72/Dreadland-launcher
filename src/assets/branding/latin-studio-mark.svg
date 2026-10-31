@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="430 320 1045 1300">
+  <!-- Latin Studio "LS" emblem, vectorized from the official logo (transparent background) -->
+  <g fill="#38bae6">
+    <!-- L: upright stroke -->
+    <path d="M518 334 L751 459 L750 1171 L625 1091 L625 724 L518 612 Z"/>
+    <!-- L: foot -->
+    <path d="M445 1049 L518 1101 L518 1292 L1054 1564 L772 1547 L442 1384 Z"/>
+    <!-- S -->
+    <path d="M812 649 L1110 762 L1397 892 L1461 1094 Q1210 905 937 817 L986 928 L1383 1136 L1388 1602 L1175 1594 L632 1314 L632 1139 L1310 1551 L1215 1460 L1215 1197 L812 990 Z"/>
+  </g>
+</svg>

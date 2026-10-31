@@ -2,7 +2,7 @@ import { useI18n } from '../../context/I18nContext';
 import { api } from '../../api';
 import { ICONS } from '../../constants/icons';
 import { Icon } from '../common/CommonComponents';
-import dreadlandLogo from '../../assets/branding/dreadland-logo.jpg';
+import latinStudioMark from '../../assets/branding/latin-studio-mark.svg';
 
 // Frameless window title bar with custom window controls (macOS keeps its native ones)
 export function TitleBar({ appVersion }) {
@@ -12,7 +12,11 @@ export function TitleBar({ appVersion }) {
   return (
     <div className="titlebar">
       <div className="titlebar-brand">
-        <img className="titlebar-banner-logo" src={dreadlandLogo} alt={t('app.name')} draggable={false} />
+        <img className="titlebar-mark" src={latinStudioMark} alt="" draggable={false} />
+        <div className="titlebar-wordmark" aria-label={t('app.name')}>
+          <span className="titlebar-wordmark-title">LATIN STUDIO</span>
+          <span className="titlebar-wordmark-tagline">GAMING · ENTERTAINMENT · CREATORS</span>
+        </div>
         <span className="titlebar-version">{appVersion ? `v${appVersion}` : '1.0.0'}</span>
       </div>
       {showControls && (
